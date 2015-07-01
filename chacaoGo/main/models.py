@@ -5,6 +5,7 @@ class User(models.Model):
     """Clase para usuario"""
     username = models.CharField(max_length = 20,primary_key=True)
     fullname = models.CharField(max_length = 30)
+    email    = models.EmailField(unique=True)
     password = models.CharField(max_length = 128) #Para sha
     userType = models.CharField(max_length = 11) 
     added    = models.DateTimeField(auto_now_add=True) 
