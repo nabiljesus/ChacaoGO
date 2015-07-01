@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block contenido %}    
+<body class="darker" background="/static/img/mapa.png">
+
+  <script type="text/javascript">   
+    function Redirect() 
+    {  
+      window.location="main"; 
+    } 
+    document.write(""); 
+    setTimeout('Redirect()', 3000);   
+  </script>
+
+  <img class="center img-responsive center-block" src="/static/img/logo.png" >
+</body>    
+{% endblock contenido %}
+
