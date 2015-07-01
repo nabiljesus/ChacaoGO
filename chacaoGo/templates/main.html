@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block contenido %} 
-<body>
+<body bgcolor="black" >
   <div class="row btn-group">
     <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
     <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
@@ -21,5 +21,60 @@
     <button type="button" class="btn btn-default">Conectarme</button>
     <a class="btn btn-default" href="/register">Registrarme</a>
   </div>
+
+
+
+
+
+
+
+
+  <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis?v=2.0"></script>
+  <script type="text/javascript">
+    dojo.require("esri.map");
+    dojo.require("dijit.layout.ContentPane");
+    dojo.require("dijit.layout.BorderContainer");
+    var map;
+    function Init() {
+      dojo.style(dojo.byId("map"), { width: dojo.contentBox("map").w + "px", height: (esri.documentBox.h - dojo.contentBox("navTable").h - 40) + "px" });
+      map = new esri.Map("map");
+      var layer = new esri.layers.ArcGISTiledMapServiceLayer("http://200.74.193.82/ArcGIS/rest/services/RETOCHACAO/infomapa1/MapServer");
+      map.addLayer(layer);
+  var resizeTimer;
+                              dojo.connect(map, 'onLoad', function(theMap) {
+                                dojo.connect(dijit.byId('map'), 'resize', function() {
+                                  clearTimeout(resizeTimer);
+                                  resizeTimer = setTimeout(function() {
+                                    map.resize();
+                                    map.reposition();
+                                   }, 500);
+                                 });
+                               });
+    }
+    dojo.addOnLoad(Init);
+  </script>
+
+  <table style="width:100%">
+<tr>
+<td>
+<table id="navTable" width="100%">
+<tbody>
+<tr valign="top">
+
+<td align="right" id="help">
+Built using the  <a href="http://resources.esri.com/arcgisserver/apis/javascript/arcgis">ArcGIS JavaScript API</a>
+</td>
+
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</table>
+<div id="map" style="margin:auto;width:97%;border:1px solid #000;"></div>
+
+
+
+
 </body>
 {% endblock contenido %}
