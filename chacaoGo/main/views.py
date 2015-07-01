@@ -22,7 +22,7 @@ def register(request):
 
 def adduser(request):
     #Este no deberia llevar vista
-    t = loader.get_template('main.html')
+    t = loader.get_template('adduser.html')
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
 
