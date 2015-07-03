@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response, RequestContext
 from django.http      import HttpResponse
 from django.template  import Context,loader
 from main.forms       import UserForm
+from main.models      import * 
 
 # Create your views here.
 def index(request):
@@ -15,18 +16,47 @@ def main(request):
     return HttpResponse(t.render(c))
 
 def register(request):
-    form = UserForm()
-    t = loader.get_template('register.html')
-    c = Context({'form': form})         
-    return HttpResponse(t.render(c))
+
+    if request.method == 'GET':
+        dictionary = {'form': UserForm()}
+    elif request.method == 'POST':
+        form = UserForm(request.POST)
+        if form.is_valid():
+            newUser = User(
+                username = form.cleaned_data['username'],
+                fullname = form.cleaned_data['fullname'],
+                email    = form.cleaned_data['email'],
+                password = form.cleaned_data['password'],
+                userType = form.cleaned_data['userType']
+            )
+            newUser.save()
+            c = Context({'mensaje': 'Gracias por registrarte!'})
+            t = loader.get_template('main.html')
+        else:
+            print("No pase la validez D:")
+            for field in form:
+                print(field.errors)
+            dictionary = {'form': UserForm(), 'mensaje': 'Ha ocurrido un error al momento de registro :('}
+        return HttpResponse(t.render(c))
+    else:
+        dictionary = {}
+        print("wtf am i doing here?")
+
+    
+    
+    return render_to_response('register.html', dictionary , context_instance=RequestContext(request))
+    
+    
+
 
 
 
 def adduser(request):
     #Este no deberia llevar vista
-    t = loader.get_template('adduser.html')
-    c = Context({'foo': 'bar'})         
-    return HttpResponse(t.render(c))
+    t = loader.get_template('main.html')
+    
+    return HttpResponse(t.render({}))
+    
 
 def userprofile(request):
     t = loader.get_template('userprofile.html')
