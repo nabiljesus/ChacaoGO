@@ -23,8 +23,8 @@ class UserForm(forms.ModelForm):
         fields = ['username','fullname','password','password2','email','userType']
 
 class LoginForm(forms.ModelForm):
-    username = forms.CharField(max_length = 20,required=True,widget=forms.TextInput(attrs={'class':'invisible','id':'username'}))
-    password = forms.CharField(max_length = 128,required=True,widget=forms.PasswordInput(attrs={'class':'invisible','id':'password'})) #Para sha
+    username = forms.CharField(max_length = 20,required=True,widget=forms.TextInput(attrs={'class':'invisible center','id':'username'}))
+    password = forms.CharField(max_length = 128,required=True,widget=forms.PasswordInput(attrs={'class':'invisible center','id':'password'})) #Para sha
 
     class Meta:
         model = User

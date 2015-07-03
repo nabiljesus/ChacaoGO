@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^main/', views.main, name='main'),
     url(r'^register/', views.register, name='register'),
     url(r'^adduser/', views.adduser, name='adduser'),
+    url(r'^redirectuser/', views.redirectuser, name='redirectuser'),
     url(r'^userprofile/', views.userprofile, name='userprofile'),
     url(r'^mayorsprofile/', views.mayorsprofile, name='mayorsprofile'),
 ]

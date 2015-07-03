@@ -1,4 +1,4 @@
-from django.shortcuts import render, render_to_response, RequestContext
+from django.shortcuts import render, render_to_response, RequestContext, redirect
 from django.http      import HttpResponse
 from django.template  import Context,loader
 from main.forms       import *
@@ -55,13 +55,22 @@ def register(request):
     
 
 
-
-
 def adduser(request):
     #Este no deberia llevar vista
     t = loader.get_template('main.html')
     
     return HttpResponse(t.render({}))
+
+def redirectuser(request):
+    if request.method == 'GET':
+        print("No deberias estar aqui, fucker")
+        t = '/main'
+    elif request.method == 'POST':
+        t = '/userprofile'
+        # AGREGAR PERSONA A LA SESSION
+        # t = loader.get_template('mayorsprofile.html') #Depende de quien hizo log
+
+    return redirect(t,foo='bar')
     
 
 def userprofile(request):
@@ -74,7 +83,7 @@ def mayorsprofile(request):
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
 
-def mayorsprofile(request):
+def event(request):
     t = loader.get_template('event.html')
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
