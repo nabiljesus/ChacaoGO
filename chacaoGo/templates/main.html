@@ -17,41 +17,62 @@
     <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
   </div>
 
+  <script type="text/javascript">
+    function showUp(){
+      document.getElementById("regpop").style.visibility  = "visible";
+      document.getElementById("back").style.visibility    = "visible";
+      document.getElementById("password").style.visibility= "visible";
+      document.getElementById("passName").style.visibility= "visible";
+      document.getElementById("usName").style.visibility  = "visible";
+      document.getElementById("username").style.visibility= "visible";
+      document.getElementById("regpop").margin="0 auto";
+      document.getElementById("back").margin  ="0 auto";
+      document.getElementById("password").margin  ="0 auto";
+      document.getElementById("passName").margin  ="0 auto";
+      document.getElementById("usName").margin  ="0 auto";
+      document.getElementById("username").margin  ="0 auto";
+    }
+    function hide(){
+      document.getElementById("regpop").style.visibility  = "hidden";
+      document.getElementById("back").style.visibility    = "hidden";
+      document.getElementById("password").style.visibility= "hidden";
+      document.getElementById("passName").style.visibility= "hidden";
+      document.getElementById("usName").style.visibility  = "hidden";
+      document.getElementById("username").style.visibility= "hidden";
+    }
+  </script>
+
   <div class="btn-group topright">
-    <button type="button" class="btn btn-default">Conectarme</button>
+    <button type="button" class="btn btn-default" onclick="showUp()">Conectarme</button>
     <a class="btn btn-default" href="/register">Registrarme</a>
   </div>
 
 
+  <div id="cover">
+    <img id="regpop" class="img-responsive center invisible" src="/static/img/login_pop.png"/>
+      <input onclick="hide()" type="image" id="back" class="interno img-responsive center invisible " height="100" width="100" src="/static/img/backblack.png"/>
+
+    <form id="form" action="/login/" method="post">
+    {% csrf_token %}
+    <div class="form-group invisible">
+        <label class="invisible" id="usName">Usuario: </label>
+        {{form.username}}
+    </div>
+    <div class="form-group invisible">
+        <label class="invisible" id="passName">Password: </label>
+        {{form.password}}
+    </div>
+    </form>
+    
+
+  </div>
 
 
-
-
-
-
+  <!--
   <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis?v=2.0"></script>
   <script type="text/javascript">
-    dojo.require("esri.map");
-    dojo.require("dijit.layout.ContentPane");
-    dojo.require("dijit.layout.BorderContainer");
-    var map;
-    function Init() {
-      dojo.style(dojo.byId("map"), { width: dojo.contentBox("map").w + "px", height: (esri.documentBox.h - dojo.contentBox("navTable").h - 40) + "px" });
-      map = new esri.Map("map");
-      var layer = new esri.layers.ArcGISTiledMapServiceLayer("http://200.74.193.82/ArcGIS/rest/services/RETOCHACAO/infomapa1/MapServer");
-      map.addLayer(layer);
-  var resizeTimer;
-                              dojo.connect(map, 'onLoad', function(theMap) {
-                                dojo.connect(dijit.byId('map'), 'resize', function() {
-                                  clearTimeout(resizeTimer);
-                                  resizeTimer = setTimeout(function() {
-                                    map.resize();
-                                    map.reposition();
-                                   }, 500);
-                                 });
-                               });
-    }
-    dojo.addOnLoad(Init);
+    var myWorker = new Worker("/static/js/mapa.js");
+    myWorker.loadMap();
   </script>
 
   <table style="width:100%">
@@ -72,6 +93,7 @@ Built using the  <a href="http://resources.esri.com/arcgisserver/apis/javascript
 </tr>
 </table>
 <div id="map" style="margin:auto;width:97%;border:1px solid #000;"></div>
+  -->
 
 
 

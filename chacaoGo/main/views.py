@@ -1,7 +1,7 @@
 from django.shortcuts import render, render_to_response, RequestContext
 from django.http      import HttpResponse
 from django.template  import Context,loader
-from main.forms       import UserForm
+from main.forms       import *
 from main.models      import * 
 
 # Create your views here.
@@ -11,9 +11,15 @@ def index(request):
     return HttpResponse(t.render(c))
 
 def main(request):
-    t = loader.get_template('main.html')
-    c = Context({'foo': 'bar'})         
-    return HttpResponse(t.render(c))
+    #t = loader.get_template('main.html')
+    #c = Context({'foo': 'bar'})         
+
+    dictionary = {'form': LoginForm()}
+    return render_to_response('main.html', 
+                              dictionary , 
+                              context_instance=RequestContext(request)
+                              )
+
 
 def register(request):
 

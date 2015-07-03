@@ -21,3 +21,11 @@ class UserForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['username','fullname','password','password2','email','userType']
+
+class LoginForm(forms.ModelForm):
+    username = forms.CharField(max_length = 20,required=True,widget=forms.TextInput(attrs={'class':'invisible','id':'username'}))
+    password = forms.CharField(max_length = 128,required=True,widget=forms.PasswordInput(attrs={'class':'invisible','id':'password'})) #Para sha
+
+    class Meta:
+        model = User
+        fields = ['username','password']
