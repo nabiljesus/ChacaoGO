@@ -1,3 +1,4 @@
+from django.contrib.sessions.backends.db import SessionStore
 from django.shortcuts import render, render_to_response, RequestContext, redirect
 from django.http      import HttpResponse
 from django.template  import Context,loader
@@ -22,7 +23,6 @@ def main(request):
 
 
 def register(request):
-
     if request.method == 'GET':
         dictionary = {'form': UserForm()}
     elif request.method == 'POST':
@@ -66,9 +66,15 @@ def redirectuser(request):
         print("No deberias estar aqui, fucker")
         t = '/main'
     elif request.method == 'POST':
+        #Verificar que el usuario es correcto
+
+        #Agregamos la persona a la sesion
+        s = SessionStore()
+        s['username'] = "username"
+        s['type'] = "mayor"
+        # Redireccion a la pagina correcta
         t = '/userprofile'
-        # AGREGAR PERSONA A LA SESSION
-        # t = loader.get_template('mayorsprofile.html') #Depende de quien hizo log
+        # t = '/mayorsprofile' #Depende de quien hizo log
 
     return redirect(t,foo='bar')
     
