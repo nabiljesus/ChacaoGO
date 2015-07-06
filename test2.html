@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+   <title>Leaflet Quick Start Guide Example</title>
+   <meta charset="utf-8" />
+
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css" />
+</head>
+<body>
+   <div id="map" style="width: 1000px; height: 1000px"></div>
+
+   <script src="http://leafletjs.com/dist/leaflet.js"></script>
+   <script>
+
+      var map = L.map('map').setView([10.54562, -426.87142], 13);
+
+      L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+         maxZoom: 18,
+         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+         id: 'examples.map-i875mjb7'
+      }).addTo(map);
+
+
+      var circlep = L.circle([51.508, -0.11], 500, {
+         color: 'red',
+         fillColor: '#f03',
+         fillOpacity: 0.5
+      })
+
+      circlep.addTo(map).bindPopup("I am a circle.");
+
+      var polip = L.polygon([
+         [10.54562, -426.87142],
+         [10.55028, -426.86803],
+         [10.55091, -426.86635],
+         [10.54899, -426.86221],
+         [10.54669, -426.85957],
+         [10.54383, -426.85736],
+         [10.54134, -426.85266],
+         [10.53853, -426.8455],
+         [10.53933, -426.84438],
+         [10.53946, -426.83846],
+         [10.53845, -426.83507],
+         [10.5338, -426.83876],
+         [10.5284, -426.83709],
+         [10.51161, -426.83807],
+         [10.50465, -426.83674],
+         [10.50018, -426.84048],
+         [10.49646, -426.84378],
+         [10.48887, -426.84344],
+         [10.48368, -426.84382],
+         [10.4838, -426.8497],
+         [10.48254, -426.85219],
+         [10.48503, -426.86133],
+         [10.48769, -426.86914],
+         [10.49355, -426.87108],
+         [10.50461, -426.86648],
+         [10.52018, -426.86344],
+         [10.53731, -426.87155],
+         [10.54558, -426.87163]
+      ], {
+         stroke: true,
+         weight: 0.3,
+         color: 'Red',
+         fillOpacity: 0,
+         Opacity: 0
+      })
+
+      polip.addTo(map).bindPopup("Estoy en chacao :D.");
+
+
+      var popup = L.popup();
+
+      function onMapClick(e) {
+         popup
+            .setLatLng(e.latlng)
+            //.setContent("You clicked the map at " + e.latlng.toString())
+            .setContent("No toy en Chacao :(")
+            .openOn(map);
+      }
+
+      map.on('click', onMapClick);
+      map.fitBounds(polip.getBounds()); // max zoom to see whole polygon
+      map.setMaxBounds(polip.getBounds()); // restrict map view to polygon bounds
+      map.options.minZoom = map.getZoom(); // restrict user to zoom out 
+   </script>
+</body>
+</html>
