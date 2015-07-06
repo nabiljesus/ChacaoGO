@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block contenido %} 
+<body bgcolor="black" >
+  <div class="row btn-group">
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+    <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
+  </div>
+
+  {% if not logged %}
+  <script type="text/javascript">
+    function showUp(){
+      document.getElementById("regpop").style.visibility  = "visible";
+      document.getElementById("back").style.visibility    = "visible";
+      document.getElementById("password").style.visibility= "visible";
+      document.getElementById("passName").style.visibility= "visible";
+      document.getElementById("usName").style.visibility  = "visible";
+      document.getElementById("username").style.visibility= "visible";
+      document.getElementById("connect").style.visibility= "visible";
+      document.getElementById("regpop").margin="0 auto";
+      document.getElementById("back").margin  ="0 auto";
+      document.getElementById("password").margin  ="0 auto";
+      document.getElementById("passName").margin  ="0 auto";
+      document.getElementById("usName").margin  ="0 auto";
+      document.getElementById("username").margin  ="0 auto";
+      document.getElementById("connect").margin  ="0 auto";
+    }
+    function hide(){
+      document.getElementById("regpop").style.visibility  = "hidden";
+      document.getElementById("back").style.visibility    = "hidden";
+      document.getElementById("password").style.visibility= "hidden";
+      document.getElementById("passName").style.visibility= "hidden";
+      document.getElementById("usName").style.visibility  = "hidden";
+      document.getElementById("username").style.visibility= "hidden";
+      document.getElementById("connect").style.visibility= "hidden";
+    }
+  </script>
+
+  <div class="btn-group topright">
+    <button type="button" class="btn btn-default" onclick="showUp()">Conectarme</button>
+    <a class="btn btn-default" href="/register">Registrarme</a>
+  </div>
+
+
+  <div id="cover">
+    <img id="regpop" class="img-responsive center invisible" src="/static/img/login_pop.png"/>
+      <input onclick="hide()" type="image" id="back" class="interno img-responsive center invisible " height="100" width="100" src="/static/img/backblack.png"/>
+
+    <form id="form" action="/redirectuser/" method="post">
+    {% csrf_token %}
+    <div class="form-group invisible center">
+        <label class="invisible" id="usName">Usuario: </label>
+         <input type="text" name="username" id="username">
+  
+    </div>
+    <div class="form-group invisible">
+        <label class="invisible" id="passName">Password: </label>
+         <input type="password" name="password" id="password">
+    </div>
+    <button id="connect" type="submit" class="btn btn-default invisible">Conectarme</button>
+    </form>
+
+  </div>
+
+  {% else %}
+  <div class="btn-group topright">
+    <a class="btn btn-default" href="/logout">Salir</button>
+  </div>
+
+  {% endif %}
+
+  <!--
+  <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis?v=2.0"></script>
+  <script type="text/javascript">
+    var myWorker = new Worker("/static/js/mapa.js");
+    myWorker.loadMap();
+  </script>
+
+  <table style="width:100%">
+<tr>
+<td>
+<table id="navTable" width="100%">
+<tbody>
+<tr valign="top">
+
+<td align="right" id="help">
+Built using the  <a href="http://resources.esri.com/arcgisserver/apis/javascript/arcgis">ArcGIS JavaScript API</a>
+</td>
+
+</tr>
+</tbody>
+</table>
+</td>
+</tr>
+</table>
+<div id="map" style="margin:auto;width:97%;border:1px solid #000;"></div>
+  -->
+
+
+
+
+</body>
+{% endblock contenido %}

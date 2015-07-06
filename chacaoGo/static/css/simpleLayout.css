@@ -1,0 +1,33 @@
+.center {
+    margin: 0 auto;
+    vertical-align: middle;
+    /*position: absolute;*/
+}
+
+.darker {
+  
+}
+
+.topright{
+    position: absolute;
+    top: 0;
+    right: 0px;
+}
+
+.invisible{
+    visibility: hidden;
+}
+
+.con { 
+    overflow:hidden; 
+}
+
+#cover{
+    position: relative;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+.interno{
+    bottom: 0px;
+}
