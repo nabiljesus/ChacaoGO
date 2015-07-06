@@ -13,9 +13,15 @@ def index(request):
 
 def main(request):
     #t = loader.get_template('main.html')
-    #c = Context({'foo': 'bar'})         
+    #c = Context({'foo': 'bar'})
+    logged = 'username' in request.session
+    print("Esta loggeado?")
+    print(logged)
 
-    dictionary = {'form': LoginForm()}
+    dictionary = {'logged':logged }
+    if not logged:
+        dictionary['form'] = LoginForm()
+
     return render_to_response('main.html', 
                               dictionary , 
                               context_instance=RequestContext(request)
@@ -33,7 +39,7 @@ def register(request):
                 fullname = form.cleaned_data['fullname'],
                 email    = form.cleaned_data['email'],
                 password = form.cleaned_data['password'],
-                userType = form.cleaned_data['userType']
+                userType = 'Usuario'
             )
             newUser.save()
             c = Context({'mensaje': 'Gracias por registrarte!'})
@@ -48,8 +54,6 @@ def register(request):
         dictionary = {}
         print("wtf am i doing here?")
 
-    
-    
     return render_to_response('register.html', dictionary , context_instance=RequestContext(request))
     
     
@@ -58,7 +62,6 @@ def register(request):
 def adduser(request):
     #Este no deberia llevar vista
     t = loader.get_template('main.html')
-    
     return HttpResponse(t.render({}))
 
 def redirectuser(request):
@@ -68,16 +71,29 @@ def redirectuser(request):
     elif request.method == 'POST':
         #Verificar que el usuario es correcto
 
+        t = '/main'
+
+        username = request.POST['username']
+        password = request.POST['password']
+
+        if User.mayLog(username,password):
+            userType = User.getType(username)
+            request.session['username'] = username
+            request.session['type']     = userType
+            request.session.modified = True
+        else:
+            #Poner mensaje de error from django.contrib import messages
+            pass
+
         #Agregamos la persona a la sesion
-        s = SessionStore()
-        s['username'] = "username"
-        s['type'] = "mayor"
-        # Redireccion a la pagina correcta
-        t = '/userprofile'
-        # t = '/mayorsprofile' #Depende de quien hizo log
 
     return redirect(t,foo='bar')
-    
+
+def logout(request):
+    del request.session['username']
+    del request.session['type']
+    request.session.modified = True
+    return redirect('/main',foo='bar')
 
 def userprofile(request):
     t = loader.get_template('userprofile.html')

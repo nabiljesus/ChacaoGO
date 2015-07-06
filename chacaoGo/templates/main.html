@@ -17,6 +17,7 @@
     <div class="col-md-1"> <input type="checkbox" value=""> filt i </div>
   </div>
 
+  {% if not logged %}
   <script type="text/javascript">
     function showUp(){
       document.getElementById("regpop").style.visibility  = "visible";
@@ -59,17 +60,24 @@
     {% csrf_token %}
     <div class="form-group invisible center">
         <label class="invisible" id="usName">Usuario: </label>
-        {{form.username}}
+         <input type="text" name="username" id="username">
+  
     </div>
     <div class="form-group invisible">
         <label class="invisible" id="passName">Password: </label>
-        {{form.password}}
+         <input type="password" name="password" id="password">
     </div>
     <button id="connect" type="submit" class="btn btn-default invisible">Conectarme</button>
     </form>
 
   </div>
 
+  {% else %}
+  <div class="btn-group topright">
+    <a class="btn btn-default" href="/logout">Salir</button>
+  </div>
+
+  {% endif %}
 
   <!--
   <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis?v=2.0"></script>
