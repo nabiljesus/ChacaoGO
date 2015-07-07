@@ -1,8 +1,7 @@
-<<<<<<< HEAD
+
 from django.shortcuts import render
 
 # Create your views here.
-=======
 from django.contrib.sessions.backends.db import SessionStore
 from django.shortcuts import render, render_to_response, RequestContext, redirect
 from django.http      import HttpResponse
@@ -114,6 +113,3 @@ def event(request):
     t = loader.get_template('event.html')
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
-
-
->>>>>>> Javier

@@ -1,8 +1,7 @@
 from django.db import models
 
 # Create your models here.
-<<<<<<< HEAD
-=======
+
 class User(models.Model):
     """Clase para usuario"""
     NORMAL    = 'Usuario'
@@ -62,4 +61,3 @@ class Comment(models.Model):
     event       = models.ForeignKey(Event)
     description = models.CharField(max_length = 500)
     added       = models.DateTimeField(auto_now_add=True)
->>>>>>> Javier
