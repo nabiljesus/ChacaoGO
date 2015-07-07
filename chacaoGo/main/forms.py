@@ -23,27 +23,45 @@ class UserForm(forms.ModelForm):
         fields = ['username','fullname','password','password2','email']
 
 
-class LoginForm(forms.ModelForm):
-    username = forms.CharField(max_length = 20,required=True,widget=forms.TextInput(attrs={'class':'invisible center','id':'username'}))
-    password = forms.CharField(max_length = 128,required=True,widget=forms.PasswordInput(attrs={'class':'invisible center','id':'password'})) #Para sha
-
-    def is_valid(self):
-        valid = super(LoginForm, self).is_valid()
-
-        if not valid:
-            return valid
-
-        username = self.cleaned_data['username']
-        password = self.cleaned_data['password']
-
-
-
-        res  = (type(username) is str) and (type(password) is str)
-        if res:
-            res  = len(username) <= 20 and len(password) <= 128
-
-        return res
+        
+class EventForm(forms.ModelForm):
+    """Clase para formulario de usuario"""
+    name        = forms.CharField(max_length = 30,required=True)
+    description = forms.CharField(max_length = 500,required=True)
+    start       = forms.CharField(max_length = 128,required=True,widget=forms.PasswordInput()) #Para sha
+    end         = forms.EmailField(required=True) 
 
     class Meta:
-        model = User
-        fields = ['username','password']
+        model = Event
+        fields = ['name','description','start','end','type']
+
+
+
+
+
+
+
+# class LoginForm(forms.ModelForm):
+#     username = forms.CharField(max_length = 20,required=True,widget=forms.TextInput(attrs={'class':'invisible center','id':'username'}))
+#     password = forms.CharField(max_length = 128,required=True,widget=forms.PasswordInput(attrs={'class':'invisible center','id':'password'})) #Para sha
+
+#     def is_valid(self):
+#         valid = super(LoginForm, self).is_valid()
+
+#         if not valid:
+#             return valid
+
+#         username = self.cleaned_data['username']
+#         password = self.cleaned_data['password']
+
+
+
+#         res  = (type(username) is str) and (type(password) is str)
+#         if res:
+#             res  = len(username) <= 20 and len(password) <= 128
+
+#         return res
+
+#     class Meta:
+#         model = User
+#         fields = ['username','password']

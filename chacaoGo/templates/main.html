@@ -73,10 +73,15 @@
   </div>
 
   {% else %}
-  <div class="btn-group topright">
-    <a class="btn btn-default" href="/logout">Salir</button>
-  </div>
 
+  <div class="btn-group topright">
+    <a type="button" class="btn btn-default" href="/profile">Perfil</a>
+    <a class="btn btn-default" href="/logout">Salir</a>
+  </div>  
+
+  <div class="btn-group bottomright">
+    <a type="button" class="btn btn-default" href="/addevent">Crear Evento</a>
+  </div>
   {% endif %}
 
   <!--
