@@ -56,7 +56,7 @@
     <img id="regpop" class="img-responsive center invisible" src="/static/img/login_pop.png"/>
       <input onclick="hide()" type="image" id="back" class="interno img-responsive center invisible " height="100" width="100" src="/static/img/backblack.png"/>
 
-    <form id="form" action="/redirectuser/" method="post">
+    <form id="form" action="/login/" method="post">
     {% csrf_token %}
     <div class="form-group invisible center">
         <label class="invisible" id="usName">Usuario: </label>
@@ -75,7 +75,7 @@
   {% else %}
 
   <div class="btn-group topright">
-    <a type="button" class="btn btn-default" href="/profile">Perfil</a>
+    <a type="button" class="btn btn-default" href="/redirectuser">Perfil</a>
     <a class="btn btn-default" href="/logout">Salir</a>
   </div>  
 

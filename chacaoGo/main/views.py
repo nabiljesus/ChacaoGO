@@ -67,7 +67,7 @@ def adduser(request):
     t = loader.get_template('main.html')
     return HttpResponse(t.render({}))
 
-def redirectuser(request):
+def login(request):
     if request.method == 'GET':
         print("No deberias estar aqui, fucker")
         t = '/main'
@@ -101,6 +101,21 @@ def logout(request):
 #######################
 #  Vistas de perfil
 #######################
+
+def redirectuser(request):
+    if not 'type' in request.session:
+        html = '/main'
+    else:
+        if   request.session['type'] == 'Usuario':
+            html = '/userprofile'
+        elif request.session['type'] == 'Alcaldía':
+            html = '/mayorsprofile'
+        elif request.session['type'] == 'Moderador':
+            html = '/userprofile'
+        else:
+            html = '/main'
+
+    return redirect(html)
 
 def userprofile(request):
     t = loader.get_template('userprofile.html')
@@ -149,6 +164,6 @@ def addevent(request):
         return HttpResponse(t.render(c))
     else:
         dictionary = {}
-        print("wtf am i doing here?")
+        print("wtf? what am i doing here?")
 
     return render_to_response('addevent.html', dictionary , context_instance=RequestContext(request))
