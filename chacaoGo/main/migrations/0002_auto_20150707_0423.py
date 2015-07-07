@@ -11,10 +11,4 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.AddField(
-            model_name='user',
-            name='email',
-            field=models.EmailField(default='user@nil.net', unique=True, max_length=254),
-            preserve_default=False,
-        ),
     ]

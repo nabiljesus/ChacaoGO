@@ -1,5 +1,51 @@
 from django.db import models
 
+TYPECHOICES = (
+        ('ZP','Zona Peligrosa'),
+        ('DEL','Delito'),
+        ('AS','Actividad Sospechosa'),
+        ('AC','Accidente'),
+        ('EM','Embotellamiento'),
+        ('PV','Peligro en la Vía'),
+        ('PR','Protesta'),
+        ('AM','Asistencia médica'),
+        ('SA','Servicio de Agua'),
+        ('SE','Servicio Eléctrico'),
+        ('RRS','Recolección de Residuos Solidos'),
+        ('MA','Maratón'),
+        ('ED','Encuentro Deportivo'),
+        ('BA','Bailoterapia'),
+        ('YO','Yoga'),
+        ('CD','Clase Deportiva'),
+        ('CO','Concierto'),
+        ('FE','Feria'),
+        ('OT','Obra de Teatro'),
+        ('EA','Exposición de arte'),
+        ('JD','Jornada de Documentación'),
+        ('VPE','Venta de Producto Escaso'),
+        ('JE','Jornada Electoral'),
+        ('DES','Descuento'),
+        ('DS','Donación de sangre'),
+        ('SM','Solicitud de Medicamento'),
+        ('JV','Jornada Veterinaria'),
+        ('SV','Solicitud de Voluntarios'),
+        ('CA','Calles y avenidas'),
+        ('AC','Aceras'),
+        ('PC','Patrimonio Cultural'),
+        ('TE','Terreno')
+    )
+
+CATEGORIES = (
+    ('SE','Seguridad'),
+    ('VI','Vialidad'),
+    ('DS','Deficiencia de Servicios'),
+    ('DE','Deportes'),
+    ('CU','Cultura'),
+    ('PR','Productos'),
+    ('SP','Servicios Públicos'),
+    ('DM','Deterioro Municipal')
+)    
+
 # Create your models here.
 
 class User(models.Model):
@@ -7,7 +53,7 @@ class User(models.Model):
     NORMAL    = 'Usuario'
     MODERATOR = 'Moderador'
     MAYOR     = 'Alcaldía'
-    TYPECHOICES = (
+    USERTYPES = (
         (NORMAL,   'Usuario'  ),
         (MODERATOR,'Moderador'),
         (MAYOR,    'Alcaldía' )
@@ -17,7 +63,7 @@ class User(models.Model):
     fullname = models.CharField(max_length = 30)
     email    = models.EmailField(unique=True)
     password = models.CharField(max_length = 128) #Para sha
-    userType = models.CharField(max_length = 9,choices=TYPECHOICES,default=NORMAL) 
+    userType = models.CharField(max_length = 9,choices=USERTYPES,default=NORMAL) 
     added    = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -31,29 +77,39 @@ class User(models.Model):
         else:
             return False
 
+    def getUser(username):
+        user = User.objects.filter(username=username)
+        return user[0]
+
     def getType(username):
         user = User.objects.filter(username=username)
         if len(user) == 1:
             return user[0].userType
         else:
             return None
-        
-        
+
+class Category(models.Model):
+    """Clase para categoria de cada evento""" 
+    categoryName = models.CharField(max_length = 2,choices=CATEGORIES)
+    eventType    = models.CharField(max_length = 3,choices=TYPECHOICES)
+
 
 class Event(models.Model):
     """Clase para un evento"""
+    DEFAULT     = 'FE'
+    
+    eventId     = models.AutoField(primary_key=True)
     user        = models.ForeignKey(User)
     name        = models.CharField(max_length = 30)
-    description = models.CharField(max_length = 500)
+    description = models.TextField(default = " ")
     xPosition   = models.FloatField()
     yPosition   = models.FloatField()
     added       = models.DateTimeField(auto_now_add=True)
     start       = models.DateTimeField()
     end         = models.DateTimeField()
-    #Tipo                  String
-    #VIP                   Bool
-    #Atendido por alcaldia Bool
-
+    evenType    = models.CharField(max_length = 3,choices=TYPECHOICES)
+    vip         = models.BooleanField(default = False)
+    seen        = models.BooleanField(default = False)
 
 class Comment(models.Model):
     """Clase para comentarios asociados a un evento"""
