@@ -1,5 +1,34 @@
 from django.db import models
 
+TYPECHOICES = (
+        ('ZP','Zona Peligrosa'),
+        ('DEL','Delito'),
+        ('AS','Actividad Sospechosa'),
+        ('AC','Accidente'),
+        ('EM','Embotellamiento'),
+        ('PV','Peligro en la Vía'),
+        ('PR','Protesta'),
+        ('AM','Asistencia médica'),
+        ('RSE','Reparacion Servicio Electrico'),
+        ('RRS','Recolección de Residuos Solidos'),
+        ('MA','Maratón'),
+        ('BA','Bailoterapia'),
+        ('YO','Yoga'),
+        ('CD','Clase Deportiva'),
+        ('CO','Concierto'),
+        ('FE','Feria'),
+        ('OT','Obra de Teatro'),
+        ('EA','Exposición de arte'),
+        ('JD','Jornada de Documentación'),
+        ('VPE','Venta de Producto Escaso'),
+        ('JE','Jornada Electoral'),
+        ('DES','Descuento'),
+        ('DS','Donación de sangre'),
+        ('SM','Solicitud de Medicamento'),
+        ('JV','Jornada Veterinaria'),
+        ('SV','Solicitud de Voluntarios')
+    )       
+
 # Create your models here.
 class User(models.Model):
     """Clase para usuario"""
@@ -37,39 +66,11 @@ class User(models.Model):
         else:
             return None
         
-        
 
 class Event(models.Model):
     """Clase para un evento"""
     DEFAULT     = 'FE'
-    TYPECHOICES = (
-        ('ZP','Zona Peligrosa'),
-        ('DEL','Delito'),
-        ('AS','Actividad Sospechosa'),
-        ('AC','Accidente'),
-        ('EM','Embotellamiento'),
-        ('PV','Peligro en la Vía'),
-        ('PR','Protesta'),
-        ('AM','Asistencia médica'),
-        ('RSE','Reparacion Servicio Electrico'),
-        ('RRS','Recolección de Residuos Solidos'),
-        ('MA','Maratón'),
-        ('BA','Bailoterapia'),
-        ('YO','Yoga'),
-        ('CD','Clase Deportiva'),
-        ('CO','Concierto'),
-        ('FE','Feria'),
-        ('OT','Obra de Teatro'),
-        ('EA','Exposición de arte'),
-        ('JD','Jornada de Documentación'),
-        ('VPE','Venta de Producto Escaso'),
-        ('JE','Jornada Electoral'),
-        ('DES','Descuento'),
-        ('DS','Donación de sangre'),
-        ('SM','Solicitud de Medicamento'),
-        ('JV','Jornada Veterinaria'),
-        ('SV','Solicitud de Voluntarios')
-    )
+    
 
     eventId     = models.AutoField(primary_key=True)
     user        = models.ForeignKey(User)

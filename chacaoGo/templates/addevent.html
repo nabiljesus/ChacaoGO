@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block contenido %} 
+<body class="darker" background="/static/img/mapa.png">
+  <form id="form" action="/register/" method="post">
+    {% csrf_token %}
+    <!--{{ form }}-->
+    
+    <div class="form-group">
+        <label>Nombre: </label>
+        {{form.name}}
+    </div>
+
+
+    <div class="form-group">
+        <label >Descripcion: </label>
+        {{form.description}}
+    </div>
+
+    <div class="form-group">
+        <label >Tipo: </label>
+        {{form.evType}}
+    </div>
+
+
+    <div class="form-group">
+        <label >Momento de Inicio: </label>
+        {{form.start}}
+    </div>
+
+
+    <div class="form-group">
+        <label >Momento de Fin:</label>
+        {{form.end}}
+    </div>
+
+
+    <button type="submit" class="btn btn-default">Agregar evento</button>
+
+  </form>
+</body>
+{% endblock contenido %}

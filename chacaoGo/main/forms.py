@@ -1,5 +1,5 @@
 from django       import forms
-from main.models  import User,Event
+from main.models  import User,Event,TYPECHOICES
 
 class UserForm(forms.ModelForm):
     """Clase para formulario de usuario"""
@@ -28,16 +28,13 @@ class EventForm(forms.ModelForm):
     """Clase para formulario de usuario"""
     name        = forms.CharField(max_length = 30,required=True)
     description = forms.CharField(max_length = 500,required=True)
-    start       = forms.CharField(max_length = 128,required=True,widget=forms.PasswordInput()) #Para sha
-    end         = forms.EmailField(required=True) 
+    evType      = forms.ChoiceField(required=True,choices=TYPECHOICES)
+    start       = forms.DateTimeField(required=True) 
+    end         = forms.DateTimeField(required=True) 
 
     class Meta:
         model = Event
         fields = ['name','description','start','end','evType']
-
-
-
-
 
 
 

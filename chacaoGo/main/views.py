@@ -129,24 +129,26 @@ def addevent(request):
     elif request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
-            newUser = User(
-                username = form.cleaned_data['username'],
-                fullname = form.cleaned_data['fullname'],
-                email    = form.cleaned_data['email'],
-                password = form.cleaned_data['password'],
-                userType = 'Usuario'
-            )
-            newUser.save()
-            c = Context({'mensaje': 'Gracias por registrarte!'})
-            t = loader.get_template('main.html')
+            # newUser = User(
+            #     username = form.cleaned_data['username'],
+            #     fullname = form.cleaned_data['fullname'],
+            #     email    = form.cleaned_data['email'],
+            #     password = form.cleaned_data['password'],
+            #     userType = 'Usuario'
+            # )
+            print("YIPPIEEE")
+
+            # newUser.save()
+            c = Context({'mensaje': 'Gracias por agregar eso que agregaste jeje!'})
+            t = loader.get_template('main.html') # A donde deberia mandar?
         else:
             print("No pase la validez D:")
             for field in form:
                 print(field.errors)
-            dictionary = {'form': UserForm(), 'mensaje': 'Ha ocurrido un error al momento de registro :('}
+            dictionary = {'form': EventForm(), 'mensaje': 'Ha ocurrido un error al momento de registro :('}
         return HttpResponse(t.render(c))
     else:
         dictionary = {}
         print("wtf am i doing here?")
 
-    return render_to_response('register.html', dictionary , context_instance=RequestContext(request))
+    return render_to_response('addevent.html', dictionary , context_instance=RequestContext(request))
