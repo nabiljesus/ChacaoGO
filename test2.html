@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-   <title>Leaflet Quick Start Guide Example</title>
+   <title>ChacaoGO test</title>
    <meta charset="utf-8" />
 
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-   <link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css" />
+  <link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css" />
 </head>
 <body>
    <div id="map" style="width: 1000px; height: 1000px"></div>
@@ -190,7 +190,8 @@
           'className' : 'custom'
           }
 
-      var myInput = { 'PR' : [ {"X":10.49802,"Y":-426.85181,"nombre":'hi',"descripcion":'hola, soy texto descripcion del marker', "tipo":"ZP", "id": 0, "VIP":true}]};
+      var myInput = { 'PR' : [ {"X":10.49802,"Y":-426.85181,"nombre":'hi',"descripcion":'hola, soy texto descripcion del marker', "tipo":"ZP", "id": 0, "VIP":true}], 
+         'VI' : [ {"X":10.50089,"Y": -426.8573,"nombre":'hi2',"descripcion":'hola, soy texto descripcion del marker', "tipo":"DEL", "id": 0, "VIP":false}] };
 
       for (var key in myInput) {
         //alert(key)
@@ -352,7 +353,7 @@
         }
       }
 
-      //map.on('click', onMapClick);
+      map.on('click', onMapClick);
       map.fitBounds(polip.getBounds()); // max zoom to see whole polygon
       map.setMaxBounds(polip.getBounds()); // restrict map view to polygon bounds
       //map.zoomToExtent(polip.getBounds())
