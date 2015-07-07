@@ -38,3 +38,16 @@
 .interno{
     bottom: 0px;
 }
+
+
+.mapr {
+      margin: auto;
+      width: 144vh;
+      height: 93vh;}
+
+.filt_buttom {
+    position:absolute;  
+    transition: .5s ease;
+    top: 0%;
+    left: 90%;  
+} 

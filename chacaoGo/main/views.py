@@ -38,6 +38,7 @@ def main(request):
 ################################
 
 def register(request):
+    dictionary = {}
     if request.method == 'GET':
         dictionary = {'form': UserForm()}
     elif request.method == 'POST':
@@ -58,7 +59,7 @@ def register(request):
             for field in form:
                 print(field.errors)
             dictionary = {'form': UserForm(), 'mensaje': 'Ha ocurrido un error al momento de registro :('}
-        return HttpResponse(t.render(c))
+        #return HttpResponse(t.render(c))
     else:
         dictionary = {}
         print("wtf am i doing here?")
@@ -147,8 +148,6 @@ def event(request):
     t = loader.get_template('event.html')
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
-<<<<<<< HEAD
-=======
 
 def addevent(request):
     if not 'username' in request.session:
@@ -188,4 +187,3 @@ def addevent(request):
         print("wtf? what am i doing here?")
 
     return render_to_response('addevent.html', dictionary , context_instance=RequestContext(request))
->>>>>>> 8ab41d4160ed93b3c869fc02415f020c4d6cf83b

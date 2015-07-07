@@ -1,36 +1,12 @@
-{% extends "base.html" %}
-
-{% block contenido %} 
-<body bgcolor="black" >
-  <div class="row btn-group">
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_police.png" width="18px"> Seguridad </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_street.png" width="18px"> Vialidad </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_service.png" width="18px"> Det. Servicios </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_sports.png" width="18px"> Deportes </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_culture.png" width="18px"> Cultura </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_product.png" width="18px"> Productos </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_help.png" width="18px"> Solicitudes </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_broken.png" width="18px"> Det. Municipal </div>
-    <div class="filt_buttom">
-       <a class="btn btn-default" href="/register">Filtrar</a>
-    </div>
-  </div>
-
-
-  <!-- ================ MAP START ====================== -->
-  <div id="map" class="mapr"></div></div>
- 
-
-  <script src="http://leafletjs.com/dist/leaflet.js"></script>
-     <script>
+   <script>
 
       var map = L.map('map').setView([10.54562, -426.87142], 13);
 
       L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
          maxZoom: 18,
-         // attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-         //    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-         //    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+            '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+            'Imagery © <a href="http://mapbox.com">Mapbox</a>',
          id: 'examples.map-i875mjb7'
       }).addTo(map);
 
@@ -371,104 +347,3 @@
       map.options.maxZoom = 19;
       map.options.minZoom = 14;
    </script>
-
-  {% if not logged %}
-  <script type="text/javascript">
-    function showUp(){
-      document.getElementById("regpop").style.visibility  = "visible";
-      document.getElementById("back").style.visibility    = "visible";
-      document.getElementById("password").style.visibility= "visible";
-      document.getElementById("passName").style.visibility= "visible";
-      document.getElementById("usName").style.visibility  = "visible";
-      document.getElementById("username").style.visibility= "visible";
-      document.getElementById("connect").style.visibility= "visible";
-      document.getElementById("regpop").margin="0 auto";
-      document.getElementById("back").margin  ="0 auto";
-      document.getElementById("password").margin  ="0 auto";
-      document.getElementById("passName").margin  ="0 auto";
-      document.getElementById("usName").margin  ="0 auto";
-      document.getElementById("username").margin  ="0 auto";
-      document.getElementById("connect").margin  ="0 auto";
-    }
-    function hide(){
-      document.getElementById("regpop").style.visibility  = "hidden";
-      document.getElementById("back").style.visibility    = "hidden";
-      document.getElementById("password").style.visibility= "hidden";
-      document.getElementById("passName").style.visibility= "hidden";
-      document.getElementById("usName").style.visibility  = "hidden";
-      document.getElementById("username").style.visibility= "hidden";
-      document.getElementById("connect").style.visibility= "hidden";
-    }
-  </script>
-
-  <div class="btn-group topright">
-    <button type="button" class="btn btn-default" onclick="showUp()">Conectarme</button>
-    <a class="btn btn-default" href="/register">Registrarme</a>
-  </div>
-
-  <div id="cover">
-    <img id="regpop" class="img-responsive center invisible" src="/static/img/login_pop.png"/>
-      <input onclick="hide()" type="image" id="back" class="interno img-responsive center invisible " height="100" width="100" src="/static/img/backblack.png"/>
-
-    <form id="form" action="/login/" method="post">
-    {% csrf_token %}
-    <div class="form-group invisible center">
-        <label class="invisible" id="usName">Usuario: </label>
-         <input type="text" name="username" id="username">
-  
-    </div>
-    <div class="form-group invisible">
-        <label class="invisible" id="passName">Password: </label>
-         <input type="password" name="password" id="password">
-    </div>
-    <button id="connect" type="submit" class="btn btn-default invisible">Conectarme</button>
-    </form>
-
-  </div>
-
-  {% else %}
-
-  <div class="btn-group topright">
-    <a type="button" class="btn btn-default" href="/redirectuser">Perfil</a>
-    <a class="btn btn-default" href="/logout">Salir</a>
-  </div>  
-
-  <div class="btn-group bottomright">
-    <a type="button" class="btn btn-default" href="/addevent">Crear Evento</a>
-  </div>
-
-   <!-- ================ MAP END ====================== -->
-  {% endif %}
-
-  <!--
-  <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis?v=2.0"></script>
-  <script type="text/javascript">
-    var myWorker = new Worker("/static/js/mapa.js");
-    myWorker.loadMap();
-  </script>
-
-  <table style="width:100%">
-<tr>
-<td>
-<table id="navTable" width="100%">
-<tbody>
-<tr valign="top">
-
-<td align="right" id="help">
-Built using the  <a href="http://resources.esri.com/arcgisserver/apis/javascript/arcgis">ArcGIS JavaScript API</a>
-</td>
-
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</table>
-<div id="map" style="margin:auto;width:97%;border:1px solid #000;"></div>
-  -->
-
-
-
-
-</body>
-{% endblock contenido %}
