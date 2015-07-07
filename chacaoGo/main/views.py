@@ -22,8 +22,8 @@ def main(request):
     print(logged)
 
     dictionary = {'logged':logged }
-    if not logged:
-        dictionary['form'] = LoginForm()
+    # if not logged: #Ya no se usa esta form
+        #dictionary['form'] = LoginForm()
 
     return render_to_response('main.html', 
                               dictionary , 

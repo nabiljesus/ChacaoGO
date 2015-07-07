@@ -1,5 +1,5 @@
 from django       import forms
-from main.models  import User
+from main.models  import User,Event
 
 class UserForm(forms.ModelForm):
     """Clase para formulario de usuario"""
@@ -33,7 +33,7 @@ class EventForm(forms.ModelForm):
 
     class Meta:
         model = Event
-        fields = ['name','description','start','end','type']
+        fields = ['name','description','start','end','evType']
 
 
 
