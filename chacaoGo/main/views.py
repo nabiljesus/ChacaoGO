@@ -43,6 +43,7 @@ def register(request):
         dictionary = {'form': UserForm()}
     elif request.method == 'POST':
         form = UserForm(request.POST)
+        t = loader.get_template('main.html')
         if form.is_valid():
             newUser = User(
                 username = form.cleaned_data['username'],
@@ -53,13 +54,13 @@ def register(request):
             )
             newUser.save()
             c = Context({'mensaje': 'Gracias por registrarte!'})
-            t = loader.get_template('main.html')
+            
         else:
             print("No pase la validez D:")
             for field in form:
                 print(field.errors)
             dictionary = {'form': UserForm(), 'mensaje': 'Ha ocurrido un error al momento de registro :('}
-        #return HttpResponse(t.render(c))
+        return HttpResponse(t.render(c))
     else:
         dictionary = {}
         print("wtf am i doing here?")
@@ -79,12 +80,11 @@ def login(request):
     elif request.method == 'POST':
         #Verificar que el usuario es correcto
 
-        t = '/main'
-
         username = request.POST['username']
         password = request.POST['password']
 
         if User.mayLog(username,password):
+            print("Pase por aqui")
             userType = User.getType(username)
             request.session['username'] = username
             request.session['type']     = userType
@@ -92,10 +92,8 @@ def login(request):
         else:
             #Poner mensaje de error from django.contrib import messages
             pass
-
-        #Agregamos la persona a la sesion
-
-    return redirect(t,foo='bar')
+        
+    return render_to_response('main.html', {} , context_instance=RequestContext(request))
 
 def logout(request):
     del request.session['username']
