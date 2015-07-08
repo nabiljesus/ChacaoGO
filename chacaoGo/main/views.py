@@ -139,6 +139,21 @@ def mayorsprofile(request):
     return HttpResponse(t.render(c))
 
 
+def myevents(request):
+    t = loader.get_template('myevents.html')
+    return HttpResponse(t.render({}))
+
+def mycomments(request):
+    t = loader.get_template('mycomments.html')
+    return HttpResponse(t.render({}))
+
+def favorites(request):
+    t = loader.get_template('favorites.html')
+    return HttpResponse(t.render({}))
+
+def purchases(request):
+    t = loader.get_template('purchases.html')
+    return HttpResponse(t.render({}))
 
 #######################
 #  Vistas para eventos
