@@ -3,15 +3,42 @@
     vertical-align: middle;
     /*position: absolute;*/
 }
-
-.darker {
-    background-image:url("/static/img/mapa.png") ;
-    -webkit-filter:brightness(50%);
-    -moz-filter:brightness(50%);
-    filter: url(#brightness); /* required for FF */
-    filter:brightness(50%);
+.wraptocenter {
+  vertical-align: middle;
+}
+.overlay {
+    display: block;
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 110%;
+    background-color: black;
+    z-index:1001;
+    -moz-opacity: 0.8;
+    opacity:.8;
 }
 
+.modal {
+    background: #00121b;
+    min-height: 54.5em;
+    width: 56.5em;
+    border: 1px solid #111e24;
+    box-shadow: 0 0 1em #000;
+    -moz-box-shadow: 0 0 1em #000;
+    -webkit-box-shadow: 0 0 1em #000;
+    display: none;
+    position: absolute;
+    z-index: 1002;
+}
+.darker {
+  position:fixed;
+  width:100%;
+  height:100%;
+  top:0;
+  left:0;
+  opacity:0.6; 
+}
 .topright{
     position: absolute;
     top: 0;
@@ -59,6 +86,10 @@
       margin: auto;
       width: 100%;
       height: 93vh;}
+.mapr1 {
+      margin: auto;
+      width: 100%;
+      height: 95vh;}
 
 .filt_buttom {
     position:absolute;  
