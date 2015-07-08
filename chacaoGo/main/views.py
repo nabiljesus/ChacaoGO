@@ -179,22 +179,36 @@ def event(request):
 
 def addevent(request):
     if not 'username' in request.session:
+        #Alertar que no esta registrado
         return redirect("/main",foo='bar')
 
     if request.method == 'GET':
-        dictionary = {'form': EventForm()}
-        print(request.GET.get('x',-1))
-        print(request.GET.get('y',-1))
+        dictionary = {  
+                        'form': EventForm(),
+                        'x'   :request.GET.get('x',-1),
+                        'y'   :request.GET.get('y',-1)
+                     }
+
     elif request.method == 'POST':
-        form = EventForm(request.POST)
+
+        #Conversion a floats
+        x = float(request.POST.get('x',-1))
+        y = float(request.POST.get('y',-1))
+
+        #Convertir post en mutable y elimnar variables de mas
+        copy = request.POST.copy()
+        copy.pop('x')
+        copy.pop('y')
+
+        form = EventForm(copy)
         if form.is_valid():
 
             newEvent = Event(
                 user        = User.getUser(request.session['username']),
                 name        = form.cleaned_data['name'],
                 description = form.cleaned_data['description'],
-                xPosition   = 0.00015484, #form.cleaned_data[''],
-                yPosition   = 0.00015484, #form.cleaned_data[''],
+                xPosition   = x, 
+                yPosition   = y, 
                 start       = form.cleaned_data['start'],
                 end         = form.cleaned_data['end'],
                 evenType    = form.cleaned_data['evType']
@@ -203,6 +217,7 @@ def addevent(request):
             newEvent.save()
             c = Context({'mensaje': 'Gracias por agregar eso que agregaste jeje!'})
             t = loader.get_template('main.html') # A donde deberia mandar?
+            return render_to_response('main.html', {} , context_instance=RequestContext(request))
             return redirect("/main")
         else:
             print("No pase la validez D:")
