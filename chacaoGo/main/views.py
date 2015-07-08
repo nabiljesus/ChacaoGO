@@ -1,3 +1,7 @@
+
+from django.shortcuts import render
+
+# Create your views here.
 from django.contrib.sessions.backends.db import SessionStore
 from django.shortcuts import render, render_to_response, RequestContext, redirect
 from django.http      import HttpResponse
@@ -34,6 +38,7 @@ def main(request):
 ################################
 
 def register(request):
+    dictionary = {}
     if request.method == 'GET':
         dictionary = {'form': UserForm()}
     elif request.method == 'POST':
@@ -54,7 +59,7 @@ def register(request):
             for field in form:
                 print(field.errors)
             dictionary = {'form': UserForm(), 'mensaje': 'Ha ocurrido un error al momento de registro :('}
-        return HttpResponse(t.render(c))
+        #return HttpResponse(t.render(c))
     else:
         dictionary = {}
         print("wtf am i doing here?")

@@ -47,6 +47,7 @@ CATEGORIES = (
 )    
 
 # Create your models here.
+
 class User(models.Model):
     """Clase para usuario"""
     NORMAL    = 'Usuario'
