@@ -26,6 +26,7 @@ urlpatterns = [
     url(r'^register/', views.register, name='register'),
     url(r'^logout/', views.logout, name='logout'),
     url(r'^login/', views.login, name='login'),
+    url(r'^finishlog/', views.finishlog, name='finishlog'),
     #url(r'^adduser/', views.adduser, name='adduser'), vista innecesaria elimnada
     url(r'^redirectuser/', views.redirectuser, name='redirectuser'),
     #Paginas de usuario
