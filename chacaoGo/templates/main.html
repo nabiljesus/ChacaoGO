@@ -178,7 +178,7 @@
       function onMapClick(e) {
          popup
             .setLatLng(e.latlng)
-            .setContent("You clicked the map at " + e.latlng.toString())
+            .setContent("<div align=\"right\"><a href=\"/addevent/?x="+e.latlng.lat.toString()+"&y="+e.latlng.lng.toString()+"\">Agregar Evento</a></div></font>")
             //.setContent("No toy en Chacao :(")
             .openOn(map);
       }
