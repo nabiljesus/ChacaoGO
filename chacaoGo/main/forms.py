@@ -28,6 +28,7 @@ class UserForm(forms.ModelForm):
 #Calculo de fecha minima y maxima
 from datetime import datetime, timedelta
 date  = datetime.now()
+date   = date - timedelta(days=1)
 today = date.strftime('%Y-%m-%d')
 date   = date + timedelta(days=2)
 afterTomorrow = date.strftime('%Y-%m-%d')

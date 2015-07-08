@@ -38,3 +38,13 @@
 .interno{
     bottom: 0px;
 }
+
+.preto{
+    background-color: black;
+}
+
+.elefanteinvisible{
+   display: block;
+   border: medium solid transparent;
+   margin: 2px;
+}
