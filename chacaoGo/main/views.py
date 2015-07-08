@@ -5,6 +5,10 @@ from django.template  import Context,loader
 from main.forms       import *
 from main.models      import * 
 
+def kickout(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
 #######################
 #  Vistas principales
 #######################
@@ -15,15 +19,10 @@ def index(request):
     return HttpResponse(t.render(c))
 
 def main(request):
-    #t = loader.get_template('main.html')
-    #c = Context({'foo': 'bar'})
+
     logged = 'username' in request.session
-    print("Esta loggeado?")
-    print(logged)
 
     dictionary = {'logged':logged }
-    # if not logged: #Ya no se usa esta form
-        #dictionary['form'] = LoginForm()
 
     return render_to_response('main.html', 
                               dictionary , 
@@ -62,6 +61,7 @@ def register(request):
 
     return render_to_response('register.html', dictionary , context_instance=RequestContext(request))
 
+# ELIMINAR CREO
 def adduser(request):
     #Este no deberia llevar vista
     t = loader.get_template('main.html')
@@ -83,7 +83,7 @@ def login(request):
             userType = User.getType(username)
             request.session['username'] = username
             request.session['type']     = userType
-            request.session.modified = True
+            request.session.modified    = True
         else:
             #Poner mensaje de error from django.contrib import messages
             pass
@@ -103,26 +103,32 @@ def logout(request):
 #######################
 
 def redirectuser(request):
-    if not 'type' in request.session:
-        html = '/main'
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+    
+    if   request.session['type'] == 'Usuario':
+        html = '/userprofile'
+    elif request.session['type'] == 'Alcaldía':
+        html = '/mayorsprofile'
+    elif request.session['type'] == 'Moderador':
+        html = '/userprofile'
     else:
-        if   request.session['type'] == 'Usuario':
-            html = '/userprofile'
-        elif request.session['type'] == 'Alcaldía':
-            html = '/mayorsprofile'
-        elif request.session['type'] == 'Moderador':
-            html = '/userprofile'
-        else:
-            html = '/main'
+        html = '/main'
 
     return redirect(html)
 
 def userprofile(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
     t = loader.get_template('userprofile.html')
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
 
 def mayorsprofile(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
     t = loader.get_template('mayorsprofile.html')
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
@@ -139,28 +145,37 @@ def event(request):
     return HttpResponse(t.render(c))
 
 def addevent(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
     if request.method == 'GET':
         dictionary = {'form': EventForm()}
     elif request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():
-            # newUser = User(
-            #     username = form.cleaned_data['username'],
-            #     fullname = form.cleaned_data['fullname'],
-            #     email    = form.cleaned_data['email'],
-            #     password = form.cleaned_data['password'],
-            #     userType = 'Usuario'
-            # )
-            print("YIPPIEEE")
 
-            # newUser.save()
+            newEvent = Event(
+                user        = User.getUser(request.session['username']),
+                name        = form.cleaned_data['name'],
+                description = form.cleaned_data['description'],
+                xPosition   = 0.00015484, #form.cleaned_data[''],
+                yPosition   = 0.00015484, #form.cleaned_data[''],
+                start       = form.cleaned_data['start'],
+                end         = form.cleaned_data['end'],
+                evenType    = form.cleaned_data['evType']
+            )
+
+            newEvent.save()
             c = Context({'mensaje': 'Gracias por agregar eso que agregaste jeje!'})
             t = loader.get_template('main.html') # A donde deberia mandar?
+            return redirect("/main")
         else:
             print("No pase la validez D:")
             for field in form:
+                print(field)
                 print(field.errors)
-            dictionary = {'form': EventForm(), 'mensaje': 'Ha ocurrido un error al momento de registro :('}
+            t = loader.get_template('main.html')
+            c = Context({'form': EventForm(), 'mensaje': 'Ha ocurrido un error al momento de crear el evento :('})
         return HttpResponse(t.render(c))
     else:
         dictionary = {}

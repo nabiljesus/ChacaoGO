@@ -52,7 +52,7 @@ class User(models.Model):
     NORMAL    = 'Usuario'
     MODERATOR = 'Moderador'
     MAYOR     = 'Alcaldía'
-    TYPECHOICES = (
+    USERTYPES = (
         (NORMAL,   'Usuario'  ),
         (MODERATOR,'Moderador'),
         (MAYOR,    'Alcaldía' )
@@ -62,7 +62,7 @@ class User(models.Model):
     fullname = models.CharField(max_length = 30)
     email    = models.EmailField(unique=True)
     password = models.CharField(max_length = 128) #Para sha
-    userType = models.CharField(max_length = 9,choices=TYPECHOICES,default=NORMAL) 
+    userType = models.CharField(max_length = 9,choices=USERTYPES,default=NORMAL) 
     added    = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
@@ -75,6 +75,10 @@ class User(models.Model):
             return user[0].password == password
         else:
             return False
+
+    def getUser(username):
+        user = User.objects.filter(username=username)
+        return user[0]
 
     def getType(username):
         user = User.objects.filter(username=username)
@@ -96,13 +100,13 @@ class Event(models.Model):
     eventId     = models.AutoField(primary_key=True)
     user        = models.ForeignKey(User)
     name        = models.CharField(max_length = 30)
-    description = models.CharField(max_length = 500)
+    description = models.TextField(default = " ")
     xPosition   = models.FloatField()
     yPosition   = models.FloatField()
     added       = models.DateTimeField(auto_now_add=True)
     start       = models.DateTimeField()
     end         = models.DateTimeField()
-    evenType    = models.ForeignKey(Category)
+    evenType    = models.CharField(max_length = 3,choices=TYPECHOICES)
     vip         = models.BooleanField(default = False)
     seen        = models.BooleanField(default = False)
 

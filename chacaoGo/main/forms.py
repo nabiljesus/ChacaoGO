@@ -1,5 +1,8 @@
 from django       import forms
+from django.forms import ModelForm, DateInput
+from django.forms.widgets import TextInput
 from main.models  import User,Event,TYPECHOICES
+import datetime
 
 class UserForm(forms.ModelForm):
     """Clase para formulario de usuario"""
@@ -22,19 +25,26 @@ class UserForm(forms.ModelForm):
         model = User
         fields = ['username','fullname','password','password2','email']
 
-
-        
+#Calculo de fecha minima y maxima
+from datetime import datetime, timedelta
+date  = datetime.now()
+today = date.strftime('%Y-%m-%d')
+date   = date + timedelta(days=2)
+afterTomorrow = date.strftime('%Y-%m-%d')
+    
 class EventForm(forms.ModelForm):
     """Clase para formulario de usuario"""
-    name        = forms.CharField(max_length = 30,required=True)
-    description = forms.CharField(max_length = 500,required=True)
+    name        = forms.CharField(max_length = 30,required=True,widget=forms.TextInput(attrs={'class':'form-control'}))
+    description = forms.CharField(max_length = 500,required=True,widget=forms.Textarea(attrs={'class':'form-control','rows':'5','cols':'50'}))
     evType      = forms.ChoiceField(required=True,choices=TYPECHOICES)
-    start       = forms.DateTimeField(required=True) 
-    end         = forms.DateTimeField(required=True) 
+    start       = forms.DateField(widget=forms.TextInput(attrs={'type':'date','min':today,'max':afterTomorrow}))
+    end         = forms.DateField(widget=forms.TextInput(attrs={'type':'date','min':today,'max':afterTomorrow}))
 
     class Meta:
         model = Event
-        fields = ['name','description','start','end','evType']
+        fields = ['name','description','evType']
+
+
 
 
 
