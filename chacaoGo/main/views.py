@@ -133,6 +133,14 @@ def userprofile(request):
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
 
+def checkprofile(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
+    t = loader.get_template('checkprofile.html')
+    c = Context({'foo': 'bar'})         
+    return HttpResponse(t.render(c))
+
 def mayorsprofile(request):
     if not 'username' in request.session:
         return redirect("/main",foo='bar')
@@ -175,6 +183,8 @@ def addevent(request):
 
     if request.method == 'GET':
         dictionary = {'form': EventForm()}
+        print(request.GET.get('x',-1))
+        print(request.GET.get('y',-1))
     elif request.method == 'POST':
         form = EventForm(request.POST)
         if form.is_valid():

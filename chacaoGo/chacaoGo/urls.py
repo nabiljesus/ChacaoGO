@@ -32,6 +32,7 @@ urlpatterns = [
     #Paginas de usuario
     url(r'^userprofile/', views.userprofile, name='userprofile'),
     url(r'^mayorsprofile/', views.mayorsprofile, name='mayorsprofile'),
+    url(r'^checkprofile/', views.checkprofile, name='checkprofile'),
     url(r'^myevents/', views.myevents, name='myevents'),
     url(r'^mycomments/', views.mycomments, name='mycomments'),
     url(r'^purchases/', views.purchases, name='purchases'),
