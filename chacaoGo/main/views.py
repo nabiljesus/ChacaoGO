@@ -93,7 +93,12 @@ def login(request):
             #Poner mensaje de error from django.contrib import messages
             pass
         
-    return render_to_response('main.html', {} , context_instance=RequestContext(request))
+    return render_to_response('finishlog.html', {} , context_instance=RequestContext(request))
+
+def finishlog(request):
+    t = loader.get_template('finishlog.html')
+    return HttpResponse(t.render(c))
+
 
 def logout(request):
     del request.session['username']
