@@ -145,6 +145,7 @@ def mayorsprofile(request):
 #######################
 
 def event(request):
+    eventId = int(request.GET.get('id',-1))
     t = loader.get_template('event.html')
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))

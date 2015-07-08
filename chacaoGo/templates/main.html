@@ -357,7 +357,7 @@
             var tempmark = L.marker([ACT[i]["X"], ACT[i]["Y"]], {icon: iconact}).addTo(map);
             var popup = L.popup()
              .setLatLng([ACT[i]["X"], ACT[i]["Y"]])
-             .setContent("<b><h3>"+subcate+"</h3></b><hr>"+ACT[i]["descripcion"]+"<br><br><font color=\"cyan\"><div align=\"right\"><a href=\"events/"+ACT[i]["id"]+"\">+ detalles</a></div></font>")
+             .setContent("<b><h3>"+subcate+"</h3></b><hr>"+ACT[i]["descripcion"]+"<br><br><font color=\"cyan\"><div align=\"right\"><a href=\"/event/?id="+ACT[i]["id"]+"\">+ detalles</a></div></font>")
              //.openOn(map)
             tempmark.bindPopup(popup,customOptions);
          }
@@ -373,6 +373,7 @@
       map.options.maxZoom = 19;
       map.options.minZoom = 14;
    </script>
+   <!-- ================ MAP END ====================== -->
 
   {% if not logged %}
   <script type="text/javascript">
@@ -439,37 +440,7 @@
     <a type="button" class="btn btn-default" href="/addevent">Crear Evento</a>
   </div>
 
-   <!-- ================ MAP END ====================== -->
   {% endif %}
-
-  <!--
-  <script type="text/javascript" src="http://serverapi.arcgisonline.com/jsapi/arcgis?v=2.0"></script>
-  <script type="text/javascript">
-    var myWorker = new Worker("/static/js/mapa.js");
-    myWorker.loadMap();
-  </script>
-
-  <table style="width:100%">
-<tr>
-<td>
-<table id="navTable" width="100%">
-<tbody>
-<tr valign="top">
-
-<td align="right" id="help">
-Built using the  <a href="http://resources.esri.com/arcgisserver/apis/javascript/arcgis">ArcGIS JavaScript API</a>
-</td>
-
-</tr>
-</tbody>
-</table>
-</td>
-</tr>
-</table>
-<div id="map" style="margin:auto;width:97%;border:1px solid #000;"></div>
-  -->
-
-
 
 
 </body>

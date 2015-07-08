@@ -5,7 +5,11 @@
 }
 
 .darker {
-  
+    background-image:url("/static/img/mapa.png") ;
+    -webkit-filter:brightness(50%);
+    -moz-filter:brightness(50%);
+    filter: url(#brightness); /* required for FF */
+    filter:brightness(50%);
 }
 
 .topright{
