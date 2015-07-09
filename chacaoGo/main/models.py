@@ -35,7 +35,7 @@ TYPECHOICES = (
         ('JV','Jornada Veterinaria'),
         ('SV','Solicitud de Voluntarios'),
         ('CA','Calles y avenidas'),
-        ('AC','Aceras'),
+        ('ACE','Aceras'),
         ('PC','Patrimonio Cultural'),
         ('TE','Terreno')
     )
