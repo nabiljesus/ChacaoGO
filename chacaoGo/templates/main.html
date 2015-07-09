@@ -219,7 +219,7 @@ body {
       </div>
       <!-- si se quitan las siguientes 3 lineas, funciona el de registrar-->
       <div class="filt_buttom topright" style="top : 10px; left:  45%;">
-         <a class="btn  btn-default" href="/register" >Filtrar</a>
+         <button class="btn  btn-default" href="/register" >Filtrar</button>
       </div>
  </div>
 <div class="container">
@@ -228,6 +228,7 @@ body {
   <button id="modal_trigger" href="#modal" class="btn topright" >Conectarse o Registrarse</button>
 
   <div id="modal" class="popupContainer" style="display:none;">
+
     <header class="popupHeader">
       <span class="header_title">Conectarse a ChacaoGO</span>
       <span class="modal_close"><i class="fa fa-times"></i></span>
@@ -244,7 +245,7 @@ body {
 
       <!-- Username & Password Login form -->
       <div class="user_login">
-        <form>
+        <form id="form" action="/login/" method="post">
           <label>Nombre de Usuario</label>
           <input type="text" />
           <br />
@@ -264,7 +265,7 @@ body {
 
       <!-- Register Form -->
       <div class="user_register">
-        <form>
+        <form >
           <label>Full Name</label>
           <input  name="username" id="username" type="text" />
           <br />
