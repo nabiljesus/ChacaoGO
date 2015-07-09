@@ -1,6 +1,7 @@
 .center {
     margin: 0 auto;
     vertical-align: middle;
+    z-index: 4;
     /*position: absolute;*/
 }
 .wraptocenter {
@@ -41,8 +42,13 @@
 }
 .topright{
     position: absolute;
-    top: 0;
+    top: 0%;
     right: 0px;
+}
+.topleft{
+    position: absolute;
+    top: 0%;
+    left: 0px;
 }
 
 
@@ -54,6 +60,14 @@
 
 .invisible{
     visibility: hidden;
+    display: none;
+    z-index: 4;
+}
+
+
+.invisible1{
+    visibility: hidden;
+    z-index: 4;
 }
 
 .con { 
@@ -85,7 +99,10 @@
 .mapr {
       margin: auto;
       width: 100%;
-      height: 93vh;}
+      height: 100vh;
+      top: 50%;
+      z-index: 1;
+  }
 .mapr1 {
       margin: auto;
       width: 100%;
@@ -98,3 +115,56 @@
     left: 89%;  
 } 
 
+/* Filtro */
+
+.dropdown-check-list {
+  display: inline-block;
+  background: #FF9900;
+  color: #FFFFFF;
+  text-shadow:  0 0 0px #FF0000, 0 0 2px #000000;
+  vertical-align:top;
+  z-index: 1; 
+
+}
+.dropdown-check-list .anchor {
+  position: relative;
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px 28px 5px 10px;
+  border: 1px solid #ccc;
+}
+.dropdown-check-list .anchor:after {
+  position: absolute;
+  content: "";
+  border-left: 2px solid black;
+  border-top: 2px solid black;
+  padding: 5px;
+  right: 10px;
+  top: 20%;
+  -moz-transform: rotate(-135deg);
+  -ms-transform: rotate(-135deg);
+  -o-transform: rotate(-135deg);
+  -webkit-transform: rotate(-135deg);
+  transform: rotate(-135deg);
+}
+.dropdown-check-list .anchor:active:after {
+  right: 8px;
+  top: 21%;
+}
+.dropdown-check-list ul.items {
+  padding: 2px;
+  display: none;
+  margin: 0;
+  border: 0px solid #ccc;
+  border-top: none;
+}
+.dropdown-check-list ul.items li {
+  list-style: none;
+}
+.dropdown-check-list.visible .anchor {
+  color: #FF6600;
+}
+.dropdown-check-list.visible .items {
+  display: block;
+}
+/* end filtro */

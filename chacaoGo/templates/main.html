@@ -1,8 +1,749 @@
 {% extends "base.html" %}
 
 {% block contenido %} 
-<body bgcolor="black" >
-  <div class="row btn-group">
+<!-- Style para dropdown -->
+
+
+<body bgcolor="#FF9900" >
+<style type="text/css">
+  
+body {
+  background: #FF9900;
+}
+</style>
+
+<div class="container">
+  <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="/static/js/jquery.leanModal.min.js"></script>
+  <button id="modal_trigger" href="#modal" class="btn topright" >Conectarse o Registrarse</button>
+
+  <div id="modal" class="popupContainer" style="display:none;">
+    <header class="popupHeader">
+      <span class="header_title">Conectarse a ChacaoGO</span>
+      <span class="modal_close"><i class="fa fa-times"></i></span>
+    </header>
+    
+    <section class="popupBody">
+      <!-- Social Login -->
+      <div class="social_login">
+        <div class="action_btns">
+          <div class="one_half"><a href="#" id="login_form" class="btn">Iniciar Sesion</a></div>
+          <div class="one_half last"><a href="/register" class="btn">Registrarse</a></div>
+        </div>
+      </div>
+
+      <!-- Username & Password Login form -->
+      <div class="user_login">
+        <form>
+          <label>Nombre de Usuario</label>
+          <input type="text" />
+          <br />
+
+          <label>Contraseña</label>
+          <input  type="password" name="password" />
+          <br />
+
+          <div class="action_btns">
+            <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Voler</a></div>
+            <div class="one_half last"><button id="connect" type="submit" class="btn btn_red">Iniciar Sesion</button></div>
+          </div>
+        </form>
+
+        <a href="#" class="forgot_password">Contraseña Olivdada?</a>
+      </div>
+
+      <!-- Register Form -->
+      <div class="user_register">
+        <form>
+          <label>Full Name</label>
+          <input  name="username" id="username" type="text" />
+          <br />
+
+          <label>Email Address</label>
+          <input type="email" />
+          <br />
+
+          <label>Password</label>
+          <input type="password" />
+          <br />
+
+          <div class="checkbox">
+            <input id="send_updates" type="checkbox" />
+            <label for="send_updates">Send me occasional email updates</label>
+          </div>
+
+          <div class="action_btns">
+            <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
+            <div class="one_half last"><a href="#" class="btn btn_red">Register</a></div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+
+  <script type="text/javascript">
+    $("#modal_trigger").leanModal({top : 200, overlay : 0.6, closeButton: ".modal_close" });
+
+    $(function(){
+      // Calling Login Form
+      $("#login_form").click(function(){
+        $(".social_login").hide();
+        $(".user_login").show();
+        return false;
+      });
+
+      // Calling Register Form
+      $("#register_form").click(function(){
+        $(".social_login").hide();
+        $(".user_register").show();
+        $(".header_title").text('Register');
+        return false;
+      });
+
+      // Going back to Social Forms
+      $(".back_btn").click(function(){
+        $(".user_login").hide();
+        $(".user_register").hide();
+        $(".social_login").show();
+        $(".header_title").text('Login');
+        return false;
+      });
+
+    })
+  </script>
+</div>
+
+
+ <div class="toplef" style="z-index: 2;">
+    <div id="list1" class="dropdown-check-list" tabindex="100" >
+        <span class="anchor"><img src="/static/img/icon_police.png" width="18px"><b> Seguridad </b></span>
+        <ul class="items">
+            <li><input type="checkbox" />Delitos</li>
+            <li><input type="checkbox" />Zona peligrosa</li>
+            <li><input type="checkbox" />Actividad Sospechosa</li>
+        </ul>
+
+        <script type="text/javascript" >
+
+            var checkList = document.getElementById('list1');
+            checkList.getElementsByClassName('anchor')[0].onclick = function (evt) {
+                if (checkList.classList.contains('visible'))
+                    checkList.classList.remove('visible');
+                else
+                    checkList.classList.add('visible');
+            }
+
+            checkList.onblur = function(evt) {
+                checkList.classList.remove('visible');
+            }
+        </script>
+    </div>
+
+    <div id="list2" class="dropdown-check-list" tabindex="100">
+        <span class="anchor"><img src="/static/img/icon_street.png" width="18px"> <b>Vialidad </b></span>
+        <ul class="items">
+            <li><input type="checkbox" />Accidente de tráfico</li>
+            <li><input type="checkbox" />Embotellamiento</li>
+            <li><input type="checkbox" />Peligro en la vía</li>
+            <li><input type="checkbox" />Protesta</li>
+        </ul>
+        <script type="text/javascript">
+
+            var checkList2 = document.getElementById('list2');
+            checkList2.getElementsByClassName('anchor')[0].onclick = function (evt) {
+                if (checkList2.classList.contains('visible'))
+                    checkList2.classList.remove('visible');
+                else
+                    checkList2.classList.add('visible');
+            }
+
+            checkList2.onblur = function(evt) {
+                checkList2.classList.remove('visible');
+            }
+        </script>
+
+    </div>
+    <div id="list3" class="dropdown-check-list" tabindex="100">
+        <span class="anchor"><img src="/static/img/icon_service.png" width="18px"> <b>Def. servicios  </b></span>
+        <ul class="items">
+            <li><input type="checkbox" />Servicio del agua</li>
+            <li><input type="checkbox" />Servicio eléctrico</li>
+            <li><input type="checkbox" />Asistencia médica</li>
+            <li><input type="checkbox" />Recolección de residuos sólidos</li>
+            <li><input type="checkbox" />Educación</li>
+
+        </ul>
+        <script type="text/javascript">
+
+            var checkList3 = document.getElementById('list3');
+            checkList3.getElementsByClassName('anchor')[0].onclick = function (evt) {
+                if (checkList3.classList.contains('visible'))
+                    checkList3.classList.remove('visible');
+                else
+                    checkList3.classList.add('visible');
+            }
+
+            checkList3.onblur = function(evt) {
+                checkList3.classList.remove('visible');
+            }
+        </script>
+
+    </div>
+    <div id="list4" class="dropdown-check-list" tabindex="100">
+        <span class="anchor"><img src="/static/img/icon_sports.png" width="18px">  <b>Deportes </b></span>
+        <ul class="items">
+            <li><input type="checkbox" />Servicio del agua</li>
+            <li><input type="checkbox" />Servicio eléctrico</li>
+            <li><input type="checkbox" />Asistencia médica</li>
+            <li><input type="checkbox" />Recolección de residuos sólidos</li>
+            <li><input type="checkbox" />Educación</li>
+
+        </ul>
+        <script type="text/javascript">
+
+            var checklist4 = document.getElementById('list4');
+            checklist4.getElementsByClassName('anchor')[0].onclick = function (evt) {
+                if (checklist4.classList.contains('visible'))
+                    checklist4.classList.remove('visible');
+                else
+                    checklist4.classList.add('visible');
+            }
+
+            checklist4.onblur = function(evt) {
+                checklist4.classList.remove('visible');
+            }
+        </script>
+      </div>
+    </div>
+    <div id="list5" class="dropdown-check-list" tabindex="100">
+        <span class="anchor"><img src="/static/img/icon_culture.png" width="18px">  <b>Cultura </b></span>
+        <ul class="items">
+            <li><input type="checkbox" />Servicio del agua</li>
+            <li><input type="checkbox" />Servicio eléctrico</li>
+            <li><input type="checkbox" />Asistencia médica</li>
+            <li><input type="checkbox" />Recolección de residuos sólidos</li>
+            <li><input type="checkbox" />Educación</li>
+
+        </ul>
+        <script type="text/javascript">
+
+            var checklist5 = document.getElementById('list5');
+            checklist5.getElementsByClassName('anchor')[0].onclick = function (evt) {
+                if (checklist5.classList.contains('visible'))
+                    checklist5.classList.remove('visible');
+                else
+                    checklist5.classList.add('visible');
+            }
+
+            checklist5.onblur = function(evt) {
+                checklist5.classList.remove('visible');
+            }
+        </script>
+      </div>
+      </div>
+    <div id="list6" class="dropdown-check-list" tabindex="100">
+        <span class="anchor"><img src="/static/img/icon_product.png" width="18px"> <b> Productos </b></span>
+        <ul class="items">
+            <li><input type="checkbox" />Servicio del agua</li>
+            <li><input type="checkbox" />Servicio eléctrico</li>
+            <li><input type="checkbox" />Asistencia médica</li>
+            <li><input type="checkbox" />Recolección de residuos sólidos</li>
+            <li><input type="checkbox" />Educación</li>
+
+        </ul>
+        <script type="text/javascript">
+
+            var checklist6 = document.getElementById('list6');
+            checklist6.getElementsByClassName('anchor')[0].onclick = function (evt) {
+                if (checklist6.classList.contains('visible'))
+                    checklist6.classList.remove('visible');
+                else
+                    checklist6.classList.add('visible');
+            }
+
+            checklist6.onblur = function(evt) {
+                checklist6.classList.remove('visible');
+            }
+        </script>
+      </div>
+      </div>
+    <div id="list7" class="dropdown-check-list" tabindex="100">
+        <span class="anchor"><img src="/static/img/icon_help.png" width="18px"> <b>Solicitudes  </b></span>
+        <ul class="items">
+            <li><input type="checkbox" />Servicio del agua</li>
+            <li><input type="checkbox" />Servicio eléctrico</li>
+            <li><input type="checkbox" />Asistencia médica</li>
+            <li><input type="checkbox" />Recolección de residuos sólidos</li>
+            <li><input type="checkbox" />Educación</li>
+
+        </ul>
+        <script type="text/javascript">
+
+            var checklist7 = document.getElementById('list7');
+            checklist7.getElementsByClassName('anchor')[0].onclick = function (evt) {
+                if (checklist7.classList.contains('visible'))
+                    checklist7.classList.remove('visible');
+                else
+                    checklist7.classList.add('visible');
+            }
+
+            checklist7.onblur = function(evt) {
+                checklist7.classList.remove('visible');
+            }
+        </script>
+      </div>
+      </div>
+    <div id="list8" class="dropdown-check-list" tabindex="100">
+        <span class="anchor"><img src="/static/img/icon_broken.png" width="18px"> <b>Det. Municipal  </b></span>
+        <ul class="items">
+            <li><input type="checkbox" />Servicio del agua</li>
+            <li><input type="checkbox" />Servicio eléctrico</li>
+            <li><input type="checkbox" />Asistencia médica</li>
+            <li><input type="checkbox" />Recolección de residuos sólidos</li>
+            <li><input type="checkbox" />Educación</li>
+
+        </ul>
+        <script type="text/javascript">
+
+            var checklist8 = document.getElementById('list8');
+            checklist8.getElementsByClassName('anchor')[0].onclick = function (evt) {
+                if (checklist8.classList.contains('visible'))
+                    checklist8.classList.remove('visible');
+                else
+                    checklist8.classList.add('visible');
+            }
+
+            checklist8.onblur = function(evt) {
+                checklist8.classList.remove('visible');
+            }
+        </script>
+      </div>
+      </div>
+      <!-- si se quitan las siguientes 3 lineas, funciona el de registrar-->
+      <div class="filt_buttom topright" style="top : 10px; left:  45%;">
+         <button class="btn  btn-default" href="/register" >Filtrar</button>
+      </div>
+ </div>
+
+  <!-- ================ MAP START ====================== -->
+
+<div id="map" class="mapr"></div>
+ 
+  <script src='/static/js/mapbox.js' style="z-index: 1;"></script>
+       <script>
+        L.mapbox.accessToken = 'pk.eyJ1IjoibmFiaWxqZXN1cyIsImEiOiI2ZmNhMjk5ZjE4MWFlOWU5NzU0MDg5NDI4OGQ5MDk3NyJ9.q4rRtkf-6VTh6_-H1hxhKw';
+
+        var mapboxTiles = L.tileLayer('https://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken, {
+           maxZoom: 19,
+           minZoom: 14
+           // attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+           //    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+           //    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+        });
+
+        var map = L.map('map')
+            .addLayer(mapboxTiles)
+            .setView([10.54562, -426.87142], 15);
+
+        var mark_police = L.icon({
+         iconUrl: '/static/img/pin_police.png',
+         shadowUrl: '/static/img/pin_shadow.png',
+
+         iconSize:     [45, 45], // size of the icon
+         shadowSize:   [45, 45], // size of the shadow
+         iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
+         shadowAnchor: [10, 45],  // the same for the shadow
+         popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var mark_street = L.icon({
+         iconUrl: '/static/img/pin_street.png',
+         shadowUrl: '/static/img/pin_shadow.png',
+
+         iconSize:     [45, 45], // size of the icon
+         shadowSize:   [45, 45], // size of the shadow
+         iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
+         shadowAnchor: [10, 45],  // the same for the shadow
+         popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var mark_service = L.icon({
+         iconUrl: '/static/img/pin_service.png',
+         shadowUrl: '/static/img/pin_shadow.png',
+
+         iconSize:     [45, 45], // size of the icon
+         shadowSize:   [45, 45], // size of the shadow
+         iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
+         shadowAnchor: [10, 45],  // the same for the shadow
+         popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var mark_sports = L.icon({
+         iconUrl: '/static/img/pin_sports.png',
+         shadowUrl: '/static/img/pin_shadow.png',
+
+         iconSize:     [45, 45], // size of the icon
+         shadowSize:   [45, 45], // size of the shadow
+         iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
+         shadowAnchor: [10, 45],  // the same for the shadow
+         popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var mark_culture = L.icon({
+         iconUrl: '/static/img/pin_culture.png',
+         shadowUrl: '/static/img/pin_shadow.png',
+
+         iconSize:     [45, 45], // size of the icon
+         shadowSize:   [45, 45], // size of the shadow
+         iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
+         shadowAnchor: [10, 45],  // the same for the shadow
+         popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var mark_product = L.icon({
+         iconUrl: '/static/img/pin_product.png',
+         shadowUrl: '/static/img/pin_shadow.png',
+
+         iconSize:     [45, 45], // size of the icon
+         shadowSize:   [45, 45], // size of the shadow
+         iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
+         shadowAnchor: [10, 45],  // the same for the shadow
+         popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var mark_help = L.icon({
+         iconUrl: '/static/img/pin_help.png',
+         shadowUrl: '/static/img/pin_shadow.png',
+
+         iconSize:     [45, 45], // size of the icon
+         shadowSize:   [45, 45], // size of the shadow
+         iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
+         shadowAnchor: [10, 45],  // the same for the shadow
+         popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
+        });
+
+
+        var mark_broken = L.icon({
+         iconUrl: '/static/img/pin_broken.png',
+         shadowUrl: '/static/img/pin_shadow.png',
+
+         iconSize:     [45, 45], // size of the icon
+         shadowSize:   [45, 45], // size of the shadow
+         iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
+         shadowAnchor: [10, 45],  // the same for the shadow
+         popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
+        });
+
+        var popup = L.popup();
+
+        function onMapClick2(e) {
+           popup
+              .setLatLng(e.latlng)
+              .setContent("Estoy en chacao :D en: " + e.latlng.toString())
+              //.setContent("No toy en Chacao :(")
+              .openOn(map);
+        }
+
+        var polip = L.polygon([
+           [10.54562, -426.87142],
+           [10.55028, -426.86803],
+           [10.55091, -426.86635],
+           [10.54899, -426.86221],
+           [10.54669, -426.85957],
+           [10.54383, -426.85736],
+           [10.54134, -426.85266],
+           [10.53853, -426.8455],
+           [10.53933, -426.84438],
+           [10.53946, -426.83846],
+           [10.53845, -426.83507],
+           [10.5338, -426.83876],
+           [10.5284, -426.83709],
+           [10.51161, -426.83807],
+           [10.50465, -426.83674],
+           [10.50018, -426.84048],
+           [10.49646, -426.84378],
+           [10.48887, -426.84344],
+           [10.48368, -426.84382],
+           [10.4838, -426.8497],
+           [10.48254, -426.85219],
+           [10.48503, -426.86133],
+           [10.48769, -426.86914],
+           [10.49355, -426.87108],
+           [10.50461, -426.86648],
+           [10.52018, -426.86344],
+           [10.53731, -426.87155],
+           [10.54558, -426.87163]
+        ], {
+           stroke: true,
+           weight: 1,
+           color: 'Gray',
+           fillOpacity: 0,
+           Opacity: 1
+        })
+        
+        var smallPoly=polip
+
+        var bigPoly = L.polygon(
+        [[[12.345368032463298 ,  -429.774169921875],
+        [12.21118019150401  , -424.1876220703125],
+        [8.439771599521729  , -424.2974853515625],
+        [8.667918002363121  , -429.71923828124994]],
+        [[10.54562, -426.87142],
+           [10.55028, -426.86803],
+           [10.55091, -426.86635],
+           [10.54899, -426.86221],
+           [10.54669, -426.85957],
+           [10.54383, -426.85736],
+           [10.54134, -426.85266],
+           [10.53853, -426.8455],
+           [10.53933, -426.84438],
+           [10.53946, -426.83846],
+           [10.53845, -426.83507],
+           [10.5338, -426.83876],
+           [10.5284, -426.83709],
+           [10.51161, -426.83807],
+           [10.50465, -426.83674],
+           [10.50018, -426.84048],
+           [10.49646, -426.84378],
+           [10.48887, -426.84344],
+           [10.48368, -426.84382],
+           [10.4838, -426.8497],
+           [10.48254, -426.85219],
+           [10.48503, -426.86133],
+           [10.48769, -426.86914],
+           [10.49355, -426.87108],
+           [10.50461, -426.86648],
+           [10.52018, -426.86344],
+           [10.53731, -426.87155],
+           [10.54558, -426.87163]]]
+        , {
+           stroke: true,
+           weight: 0,
+           color: 'Gray ',
+           fillOpacity: 0.2,
+           Opacity: 1
+        })
+
+        bigPoly.addTo(map)
+
+        polip.addTo(map)
+
+
+        var popup2 = L.popup()
+                   .setContent("<div aling=\"middle\">No es posible agregar un evento o suceso en esta área.</div>")
+                   //.openOn(map)
+        var customOptions2 =
+            {
+            'maxWidth': '40',
+            'className' : 'custom'
+            }       
+
+        bigPoly.bindPopup(popup2,customOptions2);
+
+        function onMapClick(e) {
+           popup
+              .setLatLng(e.latlng)
+              .setContent("<div align=\"right\"><a href=\"/addevent/?x="+e.latlng.lat.toString()+"&y="+e.latlng.lng.toString()+"\">Agregar Evento</a></div></font>")
+              //.setContent("No toy en Chacao :(")
+              .openOn(map);
+        }
+
+        //polip.addTo(map).bindPopup("Estoy en chacao :D en: " );
+
+
+        //Markers
+        // L.marker([10.49802, -426.85181], {icon: mark_police}).addTo(map);
+        // L.marker([10.49794, -426.85756], {icon: mark_street}).addTo(map);
+        // L.marker([10.49769, -426.86502], {icon: mark_service}).addTo(map);
+        // L.marker([10.49304, -426.86013], {icon: mark_sports}).addTo(map);
+        // L.marker([10.53144, -426.84709], {icon: mark_culture}).addTo(map);
+        // L.marker([10.51541, -426.8397], {icon: mark_product}).addTo(map);
+        // L.marker([10.51853, -426.86245], {icon: mark_help}).addTo(map);
+        // L.marker([10.48393, -426.84571], {icon: mark_broken}).addTo(map);
+
+        var customOptions =
+            {
+            'maxWidth': '150',
+            'className' : 'custom'
+            }
+
+        var myInput = { 'PR' : [ {"X":10.49802,"Y":-426.85181,"nombre":'hi',"descripcion":'hola, soy texto descripcion del marker', "tipo":"ZP", "id": 0, "VIP":true}], 
+           'VI' : [ {"X":10.50089,"Y": -426.8573,"nombre":'hi2',"descripcion":'hola, soy texto descripcion del marker', "tipo":"DEL", "id": 0, "VIP":false}] };
+
+        for (var key in myInput) {
+          //alert(key)
+          if (myInput.hasOwnProperty(key)) {
+
+           var ACT = myInput[key];
+           var auxl =  ACT.length;
+           //var iconact = mark_product
+
+           switch(key) {
+                  case "SE":
+                      var iconact = mark_police;
+                      break;
+                  case "VI":
+                      var iconact = mark_street;
+                      break;
+                  case "DS":
+                      var iconact = mark_service;
+                      break;
+                  case "DE":
+                      var iconact = mark_sports;
+                      break;
+                  case "CU":
+                      var iconact = mark_culture;
+                      break;
+                  case "PR":
+                      var iconact = mark_product;
+                      break;
+                  case "SP":
+                      var iconact = mark_help;
+                      break;
+                  case "DM":
+                      var iconact = mark_broken;
+                      break;
+                  default:
+                      var iconact = mark_police;
+                      break;
+           }
+
+
+           for (var i = 0; i<auxl; i++){
+               var typei = ACT[i]["tipo"]
+               //alert(typei)
+               switch(typei){
+                      case "ZP": 
+                         var subcate="Zona Peligrosa"; 
+                         break;
+                      case "DEL": 
+                         var subcate="Delito"; 
+                         break;
+                      case "AS": 
+                         var subcate="Actividad Sospechosa"; 
+                         break;
+                      case "AC": 
+                         var subcate="Accidente"; 
+                         break;
+                      case "EM": 
+                         var subcate="Embotellamiento"; 
+                         break;
+                      case "PV": 
+                         var subcate="Peligro en la Vía"; 
+                         break;
+                      case "PR": 
+                         var subcate="Protesta"; 
+                         break;
+                      case "AM": 
+                         var subcate="Asistencia médica"; 
+                         break;
+                      case "SA": 
+                         var subcate="Servicio de Agua"; 
+                         break;
+                      case "SE": 
+                         var subcate="Servicio Eléctrico"; 
+                         break;
+                      case "RRS": 
+                         var subcate="Recolección de Residuos Solidos"; 
+                         break;
+                      case "MA": 
+                         var subcate="Maratón"; 
+                         break;
+                      case "ED": 
+                         var subcate="Encuentro Deportivo"; 
+                         break;
+                      case "BA": 
+                         var subcate="Bailoterapia"; 
+                         break;
+                      case "YO": 
+                         var subcate="Yoga"; 
+                         break;
+                      case "CD": 
+                         var subcate="Clase Deportiva"; 
+                         break;
+                      case "CO": 
+                         var subcate="Concierto"; 
+                         break;
+                      case "FE": 
+                         var subcate="Feria"; 
+                         break;
+                      case "OT": 
+                         var subcate="Obra de Teatro"; 
+                         break;
+                      case "EA": 
+                         var subcate="Exposición de arte"; 
+                         break;
+                      case "JD": 
+                         var subcate="Jornada de Documentación"; 
+                         break;
+                      case "VPE": 
+                         var subcate="Venta de Producto Escaso"; 
+                         break;
+                      case "JE": 
+                         var subcate="Jornada Electoral"; 
+                         break;
+                      case "DES": 
+                         var subcate="Descuento"; 
+                         break;
+                      case "DS": 
+                         var subcate="Donación de sangre"; 
+                         break;
+                      case "SM": 
+                         var subcate="Solicitud de Medicamento"; 
+                         break;
+                      case "JV": 
+                         var subcate="Jornada Veterinaria"; 
+                         break;
+                      case "SV": 
+                         var subcate="Solicitud de Voluntarios"; 
+                         break;
+                      case "CA": 
+                         var subcate="Calles y avenidas"; 
+                         break;
+                      case "AC": 
+                         var subcate="Aceras"; 
+                         break;
+                      case "PC": 
+                         var subcate="Patrimonio Cultural"; 
+                         break;
+                      case "TE": 
+                         var subcate="Terreno";
+                         break;
+                      default :
+                         var subcate="Zona Peligrosa"; 
+                         break;
+               }
+              //alert('webo')
+              //alert(ACT[i].X);
+              //alert('webo')
+              if (ACT[i]["VIP"]){
+                  var tempmark = L.circleMarker([ACT[i]["X"], ACT[i]["Y"]], {color: '#FF0033'}).addTo(map);
+              }
+              var tempmark = L.marker([ACT[i]["X"], ACT[i]["Y"]], {icon: iconact}).addTo(map);
+              var popup = L.popup()
+               .setLatLng([ACT[i]["X"], ACT[i]["Y"]])
+               .setContent("<b><h3>"+subcate+"</h3></b><hr>"+ACT[i]["descripcion"]+"<br><br><font color=\"cyan\"><div align=\"right\"><a href=\"/event/?id="+ACT[i]["id"]+"\">+ detalles</a></div></font>")
+               //.openOn(map)
+              tempmark.bindPopup(popup,customOptions);
+           }
+              //
+          }
+        }
+
+        map.on('click', onMapClick);
+        map.fitBounds(polip.getBounds()); // max zoom to see whole polygon
+        map.setMaxBounds(polip.getBounds()); // restrict map view to polygon bounds
+        //map.zoomToExtent(polip.getBounds())
+        //map.options.minZoom = map.getZoom(); // restrict user to zoom out 
+        map.options.maxZoom = 19;
+        map.options.minZoom = 14;
+     </script>
+</div> 
+
+   <!-- ================ MAP END ====================== -->
+
+<!--   <div class="row btn-group">
     <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_police.png" width="18px"> Seguridad </div>
     <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_street.png" width="18px"> Vialidad </div>
     <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_service.png" width="18px"> Det. Servicios </div>
@@ -15,440 +756,27 @@
        <a class="btn btn-default" href="/register">Filtrar</a>
     </div>
   </div>
+ -->
 
-
-  <!-- ================ MAP START ====================== -->
-  <div id="map" class="mapr"></div></div>
- 
-
-<script src='https://api.tiles.mapbox.com/mapbox.js/v2.2.1/mapbox.js'></script>
-     <script>
-      L.mapbox.accessToken = 'pk.eyJ1IjoibmFiaWxqZXN1cyIsImEiOiI2ZmNhMjk5ZjE4MWFlOWU5NzU0MDg5NDI4OGQ5MDk3NyJ9.q4rRtkf-6VTh6_-H1hxhKw';
-
-      var mapboxTiles = L.tileLayer('https://{s}.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=' + L.mapbox.accessToken, {
-         maxZoom: 19,
-         minZoom: 14
-         // attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
-         //    '<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-         //    'Imagery © <a href="http://mapbox.com">Mapbox</a>',
-      });
-
-      var map = L.map('map')
-          .addLayer(mapboxTiles)
-          .setView([10.54562, -426.87142], 15);
-
-      var mark_police = L.icon({
-       iconUrl: '/static/img/pin_police.png',
-       shadowUrl: '/static/img/pin_shadow.png',
-
-       iconSize:     [45, 45], // size of the icon
-       shadowSize:   [45, 45], // size of the shadow
-       iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
-       shadowAnchor: [10, 45],  // the same for the shadow
-       popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
-      });
-
-      var mark_street = L.icon({
-       iconUrl: '/static/img/pin_street.png',
-       shadowUrl: '/static/img/pin_shadow.png',
-
-       iconSize:     [45, 45], // size of the icon
-       shadowSize:   [45, 45], // size of the shadow
-       iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
-       shadowAnchor: [10, 45],  // the same for the shadow
-       popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
-      });
-
-      var mark_service = L.icon({
-       iconUrl: '/static/img/pin_service.png',
-       shadowUrl: '/static/img/pin_shadow.png',
-
-       iconSize:     [45, 45], // size of the icon
-       shadowSize:   [45, 45], // size of the shadow
-       iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
-       shadowAnchor: [10, 45],  // the same for the shadow
-       popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
-      });
-
-      var mark_sports = L.icon({
-       iconUrl: '/static/img/pin_sports.png',
-       shadowUrl: '/static/img/pin_shadow.png',
-
-       iconSize:     [45, 45], // size of the icon
-       shadowSize:   [45, 45], // size of the shadow
-       iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
-       shadowAnchor: [10, 45],  // the same for the shadow
-       popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
-      });
-
-      var mark_culture = L.icon({
-       iconUrl: '/static/img/pin_culture.png',
-       shadowUrl: '/static/img/pin_shadow.png',
-
-       iconSize:     [45, 45], // size of the icon
-       shadowSize:   [45, 45], // size of the shadow
-       iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
-       shadowAnchor: [10, 45],  // the same for the shadow
-       popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
-      });
-
-      var mark_product = L.icon({
-       iconUrl: '/static/img/pin_product.png',
-       shadowUrl: '/static/img/pin_shadow.png',
-
-       iconSize:     [45, 45], // size of the icon
-       shadowSize:   [45, 45], // size of the shadow
-       iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
-       shadowAnchor: [10, 45],  // the same for the shadow
-       popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
-      });
-
-      var mark_help = L.icon({
-       iconUrl: '/static/img/pin_help.png',
-       shadowUrl: '/static/img/pin_shadow.png',
-
-       iconSize:     [45, 45], // size of the icon
-       shadowSize:   [45, 45], // size of the shadow
-       iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
-       shadowAnchor: [10, 45],  // the same for the shadow
-       popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
-      });
-
-
-      var mark_broken = L.icon({
-       iconUrl: '/static/img/pin_broken.png',
-       shadowUrl: '/static/img/pin_shadow.png',
-
-       iconSize:     [45, 45], // size of the icon
-       shadowSize:   [45, 45], // size of the shadow
-       iconAnchor:   [10, 45], // point of the icon which will correspond to marker's location
-       shadowAnchor: [10, 45],  // the same for the shadow
-       popupAnchor:  [0, -35] // point from which the popup should open relative to the iconAnchor
-      });
-
-      var popup = L.popup();
-
-      function onMapClick2(e) {
-         popup
-            .setLatLng(e.latlng)
-            .setContent("Estoy en chacao :D en: " + e.latlng.toString())
-            //.setContent("No toy en Chacao :(")
-            .openOn(map);
-      }
-
-      var polip = L.polygon([
-         [10.54562, -426.87142],
-         [10.55028, -426.86803],
-         [10.55091, -426.86635],
-         [10.54899, -426.86221],
-         [10.54669, -426.85957],
-         [10.54383, -426.85736],
-         [10.54134, -426.85266],
-         [10.53853, -426.8455],
-         [10.53933, -426.84438],
-         [10.53946, -426.83846],
-         [10.53845, -426.83507],
-         [10.5338, -426.83876],
-         [10.5284, -426.83709],
-         [10.51161, -426.83807],
-         [10.50465, -426.83674],
-         [10.50018, -426.84048],
-         [10.49646, -426.84378],
-         [10.48887, -426.84344],
-         [10.48368, -426.84382],
-         [10.4838, -426.8497],
-         [10.48254, -426.85219],
-         [10.48503, -426.86133],
-         [10.48769, -426.86914],
-         [10.49355, -426.87108],
-         [10.50461, -426.86648],
-         [10.52018, -426.86344],
-         [10.53731, -426.87155],
-         [10.54558, -426.87163]
-      ], {
-         stroke: true,
-         weight: 1,
-         color: 'Gray',
-         fillOpacity: 0,
-         Opacity: 1
-      })
-      
-      var smallPoly=polip
-
-      var bigPoly = L.polygon(
-      [[[12.345368032463298 ,  -429.774169921875],
-      [12.21118019150401  , -424.1876220703125],
-      [8.439771599521729  , -424.2974853515625],
-      [8.667918002363121  , -429.71923828124994]],
-      [[10.54562, -426.87142],
-         [10.55028, -426.86803],
-         [10.55091, -426.86635],
-         [10.54899, -426.86221],
-         [10.54669, -426.85957],
-         [10.54383, -426.85736],
-         [10.54134, -426.85266],
-         [10.53853, -426.8455],
-         [10.53933, -426.84438],
-         [10.53946, -426.83846],
-         [10.53845, -426.83507],
-         [10.5338, -426.83876],
-         [10.5284, -426.83709],
-         [10.51161, -426.83807],
-         [10.50465, -426.83674],
-         [10.50018, -426.84048],
-         [10.49646, -426.84378],
-         [10.48887, -426.84344],
-         [10.48368, -426.84382],
-         [10.4838, -426.8497],
-         [10.48254, -426.85219],
-         [10.48503, -426.86133],
-         [10.48769, -426.86914],
-         [10.49355, -426.87108],
-         [10.50461, -426.86648],
-         [10.52018, -426.86344],
-         [10.53731, -426.87155],
-         [10.54558, -426.87163]]]
-      , {
-         stroke: true,
-         weight: 0,
-         color: 'Gray ',
-         fillOpacity: 0.2,
-         Opacity: 1
-      })
-
-      bigPoly.addTo(map)
-
-      polip.addTo(map)
-
-
-      var popup2 = L.popup()
-                 .setContent("<div aling=\"middle\">No es posible agregar un evento o suceso en esta área.</div>")
-                 //.openOn(map)
-      var customOptions2 =
-          {
-          'maxWidth': '40',
-          'className' : 'custom'
-          }       
-
-      bigPoly.bindPopup(popup2,customOptions2);
-
-      function onMapClick(e) {
-         popup
-            .setLatLng(e.latlng)
-            .setContent("<div align=\"right\"><a href=\"/addevent/?x="+e.latlng.lat.toString()+"&y="+e.latlng.lng.toString()+"\">Agregar Evento</a></div></font>")
-            //.setContent("No toy en Chacao :(")
-            .openOn(map);
-      }
-
-      //polip.addTo(map).bindPopup("Estoy en chacao :D en: " );
-
-
-      //Markers
-      // L.marker([10.49802, -426.85181], {icon: mark_police}).addTo(map);
-      // L.marker([10.49794, -426.85756], {icon: mark_street}).addTo(map);
-      // L.marker([10.49769, -426.86502], {icon: mark_service}).addTo(map);
-      // L.marker([10.49304, -426.86013], {icon: mark_sports}).addTo(map);
-      // L.marker([10.53144, -426.84709], {icon: mark_culture}).addTo(map);
-      // L.marker([10.51541, -426.8397], {icon: mark_product}).addTo(map);
-      // L.marker([10.51853, -426.86245], {icon: mark_help}).addTo(map);
-      // L.marker([10.48393, -426.84571], {icon: mark_broken}).addTo(map);
-
-      var customOptions =
-          {
-          'maxWidth': '150',
-          'className' : 'custom'
-          }
-
-      var myInput = { 'PR' : [ {"X":10.49802,"Y":-426.85181,"nombre":'hi',"descripcion":'hola, soy texto descripcion del marker', "tipo":"ZP", "id": 0, "VIP":true}], 
-         'VI' : [ {"X":10.50089,"Y": -426.8573,"nombre":'hi2',"descripcion":'hola, soy texto descripcion del marker', "tipo":"DEL", "id": 0, "VIP":false}] };
-
-      for (var key in myInput) {
-        //alert(key)
-        if (myInput.hasOwnProperty(key)) {
-
-         var ACT = myInput[key];
-         var auxl =  ACT.length;
-         //var iconact = mark_product
-
-         switch(key) {
-                case "SE":
-                    var iconact = mark_police;
-                    break;
-                case "VI":
-                    var iconact = mark_street;
-                    break;
-                case "DS":
-                    var iconact = mark_service;
-                    break;
-                case "DE":
-                    var iconact = mark_sports;
-                    break;
-                case "CU":
-                    var iconact = mark_culture;
-                    break;
-                case "PR":
-                    var iconact = mark_product;
-                    break;
-                case "SP":
-                    var iconact = mark_help;
-                    break;
-                case "DM":
-                    var iconact = mark_broken;
-                    break;
-                default:
-                    var iconact = mark_police;
-                    break;
-         }
-
-
-         for (var i = 0; i<auxl; i++){
-             var typei = ACT[i]["tipo"]
-             //alert(typei)
-             switch(typei){
-                    case "ZP": 
-                       var subcate="Zona Peligrosa"; 
-                       break;
-                    case "DEL": 
-                       var subcate="Delito"; 
-                       break;
-                    case "AS": 
-                       var subcate="Actividad Sospechosa"; 
-                       break;
-                    case "AC": 
-                       var subcate="Accidente"; 
-                       break;
-                    case "EM": 
-                       var subcate="Embotellamiento"; 
-                       break;
-                    case "PV": 
-                       var subcate="Peligro en la Vía"; 
-                       break;
-                    case "PR": 
-                       var subcate="Protesta"; 
-                       break;
-                    case "AM": 
-                       var subcate="Asistencia médica"; 
-                       break;
-                    case "SA": 
-                       var subcate="Servicio de Agua"; 
-                       break;
-                    case "SE": 
-                       var subcate="Servicio Eléctrico"; 
-                       break;
-                    case "RRS": 
-                       var subcate="Recolección de Residuos Solidos"; 
-                       break;
-                    case "MA": 
-                       var subcate="Maratón"; 
-                       break;
-                    case "ED": 
-                       var subcate="Encuentro Deportivo"; 
-                       break;
-                    case "BA": 
-                       var subcate="Bailoterapia"; 
-                       break;
-                    case "YO": 
-                       var subcate="Yoga"; 
-                       break;
-                    case "CD": 
-                       var subcate="Clase Deportiva"; 
-                       break;
-                    case "CO": 
-                       var subcate="Concierto"; 
-                       break;
-                    case "FE": 
-                       var subcate="Feria"; 
-                       break;
-                    case "OT": 
-                       var subcate="Obra de Teatro"; 
-                       break;
-                    case "EA": 
-                       var subcate="Exposición de arte"; 
-                       break;
-                    case "JD": 
-                       var subcate="Jornada de Documentación"; 
-                       break;
-                    case "VPE": 
-                       var subcate="Venta de Producto Escaso"; 
-                       break;
-                    case "JE": 
-                       var subcate="Jornada Electoral"; 
-                       break;
-                    case "DES": 
-                       var subcate="Descuento"; 
-                       break;
-                    case "DS": 
-                       var subcate="Donación de sangre"; 
-                       break;
-                    case "SM": 
-                       var subcate="Solicitud de Medicamento"; 
-                       break;
-                    case "JV": 
-                       var subcate="Jornada Veterinaria"; 
-                       break;
-                    case "SV": 
-                       var subcate="Solicitud de Voluntarios"; 
-                       break;
-                    case "CA": 
-                       var subcate="Calles y avenidas"; 
-                       break;
-                    case "AC": 
-                       var subcate="Aceras"; 
-                       break;
-                    case "PC": 
-                       var subcate="Patrimonio Cultural"; 
-                       break;
-                    case "TE": 
-                       var subcate="Terreno";
-                       break;
-                    default :
-                       var subcate="Zona Peligrosa"; 
-                       break;
-             }
-            //alert('webo')
-            //alert(ACT[i].X);
-            //alert('webo')
-            if (ACT[i]["VIP"]){
-                var tempmark = L.circleMarker([ACT[i]["X"], ACT[i]["Y"]], {color: '#FF0033'}).addTo(map);
-            }
-            var tempmark = L.marker([ACT[i]["X"], ACT[i]["Y"]], {icon: iconact}).addTo(map);
-            var popup = L.popup()
-             .setLatLng([ACT[i]["X"], ACT[i]["Y"]])
-             .setContent("<b><h3>"+subcate+"</h3></b><hr>"+ACT[i]["descripcion"]+"<br><br><font color=\"cyan\"><div align=\"right\"><a href=\"/event/?id="+ACT[i]["id"]+"\">+ detalles</a></div></font>")
-             //.openOn(map)
-            tempmark.bindPopup(popup,customOptions);
-         }
-            //
-        }
-      }
-
-      map.on('click', onMapClick);
-      map.fitBounds(polip.getBounds()); // max zoom to see whole polygon
-      map.setMaxBounds(polip.getBounds()); // restrict map view to polygon bounds
-      //map.zoomToExtent(polip.getBounds())
-      //map.options.minZoom = map.getZoom(); // restrict user to zoom out 
-      map.options.maxZoom = 19;
-      map.options.minZoom = 14;
-   </script>
-   <!-- ================ MAP END ====================== -->
 
   {% if not logged %}
   <script type="text/javascript">
     function showUp(){
+      document.getElementById("regpop").style.display  = "initial";
+      document.getElementById("back").style.display    = "initial";
+      document.getElementById("password").style.display  = "initial";
+      document.getElementById("passName").style.display  = "initial";
+      document.getElementById("usName").style.display  = "initial";
+      document.getElementById("username").style.display  = "initial";
+      document.getElementById("connect").style.display  = "initial";
+
       document.getElementById("regpop").style.visibility  = "visible";
       document.getElementById("back").style.visibility    = "visible";
-      document.getElementById("password").style.visibility= "visible";
-      document.getElementById("passName").style.visibility= "visible";
+      document.getElementById("password").style.visibility  = "visible";
+      document.getElementById("passName").style.visibility  = "visible";
       document.getElementById("usName").style.visibility  = "visible";
-      document.getElementById("username").style.visibility= "visible";
-      document.getElementById("connect").style.visibility= "visible";
-      document.getElementById("regpop").margin="0 auto";
-      document.getElementById("back").margin  ="0 auto";
-      document.getElementById("password").margin  ="0 auto";
-      document.getElementById("passName").margin  ="0 auto";
-      document.getElementById("usName").margin  ="0 auto";
-      document.getElementById("username").margin  ="0 auto";
-      document.getElementById("connect").margin  ="0 auto";
+      document.getElementById("username").style.visibility  = "visible";
+      document.getElementById("connect").style.visibility  = "visible";
     }
     function hide(){
       document.getElementById("regpop").style.visibility  = "hidden";
@@ -458,28 +786,35 @@
       document.getElementById("usName").style.visibility  = "hidden";
       document.getElementById("username").style.visibility= "hidden";
       document.getElementById("connect").style.visibility= "hidden";
+      document.getElementById("regpop").style.display  = "none";
+      document.getElementById("back").style.display    = "none";
+      document.getElementById("password").style.display= "none";
+      document.getElementById("passName").style.display= "none";
+      document.getElementById("usName").style.display  = "none";
+      document.getElementById("username").style.display= "none";
+      document.getElementById("connect").style.display= "none";
     }
   </script>
 
-  <div class="btn-group topright">
+<!--   <div class="btn-group topright">
     <button type="button" class="btn btn-default" onclick="showUp()">Conectarme</button>
     <a class="btn btn-default" href="/register">Registrarme</a>
   </div>
-
+ -->
   <div id="cover">
-    <img id="regpop" class="img-responsive center invisible" src="/static/img/login_pop.png"/>
-      <input onclick="hide()" type="image" id="back" class="interno img-responsive center invisible " height="100" width="100" src="/static/img/backblack.png"/>
+    <img id="regpop" class="img-responsive center invisible" style="z-index: 3;" src="/static/img/login_pop.png"/>
+      <input onclick="hide()" type="image" id="back" style="z-index: 3;" class="interno img-responsive center invisible " height="100" width="100" src="/static/img/backblack.png"/>
 
     <form id="form" action="/login/" method="post">
     {% csrf_token %}
     <div class="form-group invisible center">
-        <label class="invisible" id="usName">Usuario: </label>
-         <input type="text" name="username" id="username">
+        <label class="invisible" id="usName" style="z-index: 4;">Usuario: </label>
+         <input type="text" name="username" id="username" style="z-index: 4;">
   
     </div>
     <div class="form-group invisible">
-        <label class="invisible" id="passName">Password: </label>
-         <input type="password" name="password" id="password">
+        <label class="invisible" id="passName" style="z-index: 4;">Password: </label>
+         <input type="password" name="password" style="z-index: 4;" id="password">
     </div>
     <button id="connect" type="submit" class="btn btn-default invisible">Conectarme</button>
     </form>

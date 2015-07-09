@@ -1,0 +1,111 @@
+-Seguridad  (Duración 1 día)
+--Delitos
+--Zona Peligrosa 
+--Actividad Sospechosa
+
+-Vialidad (Duración 1 día)
+--Accidente de tráfico
+--Embotellamiento
+--Peligro en la vía
+--Protesta
+
+-Def. de servicios (Duración 3 días)
+--Servicio del agua
+--Servicio eléctrico
+--Asistencia médica
+--Recolección de residuos sólidos
+--Educación
+--Otro def. serv.
+
+-Deportes   (de 1 a 3 días)
+--Encuentro deportivo
+--Maratón
+--Bailoterapia
+--Yoga
+--Clase deportiva
+--Otro evento deportivo
+
+-Cultura   (de 1 a 3 días)
+--Concierto
+--Obra de Teatro
+--Exposición de arte
+--Feria
+--Otro evento cultural
+
+-Productos   (1 día)
+--Jornada electoral
+--Jornada de documentación
+--Venta de producto escaso
+--Descuentos
+--Otro evento de productos
+
+-Servicio Público (de 1 a 3 días)
+--Donante de sangre
+--Medicamento
+--Transporte*
+--Donaciones*
+--Colaboradores*
+--Jornada VEterinaria
+--Otro evento de Serv. Publico
+
+-Deterioro Municipal (de 1 a 3 días)
+--Calles y avenidas
+--Aceras
+--Patrimonio Cultural
+--Terreno
+--Otro suceso de Det. Mun.
+
+
+- Entes oficiales
+
+- Cualquier usuario
+
+
+|Códigos
+--------
+
+Eventos
+==========================
+('ZP','Zona Peligrosa'),
+('DEL','Delito'),
+('AS','Actividad Sospechosa'),
+('AC','Accidente'),
+('EM','Embotellamiento'),
+('PV','Peligro en la Vía'),
+('PR','Protesta'),
+('AM','Asistencia médica'),
+('SA','Servicio de Agua'),
+('SE','Servicio Eléctrico'),
+('RRS','Recolección de Residuos Solidos'),
+('MA','Maratón'),
+('ED','Encuentro Deportivo'),
+('BA','Bailoterapia'),
+('YO','Yoga'),
+('CD','Clase Deportiva'),
+('CO','Concierto'),
+('FE','Feria'),
+('OT','Obra de Teatro'),
+('EA','Exposición de arte'),
+('JD','Jornada de Documentación'),
+('VPE','Venta de Producto Escaso'),
+('JE','Jornada Electoral'),
+('DES','Descuento'),
+('DS','Donación de sangre'),
+('SM','Solicitud de Medicamento'),
+('JV','Jornada Veterinaria'),
+('SV','Solicitud de Voluntarios'),
+('CA','Calles y avenidas'),
+('AC','Aceras'),
+('PC','Patrimonio Cultural'),
+('TE','Terreno')
+
+Categorias
+====================
+('SE','Seguridad'),
+('VI','Vialidad'),
+('DS','Deficiencia de Servicios'),
+('DE','Deportes'),
+('CU','Cultura'),
+('PR','Productos'),
+('SP','Servicios Públicos'),
+('DM','Deterioro Municipal')
