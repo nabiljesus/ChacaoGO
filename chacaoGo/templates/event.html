@@ -47,16 +47,29 @@
 						<p>¿Es información útil y certera? </p>
 						</div>
 						<div class="col-md-4">
-							 
-							<button type="button" class="btn btn-default">
-								Si
-							</button>
+							
+							<a  
+								{% if mayvotep and logged%}
+								href="/addvote/?v=True&eventId={{event.eventId}}"
+								{% else %} 
+								disabled="disabled" 
+								{% endif %}
+								type="button" class="btn btn-default">
+								Si ({{positives}})
+							</a>
 						</div>
 						<div class="col-md-4">
 							 
-							<button type="button" class="btn btn-default">
-								NO
-							</button>
+							<a 
+								{% if mayvoten and logged%}
+								href="/addvote/?v=False&eventId={{event.eventId}}"
+								{% else %} 
+								disabled="disabled" 
+								{% endif %}
+
+								class="btn btn-default">
+								No ({{negatives}})
+							</a>
 						</div>
 					</div>
 					<hr />
@@ -106,7 +119,7 @@
 					<hr />
 					<div class="row">
 						<div class="col-md-12">
-							<b> Publicado por: </b> <a href="/user/?username={{event.user.username}}"> {{ event.user.username }} </a>
+							<b> Publicado por: </b> <a href="/checkprofile/?username={{event.user.username}}"> {{ event.user.username }} </a>
 						</div>
 					</div>
 					<hr />

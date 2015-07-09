@@ -51,8 +51,31 @@ CATEGORIES = (
     ('DM','Deterioro Municipal')
 )
 
+CATEGORYIMAGE = {
+    'DM' : "icon_broken.png",
+    'CU' : "icon_culture.png",
+    'SP' : "icon_help.png",
+    'SE' : "icon_police.png",
+    'PR' : "icon_product.png",
+    'DS' : "icon_service.png",
+    'DE' : "icon_sports.png",
+    'VI' : "icon_street.png"
+}
 
 CATEGORYLIST = ['SE','VI','DS','DE','CU','PR','SP','DM']
+
+LEVELS  = [ ("Villano",                       0   ),
+            ("Ciudadano común",               10  ),
+            ("Buen samaritano",               20  ),
+            ("Viejita de la comunidad",       30  ),
+            ("Ciudadano Ejemplar",            40  ),
+            ("Periodista aficionado",         60  ),
+            ("Ciberperiodista",               70  ),
+            ("Colaborador conocido ChacaoGO", 100 ),
+            ("Colaborador Destacado Chacao",  150 ),
+            ("Mano dereha de Ramón Muchacho", 300 )
+           ]
+
 
 def smallerDate(a,b):
     if a.year <= b.year:
@@ -116,6 +139,47 @@ class User(models.Model):
     def getEvents(username):
         user = User.objects.filter(username=username)
         return Event.objects.filter(user=user[0]).order_by('-added')
+
+    def getCreatedEvents(username):
+        user = User.objects.filter(username=username).first()
+        return Event.objects.filter(user=user).count()
+
+    #Funcion para obtener el balance de votos de un usuario segun sus eventos
+    #Ademas entrega el titulo correspondiente 
+    def getUserVotes(username):
+        user    = User.objects.filter(username=username)[0]
+        events  = Event.objects.filter(user=user)
+        voteSum = 0
+
+        for ev in events:
+            votes = Vote.objects.filter(event=ev)
+            positive = votes.filter(isUsefull=True).count()
+            negative = votes.filter(isUsefull=False).count()
+            voteSum  = voteSum + positive - negative
+
+        for l in LEVELS:
+            if voteSum > l[1]:
+                pass
+            else:
+                title = l[0]
+                break
+            
+
+        return (voteSum,title)
+
+    def getCommentsMade(username):
+        user = User.objects.filter(username=username).first()
+        return Comment.objects.filter(user=user).count()
+
+    def getEmail(username):
+        user = User.objects.filter(username=username).first()
+        return user.email
+
+    def getName(username):
+        user = User.objects.filter(username=username).first()
+        return user.fullname
+
+
 
 class Category(models.Model):
     """Clase para categoria de cada evento""" 
@@ -207,4 +271,42 @@ class Comment(models.Model):
 
     def getParentEvent(id):
         return Event.objects.filter(eventId=id)[0]
+
+class Vote(models.Model):
+    """Clase para votos de utilidad en un evento"""
+    user        = models.ForeignKey(User)
+    event       = models.ForeignKey(Event)
+    isUsefull   = models.BooleanField()
+
+    class Meta:
+        unique_together = ('user','event')
+
+    #Funcion para obtener numero de votos positivos y negativos de un evento
+    def getEventVotes(eventId):
+        event = Event.objects.filter(eventId=eventId)[0]
+        votes = Vote.objects.filter(event=event)
+
+        positive = votes.filter(isUsefull=True).count()
+        negative = votes.filter(isUsefull=False).count()
+
+        return (positive,negative)
+
+    
+
+    #Funcion que indica por que puede votar un usuario en un evento
+    def mayVote(username,eventId):
+        user    = User.objects.filter(username=username).first()
+        event   = Event.objects.filter(eventId=eventId).first()
+
+        vote    = Vote.objects.filter(event=event,user=user)
+
+        if(vote.count() == 0 ):
+            return (True, True)
+        else:
+            if vote.first().isUsefull:
+                return (False,True)
+            else:
+                return (True,False)
+
+        
 

@@ -133,23 +133,46 @@ def userprofile(request):
         return redirect("/main",foo='bar')
 
     t = loader.get_template('userprofile.html')
-    c = Context({'foo': 'bar'})         
+    c = Context({'user': request.session['username']})         
     return HttpResponse(t.render(c))
 
 def checkprofile(request):
-    if not 'username' in request.session:
-        return redirect("/main",foo='bar')
+    logged = 'username' in request.session
 
-    t = loader.get_template('checkprofile.html')
-    c = Context({'foo': 'bar'})         
-    return HttpResponse(t.render(c))
+    profile = request.GET.get('username',-1)
+    
+    if profile == -1:
+        return redirect("/main")
+    else:
+
+
+        posts    = User.getCreatedEvents(profile)
+        comments = User.getCommentsMade(profile)
+        showable = request.session['username'] == profile
+        (points,title)   = User.getUserVotes(profile)
+
+        dictionary = {
+            'posts'   : posts   ,
+            'comments': comments,
+            'points'  : points,
+            'showable': showable, #Podria permitirse que las autoridades tambien vean este correo
+            'email'   : User.getEmail(profile),
+            'name'    : User.getName(profile),
+            'title'   : title,
+        }
+
+        t = loader.get_template('checkprofile.html')
+
+        c = Context(dictionary)         
+
+        return HttpResponse(t.render(c))
 
 def mayorsprofile(request):
     if not 'username' in request.session:
         return redirect("/main",foo='bar')
 
     t = loader.get_template('mayorsprofile.html')
-    c = Context({'foo': 'bar'})         
+    c = Context({'user': request.session['username']})       
     return HttpResponse(t.render(c))
 
 
@@ -196,15 +219,24 @@ def event(request):
     else:
         event   = Event.getEventById(1)
 
-    comments = Event.getAllComments(eventId)
-    print(comments)
+    comments                      = Event.getAllComments(eventId)
+    (positiveVotes,negativeVotes) = Vote.getEventVotes(eventId)
+    
+    (mayvotep,mayvoten) = Vote.mayVote(request.session['username'],eventId) if \
+                         ('username' in request.session) \
+                         else (False,False) 
+
     
     dictionary = {
                  'event'   : event,
                  'type'    : event.get_evenType_display(), 
                  'form'    : CommentForm(),
                  'logged'  : 'username' in request.session,
-                 'comments': comments
+                 'comments': comments,
+                 'positives' : positiveVotes,
+                 'negatives' : negativeVotes,
+                 'mayvotep'  : mayvotep,
+                 'mayvoten'  : mayvoten,
                  }
 
 
@@ -212,9 +244,10 @@ def event(request):
 
 
 def addcomment(request):
-    print("TE JURO QUE PASE POR AQUI")
+    
     if request.method == 'GET':
-        print("Que mieeeerda paso aqui")
+        # print("Que mieeeerda paso aqui")
+        pass
     elif request.method == 'POST':
 
         #Conversion a floats
@@ -250,7 +283,7 @@ def addcomment(request):
         dictionary = {}
         print("wtf? what am i doing here?")
 
-    return render_to_response('addevent.html', dictionary , context_instance=RequestContext(request))
+    return render_to_response('event.html', dictionary , context_instance=RequestContext(request))
 
 
 def addevent(request):
@@ -308,3 +341,37 @@ def addevent(request):
         print("wtf? what am i doing here?")
 
     return render_to_response('addevent.html', dictionary , context_instance=RequestContext(request))
+
+def addvote(request):
+    print(request.GET)
+    vote    = request.GET.get('v',-1)
+    eventId = int(request.GET.get('eventId',-1))
+
+    if vote == -1 or not ('username' in request.session):
+        return redirect('/event/?id='+str(eventId))
+    else:
+        user = User.getUser(request.session['username'])
+        event= Event.getEventById(eventId)
+        vote = vote == "True"
+        (mayvotep,mayvoten) = Vote.mayVote(request.session['username'],eventId)
+
+        if mayvotep and mayvoten:
+            newVote   = Vote(
+                user  = user,
+                event = event,
+                isUsefull = vote,
+            )
+            newVote.save()
+        else:
+            print("EL voto es")
+            print(vote)
+            v = Vote.objects.filter(user=user,event=event).first()
+            print("Pasando de ")
+            print(v.isUsefull)
+            v.isUsefull = vote
+            print("a")
+            print(v.isUsefull)
+            v.save()
+
+        return redirect('/event/?id='+str(eventId))
+

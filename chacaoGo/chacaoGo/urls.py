@@ -22,13 +22,14 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index, name='index'),
     url(r'^main/', views.main, name='main'),
+    
     #Paginas de sesion
     url(r'^register/', views.register, name='register'),
     url(r'^logout/', views.logout, name='logout'),
     url(r'^login/', views.login, name='login'),
     url(r'^finishlog/', views.finishlog, name='finishlog'),
-    #url(r'^adduser/', views.adduser, name='adduser'), vista innecesaria elimnada
     url(r'^redirectuser/', views.redirectuser, name='redirectuser'),
+    
     #Paginas de usuario
     url(r'^userprofile/', views.userprofile, name='userprofile'),
     url(r'^mayorsprofile/', views.mayorsprofile, name='mayorsprofile'),
@@ -37,8 +38,10 @@ urlpatterns = [
     url(r'^mycomments/', views.mycomments, name='mycomments'),
     url(r'^purchases/', views.purchases, name='purchases'),
     url(r'^favorites/', views.favorites, name='favorites'),
+    
     #Paginas de eventos
     url(r'^event/', views.event, name='event'),
     url(r'^addevent/', views.addevent, name='addevent'),
     url(r'^addcomment/', views.addcomment, name='addcomment'),
+    url(r'^addvote/', views.addvote, name='addvote'),
 ]
