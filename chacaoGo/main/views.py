@@ -22,6 +22,12 @@ def index(request):
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
 
+def testdrop(request):
+    t = loader.get_template('testdrop.html')
+    c = Context({'foo': 'bar'})         
+    return HttpResponse(t.render(c))
+
+
 def main(request):
 
     logged = 'username' in request.session

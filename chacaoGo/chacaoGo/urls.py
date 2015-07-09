@@ -40,4 +40,5 @@ urlpatterns = [
     #Paginas de eventos
     url(r'^event/', views.event, name='event'),
     url(r'^addevent/', views.addevent, name='addevent'),
+    url(r'^testdrop/', views.testdrop),
 ]

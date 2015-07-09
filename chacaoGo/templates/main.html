@@ -5,14 +5,15 @@
 
 
 <body bgcolor="#FF9900" >
-<style type="text/css">
-  
-body {
-  background: #FF9900;
-}
+
+<style type="text/css"> 
+        body{font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444;font-size:13px;  background: #FF9900;}
+        p,div,ul,li{padding:0px; margin:0px; }
 </style>
 
- <div class="toplef" style="z-index: 2;">
+
+<!-- 
+<div class="toplef" style="z-index: 2;">
     <div id="list1" class="dropdown-check-list" tabindex="100" >
         <span class="anchor"><img src="/static/img/icon_police.png" width="18px"><b> Seguridad </b></span>
         <ul class="items">
@@ -217,11 +218,11 @@ body {
         </script>
       </div>
       </div>
-      <!-- si se quitan las siguientes 3 lineas, funciona el de registrar-->
       <div class="filt_buttom topright" style="top : 10px; left:  45%;">
          <button class="btn  btn-default" href="/register" >Filtrar</button>
       </div>
- </div>
+  </div> -->
+
 <div class="container">
   <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="/static/js/jquery.leanModal.min.js"></script>
@@ -247,7 +248,7 @@ body {
       <div class="user_login">
         <form id="form" action="/login/" method="post">
           <label>Nombre de Usuario</label>
-          <input type="text" />
+          <input type="text"  name="username" id="username"/>
           <br />
 
           <label>Contraseña</label>
@@ -325,7 +326,33 @@ body {
   </script>
 </div>
 
+<div id="Filter">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="/static/js/jquery.sumoselect.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.testSelAll2 = $('.testSelAll2').SumoSelect({selectAll:true });
+        });
+    </script>
+    <style type="text/css">
+        body{font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444;font-size:13px;}
+        p,div,ul,li{padding:0px; margin:0px;}
+    </style>
 
+
+    <select multiple="multiple" placeholder="Seguridad" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+           <option selected value="volvo">Volvo</option>
+           <option value="saab">Saab</option>
+           <option value="mercedes">Mercedes</option>
+           <option value="audi">Audi</option>
+           <option selected value="bmw">BMW</option>
+           <option value="porsche">Porche</option>
+           <option value="ferrari">Ferrari</option>
+           <option value="mitsubishi">Mitsubishi</option>
+
+
+    </select>
+</div>
 
   <!-- ================ MAP START ====================== -->
 
