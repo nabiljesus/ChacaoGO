@@ -113,6 +113,10 @@ class User(models.Model):
         else:
             return None
 
+    def getEvents(username):
+        user = User.objects.filter(username=username)
+        return Event.objects.filter(user=user[0])
+
 class Category(models.Model):
     """Clase para categoria de cada evento""" 
     categoryName = models.CharField(max_length = 2,choices=CATEGORIES)
@@ -142,6 +146,9 @@ class Event(models.Model):
     evenType    = models.CharField(max_length = 3,choices=TYPECHOICES)
     vip         = models.BooleanField(default = False)
     seen        = models.BooleanField(default = False)
+
+    def getEventById(id):
+        return Event.objects.filter(eventId=id)[0]
 
     def getEventsByType(eventList):
         from django.utils import timezone

@@ -23,7 +23,7 @@
 			<div class="row">
 				<div class="col-md-4">
 					<h3>
-						Zona peligrosa
+						{{ type }}
 					</h3>
 				</div>
 				<div class="col-md-4">
@@ -35,11 +35,11 @@
 			<div class="row">
 				<div class="col-md-6">
 					<h3>
-						Enfrentamiento de Bandas
+						{{ event.name }}
 					</h3>
 					<hr />
 					<p>
-						Peleas de bandas siempre, esto no termina.
+						{{ event.description }}
 					</p>
 					<hr />
 					<div class="row">
@@ -97,14 +97,14 @@
 					<div class="row">
 						<div class="col-md-12">
 							<p>
-								<b> Fecha: </b>  08/08/2015
+								<b> Fecha: </b>  {{event.start.date}}
 							</p>
 						</div>
 					</div>
 					<hr />
 					<div class="row">
 						<div class="col-md-12">
-							<b> Publicado por: </b> <a href="/user/?=blah"> usuario </a>
+							<b> Publicado por: </b> <a href="/user/?={{event.user.username}}"> {{ event.user.username }} </a>
 						</div>
 					</div>
 					<hr />

@@ -38,16 +38,18 @@
 			<div class="col-md-12 elefanteinvisible"></div>
 
 			<div class="list-group">
-				<!-- Elemento a repetir	 -->
-				<p href="#" class="list-group-item active">Toque 100% Rock</p>
-				<div class="list-group-item">
-					<h4 class="list-group-item-heading">
-						Puro rots
-					</h4>
-					<a href="/event/?id=1" class="list-group-item-text">
-						+Detalles
-					</a>
-				</div>
+
+                {% for event in userEvents %}
+                    <p href="#" class="list-group-item active">{{event.name}}</p>
+                        <div class="list-group-item">
+                    <h4 class="list-group-item-heading">
+                        {{event.description}}
+                    </h4>
+                    <a href="/event/?id={{event.eventId}}" class="list-group-item-text">
+                        +Detalles
+                    </a>
+                </div>
+                {% endfor %}
 
 			</div>
 

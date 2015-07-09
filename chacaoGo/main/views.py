@@ -154,18 +154,33 @@ def mayorsprofile(request):
 
 
 def myevents(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
+    userEvents = User.getEvents(request.session['username'])
+
     t = loader.get_template('myevents.html')
-    return HttpResponse(t.render({}))
+    c = Context({'userEvents': userEvents}) 
+    return HttpResponse(t.render(c))
 
 def mycomments(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
     t = loader.get_template('mycomments.html')
     return HttpResponse(t.render({}))
 
 def favorites(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
     t = loader.get_template('favorites.html')
     return HttpResponse(t.render({}))
 
 def purchases(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
     t = loader.get_template('purchases.html')
     return HttpResponse(t.render({}))
 
@@ -175,8 +190,11 @@ def purchases(request):
 
 def event(request):
     eventId = int(request.GET.get('id',-1))
+
+    if eventId != -1:
+        event   = Event.getEventById(eventId)
     
-    c = Context({'foo': 'bar'})         
+    c = Context({'event': event,'type' : event.get_evenType_display() })         
     t = loader.get_template('event.html')
     return HttpResponse(t.render(c))
 
