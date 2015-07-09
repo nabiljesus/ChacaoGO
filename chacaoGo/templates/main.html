@@ -259,8 +259,15 @@
           'className' : 'custom'
           }
 
-      var myInput = { 'PR' : [ {"X":10.49802,"Y":-426.85181,"nombre":'hi',"descripcion":'hola, soy texto descripcion del marker', "tipo":"ZP", "id": 0, "VIP":true}], 
-         'VI' : [ {"X":10.50089,"Y": -426.8573,"nombre":'hi2',"descripcion":'hola, soy texto descripcion del marker', "tipo":"DEL", "id": 0, "VIP":false}] };
+      //var myInput = { 'PR' : [ {"X":10.49802,"Y":-426.85181,"nombre":'hi',"descripcion":'hola, soy texto descripcion del marker', "tipo":"ZP", "id": 0, "VIP":true}], 
+         //'VI' : [ {"X":10.50089,"Y": -426.8573,"nombre":'hi2',"descripcion":'hola, soy texto descripcion del marker', "tipo":"DEL", "id": 0, "VIP":false}] };
+      
+      //alert("merwebo")
+
+
+      var myInput = JSON.parse('{{ listaEventos | safe }}')
+      //alert(myInput)
+      //var myInput = {}
 
       for (var key in myInput) {
         //alert(key)

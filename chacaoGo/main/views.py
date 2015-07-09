@@ -26,8 +26,10 @@ def main(request):
 
     logged = 'username' in request.session
 
-    dictionary = {'logged':logged }
+    listaEventos = Event.getEventsByType(['ZP','DEL','AS','AC','EM','PV','PR','AM','SA','SE','RRS','MA','ED','BA','YO','CD','CO','FE','OT','EA','JD','VPE','JE','DES','DS','SM','JV','SV','CA','AC','PC','TE'])
+    listaEventos = json.dumps(listaEventos)
 
+    dictionary = {'logged':logged, 'listaEventos': str(listaEventos) }
     return render_to_response('main.html', 
                               dictionary , 
                               context_instance=RequestContext(request)

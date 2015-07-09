@@ -1,5 +1,10 @@
 from django.db import models
 
+
+#######################
+# Constantes de Modelos
+#######################
+
 TYPECHOICES = (
         ('ZP','Zona Peligrosa'),
         ('DEL','Delito'),
@@ -44,9 +49,14 @@ CATEGORIES = (
     ('PR','Productos'),
     ('SP','Servicios Públicos'),
     ('DM','Deterioro Municipal')
-)    
+)
 
-# Create your models here.
+
+CATEGORYLIST = ['SE','VI','DS','DE','CU','PR','SP','DM']
+
+##########
+# Modelos
+##########
 
 class User(models.Model):
     """Clase para usuario"""
@@ -69,6 +79,7 @@ class User(models.Model):
     def __str__(self):
         return self.username + " " + self.fullname
 
+    #Funcion que indica si un username con su password concuerdan 
     def mayLog(username,password):
         user = User.objects.filter(username=username)
         if len(user) == 1:
@@ -77,10 +88,12 @@ class User(models.Model):
         else:
             return False
 
+    #Funcion que entrega un objeto de tipo usuario asociado a un username
     def getUser(username):
         user = User.objects.filter(username=username)
         return user[0]
 
+    #Funcion que entrega el typo del usuario dado
     def getType(username):
         user = User.objects.filter(username=username)
         if len(user) == 1:
@@ -93,6 +106,13 @@ class Category(models.Model):
     categoryName = models.CharField(max_length = 2,choices=CATEGORIES)
     eventType    = models.CharField(max_length = 3,choices=TYPECHOICES)
 
+    #Funcion que obtiene todos los tipos asociados a una categoria
+    def getTypes(category):
+        types = Category.objects.filter(categoryName=category)
+        res = []
+        for i in types:
+            res.append(i.eventType)
+        return res
 
 class Event(models.Model):
     """Clase para un evento"""
@@ -110,6 +130,38 @@ class Event(models.Model):
     evenType    = models.CharField(max_length = 3,choices=TYPECHOICES)
     vip         = models.BooleanField(default = False)
     seen        = models.BooleanField(default = False)
+
+    def getEventsByType(eventList):
+        res = {}
+        for cat in CATEGORYLIST:
+            catEvents   = []
+            eventsInCat = Category.getTypes(cat)
+
+            for evType in eventsInCat:
+                events = Event.objects.filter(evenType=evType)
+                if (len(events) > 0):
+                    for e in events:
+                        
+
+                        if e.evenType in eventList:
+                            print("Aqui encontre algo de la lista")
+                            catEvents.append(
+                                { 'X'          : e.xPosition ,
+                                  'Y'          : e.yPosition,
+                                  'nombre'     : e.name,
+                                  'descripcion': e.description[0:30] + "...",
+                                  'tipo'       : evType,
+                                  'id'         : e.eventId,
+                                  'VIP'        : e.vip ,
+                                }
+                            )
+
+            if (len(catEvents) > 0):
+                res[cat] = catEvents
+        
+        return res
+
+
 
 class Comment(models.Model):
     """Clase para comentarios asociados a un evento"""
