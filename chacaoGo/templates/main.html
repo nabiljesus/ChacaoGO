@@ -246,8 +246,9 @@ body {
       <!-- Username & Password Login form -->
       <div class="user_login">
         <form id="form" action="/login/" method="post">
+        {% csrf_token %}
           <label>Nombre de Usuario</label>
-          <input type="text" />
+          <input type="text" name="username" id="username"/>
           <br />
 
           <label>Contraseña</label>
@@ -262,6 +263,8 @@ body {
 
         <a href="#" class="forgot_password">Contraseña Olivdada?</a>
       </div>
+
+          </form>
 
       <!-- Register Form -->
       <div class="user_register">
