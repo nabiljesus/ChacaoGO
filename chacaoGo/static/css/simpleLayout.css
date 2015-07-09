@@ -102,3 +102,8 @@
     width: 38em;
     word-wrap: break-word; 
 }
+
+.smallerimg{
+  height: 109px;
+  width: 300px;
+}
