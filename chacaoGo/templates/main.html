@@ -5,15 +5,14 @@
 
 
 <body bgcolor="#FF9900" >
-
-<style type="text/css"> 
-        body{font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444;font-size:13px;  background: #FF9900;}
-        p,div,ul,li{padding:0px; margin:0px; }
+<style type="text/css">
+  
+body {
+  background: #FF9900;
+}
 </style>
 
-
-<!-- 
-<div class="toplef" style="z-index: 2;">
+ <div class="toplef" style="z-index: 2;">
     <div id="list1" class="dropdown-check-list" tabindex="100" >
         <span class="anchor"><img src="/static/img/icon_police.png" width="18px"><b> Seguridad </b></span>
         <ul class="items">
@@ -218,12 +217,15 @@
         </script>
       </div>
       </div>
+      <!-- si se quitan las siguientes 3 lineas, funciona el de registrar-->
       <div class="filt_buttom topright" style="top : 10px; left:  45%;">
          <button class="btn  btn-default" href="/register" >Filtrar</button>
       </div>
-  </div> -->
+ </div>
 
+{% if not logged %}
 <div class="container">
+  
   <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="/static/js/jquery.leanModal.min.js"></script>
   <button id="modal_trigger" href="#modal" class="btn topright" >Conectarse o Registrarse</button>
@@ -235,6 +237,7 @@
       <span class="modal_close"><i class="fa fa-times"></i></span>
     </header>
     
+
     <section class="popupBody">
       <!-- Social Login -->
       <div class="social_login">
@@ -247,8 +250,9 @@
       <!-- Username & Password Login form -->
       <div class="user_login">
         <form id="form" action="/login/" method="post">
+        {% csrf_token %}
           <label>Nombre de Usuario</label>
-          <input type="text"  name="username" id="username"/>
+          <input type="text" name="username" id="username"/>
           <br />
 
           <label>Contraseña</label>
@@ -262,7 +266,8 @@
         </form>
 
         <a href="#" class="forgot_password">Contraseña Olivdada?</a>
-      </div>
+          </div>
+        </form>
 
       <!-- Register Form -->
       <div class="user_register">
@@ -325,36 +330,23 @@
     })
   </script>
 </div>
+  
+  {% else %}
 
-<div id="Filter">
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
-    <script src="/static/js/jquery.sumoselect.js"></script>
-    <script type="text/javascript">
-        $(document).ready(function () {
-            window.testSelAll2 = $('.testSelAll2').SumoSelect({selectAll:true });
-        });
-    </script>
-    <style type="text/css">
-        body{font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444;font-size:13px;}
-        p,div,ul,li{padding:0px; margin:0px;}
-    </style>
+  <div class="btn-group topright">
+    <a type="button" class="btn btn-default" href="/redirectuser">Perfil</a>
+    <a class="btn btn-default" href="/logout">Salir</a>
+  </div>  
 
+  <div class="btn-group bottomright">
+    <a type="button" class="btn btn-default" href="/addevent">Crear Evento</a>
+  </div>
 
-    <select multiple="multiple" placeholder="Seguridad" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
-           <option selected value="volvo">Volvo</option>
-           <option value="saab">Saab</option>
-           <option value="mercedes">Mercedes</option>
-           <option value="audi">Audi</option>
-           <option selected value="bmw">BMW</option>
-           <option value="porsche">Porche</option>
-           <option value="ferrari">Ferrari</option>
-           <option value="mitsubishi">Mitsubishi</option>
+  {% endif %}
 
-
-    </select>
-</div>
 
   <!-- ================ MAP START ====================== -->
+
 
 <div id="map" class="mapr"></div>
  
@@ -596,8 +588,7 @@
             'className' : 'custom'
             }
 
-        var myInput = { 'PR' : [ {"X":10.49802,"Y":-426.85181,"nombre":'hi',"descripcion":'hola, soy texto descripcion del marker', "tipo":"ZP", "id": 0, "VIP":true}], 
-           'VI' : [ {"X":10.50089,"Y": -426.8573,"nombre":'hi2',"descripcion":'hola, soy texto descripcion del marker', "tipo":"DEL", "id": 0, "VIP":false}] };
+        var myInput = JSON.parse('{{ listaEventos | safe }}')
 
         for (var key in myInput) {
           //alert(key)
@@ -787,80 +778,7 @@
  -->
 
 
-  {% if not logged %}
-  <script type="text/javascript">
-    function showUp(){
-      document.getElementById("regpop").style.display  = "initial";
-      document.getElementById("back").style.display    = "initial";
-      document.getElementById("password").style.display  = "initial";
-      document.getElementById("passName").style.display  = "initial";
-      document.getElementById("usName").style.display  = "initial";
-      document.getElementById("username").style.display  = "initial";
-      document.getElementById("connect").style.display  = "initial";
-
-      document.getElementById("regpop").style.visibility  = "visible";
-      document.getElementById("back").style.visibility    = "visible";
-      document.getElementById("password").style.visibility  = "visible";
-      document.getElementById("passName").style.visibility  = "visible";
-      document.getElementById("usName").style.visibility  = "visible";
-      document.getElementById("username").style.visibility  = "visible";
-      document.getElementById("connect").style.visibility  = "visible";
-    }
-    function hide(){
-      document.getElementById("regpop").style.visibility  = "hidden";
-      document.getElementById("back").style.visibility    = "hidden";
-      document.getElementById("password").style.visibility= "hidden";
-      document.getElementById("passName").style.visibility= "hidden";
-      document.getElementById("usName").style.visibility  = "hidden";
-      document.getElementById("username").style.visibility= "hidden";
-      document.getElementById("connect").style.visibility= "hidden";
-      document.getElementById("regpop").style.display  = "none";
-      document.getElementById("back").style.display    = "none";
-      document.getElementById("password").style.display= "none";
-      document.getElementById("passName").style.display= "none";
-      document.getElementById("usName").style.display  = "none";
-      document.getElementById("username").style.display= "none";
-      document.getElementById("connect").style.display= "none";
-    }
-  </script>
-
-<!--   <div class="btn-group topright">
-    <button type="button" class="btn btn-default" onclick="showUp()">Conectarme</button>
-    <a class="btn btn-default" href="/register">Registrarme</a>
-  </div>
- -->
-  <div id="cover">
-    <img id="regpop" class="img-responsive center invisible" style="z-index: 3;" src="/static/img/login_pop.png"/>
-      <input onclick="hide()" type="image" id="back" style="z-index: 3;" class="interno img-responsive center invisible " height="100" width="100" src="/static/img/backblack.png"/>
-
-    <form id="form" action="/login/" method="post">
-    {% csrf_token %}
-    <div class="form-group invisible center">
-        <label class="invisible" id="usName" style="z-index: 4;">Usuario: </label>
-         <input type="text" name="username" id="username" style="z-index: 4;">
   
-    </div>
-    <div class="form-group invisible">
-        <label class="invisible" id="passName" style="z-index: 4;">Password: </label>
-         <input type="password" name="password" style="z-index: 4;" id="password">
-    </div>
-    <button id="connect" type="submit" class="btn btn-default invisible">Conectarme</button>
-    </form>
-
-  </div>
-
-  {% else %}
-
-  <div class="btn-group topright">
-    <a type="button" class="btn btn-default" href="/redirectuser">Perfil</a>
-    <a class="btn btn-default" href="/logout">Salir</a>
-  </div>  
-
-  <div class="btn-group bottomright">
-    <a type="button" class="btn btn-default" href="/addevent">Crear Evento</a>
-  </div>
-
-  {% endif %}
 
 
 </body>
