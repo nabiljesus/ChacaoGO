@@ -122,7 +122,7 @@ def redirectuser(request):
     elif request.session['type'] == 'Alcaldía':
         html = '/mayorsprofile'
     elif request.session['type'] == 'Moderador':
-        html = '/userprofile'
+        html = '/mayorsprofile'
     else:
         html = '/main'
 

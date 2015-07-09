@@ -115,7 +115,7 @@ class User(models.Model):
 
     def getEvents(username):
         user = User.objects.filter(username=username)
-        return Event.objects.filter(user=user[0])
+        return Event.objects.filter(user=user[0]).order_by('-added')
 
 class Category(models.Model):
     """Clase para categoria de cada evento""" 
@@ -149,7 +149,7 @@ class Event(models.Model):
 
     def getAllComments(id):
         event = Event.objects.filter(eventId=id)[0]
-        return Comment.objects.filter(event=event)
+        return Comment.objects.filter(event=event).order_by('-added')
 
     def getEventById(id):
         return Event.objects.filter(eventId=id)[0]
@@ -207,3 +207,4 @@ class Comment(models.Model):
 
     def getParentEvent(id):
         return Event.objects.filter(eventId=id)[0]
+
