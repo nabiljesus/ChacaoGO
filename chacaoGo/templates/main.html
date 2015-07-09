@@ -12,109 +12,6 @@ body {
 }
 </style>
 
-<div class="container">
-  <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
-  <script type="text/javascript" src="/static/js/jquery.leanModal.min.js"></script>
-  <button id="modal_trigger" href="#modal" class="btn topright" >Conectarse o Registrarse</button>
-
-  <div id="modal" class="popupContainer" style="display:none;">
-    <header class="popupHeader">
-      <span class="header_title">Conectarse a ChacaoGO</span>
-      <span class="modal_close"><i class="fa fa-times"></i></span>
-    </header>
-    
-    <section class="popupBody">
-      <!-- Social Login -->
-      <div class="social_login">
-        <div class="action_btns">
-          <div class="one_half"><a href="#" id="login_form" class="btn">Iniciar Sesion</a></div>
-          <div class="one_half last"><a href="/register" class="btn">Registrarse</a></div>
-        </div>
-      </div>
-
-      <!-- Username & Password Login form -->
-      <div class="user_login">
-        <form>
-          <label>Nombre de Usuario</label>
-          <input type="text" />
-          <br />
-
-          <label>Contraseña</label>
-          <input  type="password" name="password" />
-          <br />
-
-          <div class="action_btns">
-            <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Voler</a></div>
-            <div class="one_half last"><button id="connect" type="submit" class="btn btn_red">Iniciar Sesion</button></div>
-          </div>
-        </form>
-
-        <a href="#" class="forgot_password">Contraseña Olivdada?</a>
-      </div>
-
-      <!-- Register Form -->
-      <div class="user_register">
-        <form>
-          <label>Full Name</label>
-          <input  name="username" id="username" type="text" />
-          <br />
-
-          <label>Email Address</label>
-          <input type="email" />
-          <br />
-
-          <label>Password</label>
-          <input type="password" />
-          <br />
-
-          <div class="checkbox">
-            <input id="send_updates" type="checkbox" />
-            <label for="send_updates">Send me occasional email updates</label>
-          </div>
-
-          <div class="action_btns">
-            <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
-            <div class="one_half last"><a href="#" class="btn btn_red">Register</a></div>
-          </div>
-        </form>
-      </div>
-    </section>
-  </div>
-
-
-  <script type="text/javascript">
-    $("#modal_trigger").leanModal({top : 200, overlay : 0.6, closeButton: ".modal_close" });
-
-    $(function(){
-      // Calling Login Form
-      $("#login_form").click(function(){
-        $(".social_login").hide();
-        $(".user_login").show();
-        return false;
-      });
-
-      // Calling Register Form
-      $("#register_form").click(function(){
-        $(".social_login").hide();
-        $(".user_register").show();
-        $(".header_title").text('Register');
-        return false;
-      });
-
-      // Going back to Social Forms
-      $(".back_btn").click(function(){
-        $(".user_login").hide();
-        $(".user_register").hide();
-        $(".social_login").show();
-        $(".header_title").text('Login');
-        return false;
-      });
-
-    })
-  </script>
-</div>
-
-
  <div class="toplef" style="z-index: 2;">
     <div id="list1" class="dropdown-check-list" tabindex="100" >
         <span class="anchor"><img src="/static/img/icon_police.png" width="18px"><b> Seguridad </b></span>
@@ -322,9 +219,112 @@ body {
       </div>
       <!-- si se quitan las siguientes 3 lineas, funciona el de registrar-->
       <div class="filt_buttom topright" style="top : 10px; left:  45%;">
-         <button class="btn  btn-default" href="/register" >Filtrar</button>
+         <a class="btn  btn-default" href="/register" >Filtrar</a>
       </div>
  </div>
+<div class="container">
+  <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
+  <script type="text/javascript" src="/static/js/jquery.leanModal.min.js"></script>
+  <button id="modal_trigger" href="#modal" class="btn topright" >Conectarse o Registrarse</button>
+
+  <div id="modal" class="popupContainer" style="display:none;">
+    <header class="popupHeader">
+      <span class="header_title">Conectarse a ChacaoGO</span>
+      <span class="modal_close"><i class="fa fa-times"></i></span>
+    </header>
+    
+    <section class="popupBody">
+      <!-- Social Login -->
+      <div class="social_login">
+        <div class="action_btns">
+          <div class="one_half"><a href="#" id="login_form" class="btn">Iniciar Sesion</a></div>
+          <div class="one_half last"><a href="/register" class="btn">Registrarse</a></div>
+        </div>
+      </div>
+
+      <!-- Username & Password Login form -->
+      <div class="user_login">
+        <form>
+          <label>Nombre de Usuario</label>
+          <input type="text" />
+          <br />
+
+          <label>Contraseña</label>
+          <input  type="password" name="password" />
+          <br />
+
+          <div class="action_btns">
+            <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Voler</a></div>
+            <div class="one_half last"><button id="connect" type="submit" class="btn btn_red">Iniciar Sesion</button></div>
+          </div>
+        </form>
+
+        <a href="#" class="forgot_password">Contraseña Olivdada?</a>
+      </div>
+
+      <!-- Register Form -->
+      <div class="user_register">
+        <form>
+          <label>Full Name</label>
+          <input  name="username" id="username" type="text" />
+          <br />
+
+          <label>Email Address</label>
+          <input type="email" />
+          <br />
+
+          <label>Password</label>
+          <input type="password" />
+          <br />
+
+          <div class="checkbox">
+            <input id="send_updates" type="checkbox" />
+            <label for="send_updates">Send me occasional email updates</label>
+          </div>
+
+          <div class="action_btns">
+            <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Back</a></div>
+            <div class="one_half last"><a href="#" class="btn btn_red">Register</a></div>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+
+
+  <script type="text/javascript">
+    $("#modal_trigger").leanModal({top : 200, overlay : 0.6, closeButton: ".modal_close" });
+
+    $(function(){
+      // Calling Login Form
+      $("#login_form").click(function(){
+        $(".social_login").hide();
+        $(".user_login").show();
+        return false;
+      });
+
+      // Calling Register Form
+      $("#register_form").click(function(){
+        $(".social_login").hide();
+        $(".user_register").show();
+        $(".header_title").text('Register');
+        return false;
+      });
+
+      // Going back to Social Forms
+      $(".back_btn").click(function(){
+        $(".user_login").hide();
+        $(".user_register").hide();
+        $(".social_login").show();
+        $(".header_title").text('Login');
+        return false;
+      });
+
+    })
+  </script>
+</div>
+
+
 
   <!-- ================ MAP START ====================== -->
 
@@ -739,7 +739,7 @@ body {
         map.options.maxZoom = 19;
         map.options.minZoom = 14;
      </script>
-</div> 
+ </div> 
 
    <!-- ================ MAP END ====================== -->
 
