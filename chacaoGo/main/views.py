@@ -32,8 +32,11 @@ def main(request):
 
     logged = 'username' in request.session
 
-    dictionary = {'logged':logged }
+    listaEventos = Event.getEventsByType(['ZP','DEL','AS','AC','EM','PV','PR','AM','SA','SE','RRS','MA','ED','BA','YO','CD','CO','FE','OT','EA','JD','VPE','JE','DES','DS','SM','JV','SV','CA','AC','PC','TE'])
+    import json
+    listaEventos = json.dumps(listaEventos)
 
+    dictionary = {'logged':logged, 'listaEventos': str(listaEventos) }
     return render_to_response('main.html', 
                               dictionary , 
                               context_instance=RequestContext(request)
@@ -125,7 +128,7 @@ def redirectuser(request):
     elif request.session['type'] == 'Alcaldía':
         html = '/mayorsprofile'
     elif request.session['type'] == 'Moderador':
-        html = '/userprofile'
+        html = '/mayorsprofile'
     else:
         html = '/main'
 
@@ -136,41 +139,88 @@ def userprofile(request):
         return redirect("/main",foo='bar')
 
     t = loader.get_template('userprofile.html')
-    c = Context({'foo': 'bar'})         
+    c = Context({'user': request.session['username']})         
     return HttpResponse(t.render(c))
 
 def checkprofile(request):
-    if not 'username' in request.session:
-        return redirect("/main",foo='bar')
+    logged = 'username' in request.session
 
-    t = loader.get_template('checkprofile.html')
-    c = Context({'foo': 'bar'})         
-    return HttpResponse(t.render(c))
+    profile = request.GET.get('username',-1)
+    
+    if profile == -1:
+        return redirect("/main")
+    else:
+
+
+        posts    = User.getCreatedEvents(profile)
+        comments = User.getCommentsMade(profile)
+        showable = request.session['username'] == profile
+        (points,title)   = User.getUserVotes(profile)
+
+        dictionary = {
+            'posts'   : posts   ,
+            'comments': comments,
+            'points'  : points,
+            'showable': showable, #Podria permitirse que las autoridades tambien vean este correo
+            'email'   : User.getEmail(profile),
+            'name'    : User.getName(profile),
+            'title'   : title,
+        }
+
+        t = loader.get_template('checkprofile.html')
+
+        c = Context(dictionary)         
+
+        return HttpResponse(t.render(c))
 
 def mayorsprofile(request):
     if not 'username' in request.session:
         return redirect("/main",foo='bar')
 
     t = loader.get_template('mayorsprofile.html')
-    c = Context({'foo': 'bar'})         
+    c = Context({'user': request.session['username']})       
     return HttpResponse(t.render(c))
 
 
 def myevents(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
+    userEvents = User.getEvents(request.session['username'])
+
     t = loader.get_template('myevents.html')
-    return HttpResponse(t.render({}))
+    c = Context({'userEvents': userEvents}) 
+    return HttpResponse(t.render(c))
 
 def mycomments(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
+    userEvents = User.getCommentedEvents(request.session['username'])
+
     t = loader.get_template('mycomments.html')
-    return HttpResponse(t.render({}))
+    c = Context({'userEvents': userEvents})
+    return HttpResponse(t.render(c))
 
 def favorites(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
+    userEvents = User.getFavoriteEvents(request.session['username'])
+
     t = loader.get_template('favorites.html')
-    return HttpResponse(t.render({}))
+    c = Context({'userEvents': userEvents})
+    return HttpResponse(t.render(c))
 
 def purchases(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
+    userEvents = User.getPurchases(request.session['username'])
+
     t = loader.get_template('purchases.html')
-    return HttpResponse(t.render({}))
+    c = Context({'userEvents': userEvents})
+    return HttpResponse(t.render(c))
 
 #######################
 #  Vistas para eventos
@@ -178,10 +228,78 @@ def purchases(request):
 
 def event(request):
     eventId = int(request.GET.get('id',-1))
+
+    if eventId != -1:
+        event   = Event.getEventById(eventId)
+    else:
+        event   = Event.getEventById(1)
+
+    comments                      = Event.getAllComments(eventId)
+    (positiveVotes,negativeVotes) = Vote.getEventVotes(eventId)
     
-    c = Context({'foo': 'bar'})         
-    t = loader.get_template('event.html')
-    return HttpResponse(t.render(c))
+    (mayvotep,mayvoten) = Vote.mayVote(request.session['username'],eventId) if \
+                         ('username' in request.session) \
+                         else (False,False) 
+
+    
+    dictionary = {
+                 'event'   : event,
+                 'type'    : event.get_evenType_display(), 
+                 'form'    : CommentForm(),
+                 'logged'  : 'username' in request.session,
+                 'comments': comments,
+                 'positives' : positiveVotes,
+                 'negatives' : negativeVotes,
+                 'mayvotep'  : mayvotep,
+                 'mayvoten'  : mayvoten,
+                 }
+
+
+    return render_to_response('event.html', dictionary , context_instance=RequestContext(request))
+
+
+def addcomment(request):
+    
+    if request.method == 'GET':
+        # print("Que mieeeerda paso aqui")
+        pass
+    elif request.method == 'POST':
+
+        #Conversion a floats
+        eventId = int(request.POST.get('eventId',-1))
+
+        #Convertir post en mutable y elimnar variables de mas
+        copy = request.POST.copy()
+        copy.pop('eventId')
+
+        form = CommentForm(copy)
+        if form.is_valid():
+
+            newComment = Comment(
+                user        = User.getUser(request.session['username']),
+                description = form.cleaned_data['description'],
+                event       = Comment.getParentEvent(eventId)
+            )
+
+            newComment.save()
+            c = Context({'mensaje': 'Gracias por comentar!'})
+            #t = loader.get_template('/event/?id='+str(eventId)) 
+            #return render_to_response('/event/?id='+str(eventId), c , context_instance=RequestContext(request))
+            return redirect('/event/?id='+str(eventId))
+        else:
+            print("No pase la validez D:")
+            for field in form:
+                print(field)
+                print(field.errors)
+            t = loader.get_template('/event/?id='+str(eventId)) 
+            c = Context({'form': CommentForm(), 'mensaje': 'Ha ocurrido un error al momento de crear el evento :('})
+        return HttpResponse(t.render(c))
+    else:
+        dictionary = {}
+        print("wtf? what am i doing here?")
+
+    return render_to_response('event.html', dictionary , context_instance=RequestContext(request))
+
 
 def addevent(request):
     if not 'username' in request.session:
@@ -238,3 +356,37 @@ def addevent(request):
         print("wtf? what am i doing here?")
 
     return render_to_response('addevent.html', dictionary , context_instance=RequestContext(request))
+
+def addvote(request):
+    print(request.GET)
+    vote    = request.GET.get('v',-1)
+    eventId = int(request.GET.get('eventId',-1))
+
+    if vote == -1 or not ('username' in request.session):
+        return redirect('/event/?id='+str(eventId))
+    else:
+        user = User.getUser(request.session['username'])
+        event= Event.getEventById(eventId)
+        vote = vote == "True"
+        (mayvotep,mayvoten) = Vote.mayVote(request.session['username'],eventId)
+
+        if mayvotep and mayvoten:
+            newVote   = Vote(
+                user  = user,
+                event = event,
+                isUsefull = vote,
+            )
+            newVote.save()
+        else:
+            print("EL voto es")
+            print(vote)
+            v = Vote.objects.filter(user=user,event=event).first()
+            print("Pasando de ")
+            print(v.isUsefull)
+            v.isUsefull = vote
+            print("a")
+            print(v.isUsefull)
+            v.save()
+
+        return redirect('/event/?id='+str(eventId))
+

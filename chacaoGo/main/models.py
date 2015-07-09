@@ -1,5 +1,10 @@
 from django.db import models
 
+
+#######################
+# Constantes de Modelos
+#######################
+
 TYPECHOICES = (
         ('ZP','Zona Peligrosa'),
         ('DEL','Delito'),
@@ -30,7 +35,7 @@ TYPECHOICES = (
         ('JV','Jornada Veterinaria'),
         ('SV','Solicitud de Voluntarios'),
         ('CA','Calles y avenidas'),
-        ('AC','Aceras'),
+        ('ACE','Aceras'),
         ('PC','Patrimonio Cultural'),
         ('TE','Terreno')
     )
@@ -44,9 +49,54 @@ CATEGORIES = (
     ('PR','Productos'),
     ('SP','Servicios Públicos'),
     ('DM','Deterioro Municipal')
-)    
+)
 
-# Create your models here.
+CATEGORYIMAGE = {
+    'DM' : "icon_broken.png",
+    'CU' : "icon_culture.png",
+    'SP' : "icon_help.png",
+    'SE' : "icon_police.png",
+    'PR' : "icon_product.png",
+    'DS' : "icon_service.png",
+    'DE' : "icon_sports.png",
+    'VI' : "icon_street.png"
+}
+
+CATEGORYLIST = ['SE','VI','DS','DE','CU','PR','SP','DM']
+
+LEVELS  = [ ("Villano",                       0   ),
+            ("Ciudadano común",               10  ),
+            ("Buen samaritano",               20  ),
+            ("Viejita de la comunidad",       30  ),
+            ("Ciudadano Ejemplar",            40  ),
+            ("Periodista aficionado",         60  ),
+            ("Ciberperiodista",               70  ),
+            ("Colaborador conocido ChacaoGO", 100 ),
+            ("Colaborador Destacado Chacao",  150 ),
+            ("Mano dereha de Ramón Muchacho", 300 )
+           ]
+
+
+def smallerDate(a,b):
+    if a.year <= b.year:
+        if a.month <= b.year:
+            if a.day <= b.year:
+                return True
+            else:
+                return False
+        else:
+            return False
+    else:
+        return False
+
+def deletRepeated(seq):
+    seen = set()
+    seen_add = seen.add
+    return [ x for x in seq if not (x in seen or seen_add(x))]
+
+##########
+# Modelos
+##########
 
 class User(models.Model):
     """Clase para usuario"""
@@ -64,11 +114,12 @@ class User(models.Model):
     email    = models.EmailField(unique=True)
     password = models.CharField(max_length = 128) #Para sha
     userType = models.CharField(max_length = 9,choices=USERTYPES,default=NORMAL) 
-    added    = models.DateTimeField(auto_now_add=True)
+    added    = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.username + " " + self.fullname
 
+    #Funcion que indica si un username con su password concuerdan 
     def mayLog(username,password):
         user = User.objects.filter(username=username)
         if len(user) == 1:
@@ -77,10 +128,12 @@ class User(models.Model):
         else:
             return False
 
+    #Funcion que entrega un objeto de tipo usuario asociado a un username
     def getUser(username):
         user = User.objects.filter(username=username)
         return user[0]
 
+    #Funcion que entrega el typo del usuario dado
     def getType(username):
         user = User.objects.filter(username=username)
         if len(user) == 1:
@@ -88,11 +141,95 @@ class User(models.Model):
         else:
             return None
 
+    def getEvents(username):
+        user = User.objects.filter(username=username).first()
+        return Event.objects.filter(user=user).order_by('-added')
+
+    def getPurchases(username):
+        user = User.objects.filter(username=username).first()
+        return Event.objects.filter(user=user,vip=True).order_by('-added')
+
+
+    def getCommentedEvents(username):
+        user     = User.objects.filter(username=username)
+        
+        eventsCommented = Comment.objects.filter(user=user)\
+                            .order_by('-added')
+
+        #Asegurando la unicidad
+        a = set()
+        for comment in eventsCommented:
+            event = comment.event
+            a.add( (event.name,event.description,event.eventId))
+
+        return a
+
+    def getFavoriteEvents(username):
+        user     = User.objects.filter(username=username)
+        
+        eventsLiked = Vote.objects.filter(user=user,isUsefull=True)
+
+        #Asegurando la unicidad
+        a = set()
+        for vote in eventsLiked:
+            event = vote.event
+            a.add( (event.name,event.description,event.eventId))
+
+        return a
+
+    def getCreatedEvents(username):
+        user = User.objects.filter(username=username).first()
+        return Event.objects.filter(user=user).count()
+
+    #Funcion para obtener el balance de votos de un usuario segun sus eventos
+    #Ademas entrega el titulo correspondiente 
+    def getUserVotes(username):
+        user    = User.objects.filter(username=username)[0]
+        events  = Event.objects.filter(user=user)
+        voteSum = 0
+
+        for ev in events:
+            votes = Vote.objects.filter(event=ev)
+            positive = votes.filter(isUsefull=True).count()
+            negative = votes.filter(isUsefull=False).count()
+            voteSum  = voteSum + positive - negative
+
+        for l in LEVELS:
+            if voteSum > l[1]:
+                pass
+            else:
+                title = l[0]
+                break
+            
+
+        return (voteSum,title)
+
+    def getCommentsMade(username):
+        user = User.objects.filter(username=username).first()
+        return Comment.objects.filter(user=user).count()
+
+    def getEmail(username):
+        user = User.objects.filter(username=username).first()
+        return user.email
+
+    def getName(username):
+        user = User.objects.filter(username=username).first()
+        return user.fullname
+
+
+
 class Category(models.Model):
     """Clase para categoria de cada evento""" 
     categoryName = models.CharField(max_length = 2,choices=CATEGORIES)
     eventType    = models.CharField(max_length = 3,choices=TYPECHOICES)
 
+    #Funcion que obtiene todos los tipos asociados a una categoria
+    def getTypes(category):
+        types = Category.objects.filter(categoryName=category)
+        res = []
+        for i in types:
+            res.append(i.eventType)
+        return res
 
 class Event(models.Model):
     """Clase para un evento"""
@@ -111,9 +248,102 @@ class Event(models.Model):
     vip         = models.BooleanField(default = False)
     seen        = models.BooleanField(default = False)
 
+    def getAllComments(id):
+        event = Event.objects.filter(eventId=id)[0]
+        return Comment.objects.filter(event=event).order_by('-added')
+
+    def getEventById(id):
+        return Event.objects.filter(eventId=id)[0]
+
+    def getEventsByType(eventList):
+        from django.utils import timezone
+        res = {}
+        for cat in CATEGORYLIST:
+            catEvents   = []
+            eventsInCat = Category.getTypes(cat)
+
+            for evType in eventsInCat:
+                events = Event.objects.filter(evenType=evType)
+                if (len(events) > 0):
+                    for e in events:
+                        now = timezone.now()
+
+                        #Comparacion unicamente de dias
+                        rightInTime = smallerDate(e.start,now)  and \
+                                      smallerDate(now,e.end)
+
+                        if not rightInTime:
+                            print("Verga primo el ",end="")
+                            print(e.name,end="")
+                            print(" no furula porque")
+                            print(now)
+                            print(e.end)
+
+                        if (e.evenType in eventList) and rightInTime:
+                            
+                            catEvents.append(
+                                { 'X'          : e.xPosition ,
+                                  'Y'          : e.yPosition,
+                                  'nombre'     : e.name,
+                                  'descripcion': e.description[0:30] + "...",
+                                  'tipo'       : evType,
+                                  'id'         : e.eventId,
+                                  'VIP'        : e.vip ,
+                                }
+                            )
+
+            if (len(catEvents) > 0):
+                res[cat] = catEvents
+        
+        return res
+
+
+
 class Comment(models.Model):
     """Clase para comentarios asociados a un evento"""
     user        = models.ForeignKey(User)
     event       = models.ForeignKey(Event)
     description = models.CharField(max_length = 500)
     added       = models.DateTimeField(auto_now_add=True)
+
+    def getParentEvent(id):
+        return Event.objects.filter(eventId=id)[0]
+
+class Vote(models.Model):
+    """Clase para votos de utilidad en un evento"""
+    user        = models.ForeignKey(User)
+    event       = models.ForeignKey(Event)
+    isUsefull   = models.BooleanField()
+
+    class Meta:
+        unique_together = ('user','event')
+
+    #Funcion para obtener numero de votos positivos y negativos de un evento
+    def getEventVotes(eventId):
+        event = Event.objects.filter(eventId=eventId)[0]
+        votes = Vote.objects.filter(event=event)
+
+        positive = votes.filter(isUsefull=True).count()
+        negative = votes.filter(isUsefull=False).count()
+
+        return (positive,negative)
+
+    
+
+    #Funcion que indica por que puede votar un usuario en un evento
+    def mayVote(username,eventId):
+        user    = User.objects.filter(username=username).first()
+        event   = Event.objects.filter(eventId=eventId).first()
+
+        vote    = Vote.objects.filter(event=event,user=user)
+
+        if(vote.count() == 0 ):
+            return (True, True)
+        else:
+            if vote.first().isUsefull:
+                return (False,True)
+            else:
+                return (True,False)
+
+        
+

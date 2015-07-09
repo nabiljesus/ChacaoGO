@@ -114,6 +114,17 @@
     left: 89%;  
 } 
 
+
+.linesplit{ 
+    width: 38em;
+    word-wrap: break-word; 
+}
+
+.smallerimg{
+  height: 109px;
+  width: 300px;
+}
+
 /* Filtro */
 
 .dropdown-check-list {
@@ -167,3 +178,4 @@
   display: block;
 }
 /* end filtro */
+

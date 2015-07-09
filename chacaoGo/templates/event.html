@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>ChacaoGO</title>
+
+    <meta name="description" content="Source code generated using layoutit.com">
+    <meta name="author" content="LayoutIt!">
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/simpleLayout.css" rel="stylesheet">
+
+  </head>
+  <body>
+
+    <div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12">
+			<div class="row">
+				<div class="col-md-4">
+					<h3>
+						{{ type }}
+					</h3>
+				</div>
+				<div class="col-md-4">
+				</div>
+				<div class="col-md-4 preto">
+					<img alt="Bootstrap Image Preview" src="/static/img/logo.png" height="126px" height="204x">
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-6">
+					<h3>
+						{{ event.name }}
+					</h3>
+					<hr />
+					<p>
+						{{ event.description }}
+					</p>
+					<hr />
+					<div class="row">
+						<div class="col-md-4">
+						<p>¿Es información útil y certera? </p>
+						</div>
+						<div class="col-md-4">
+							
+							<a  
+								{% if mayvotep and logged%}
+								href="/addvote/?v=True&eventId={{event.eventId}}"
+								{% else %} 
+								disabled="disabled" 
+								{% endif %}
+								type="button" class="btn btn-default">
+								Si ({{positives}})
+							</a>
+						</div>
+						<div class="col-md-4">
+							 
+							<a 
+								{% if mayvoten and logged%}
+								href="/addvote/?v=False&eventId={{event.eventId}}"
+								{% else %} 
+								disabled="disabled" 
+								{% endif %}
+
+								class="btn btn-default">
+								No ({{negatives}})
+							</a>
+						</div>
+					</div>
+					<hr />
+					<h3>
+						Comentarios
+					</h3>
+					<hr/>
+					<div class="list-group">
+						{% for c in comments %}
+						<a href="#" class="list-group-item active elefanteinvisible">{{c.user.username}} ({{c.added}})</a>
+
+						<div class="list-group-item elefanteinvisible">
+							<span class="badge">14</span><p class="linesplit">
+							{{c.description}}</p>
+			
+						</div> 
+						{% endfor %}
+
+
+
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="row">
+						<div class="col-md-12">
+							 
+							<p>
+								<b> Evento VIP: </b>  
+								{% if event.vip %}
+									Si 
+								{% else %}
+									No
+								{% endif %}
+							</p> 
+
+							<hr />
+
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<p>
+								<b> Fecha: </b>  {{event.start.date}}
+							</p>
+						</div>
+					</div>
+					<hr />
+					<div class="row">
+						<div class="col-md-12">
+							<b> Publicado por: </b> <a href="/checkprofile/?username={{event.user.username}}"> {{ event.user.username }} </a>
+						</div>
+					</div>
+					<hr />
+
+					<div class="row">
+						<div class="col-md-12">
+							<b> Responsabilidad de: </b> <a href="/user/?username=blah"> policia blah </a>
+						</div>
+					</div>
+					<hr />
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="row">
+								<div class="col-md-8">
+									<blockquote>
+										<p>
+											<b> Consolidar denuncia: </b>
+										</p>
+									</blockquote>
+								</div>
+								<div class="col-md-4">
+									 
+									<button type="button" class="btn btn-default">
+										+1
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<hr />
+					<div class="row">
+						<div class="col-md-12">
+							
+							{% if logged%}
+								<div class="form-group">
+								<form id="form" action="/addcomment/" method="post">
+								{% csrf_token %}
+
+								<input type="hidden" name="eventId" value="{{event.eventId}}" >
+								
+								{{form.description}}
+
+								<button type="submit" class="btn btn-default">
+									Comentar
+								</button>
+								</form>
+								</div>
+							{% else %}
+								<p> Necesitas estar conectado para <b>comentar</b> </p>
+							{% endif %}
+							
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-md-12">
+							<a href="/main" type="button" class="btn btn-default">
+								Regresar
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+    <script src="/static/js/jquery.min.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script src="/static/js/scripts.js"></script>
+  </body>
+</html>

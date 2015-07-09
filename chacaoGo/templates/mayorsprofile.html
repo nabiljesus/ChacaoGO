@@ -1,4 +1,88 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-{% block contenido %} 
-{% endblock contenido %}
+    <meta name="Javier y Nabil" content="ChacaoGo!">
+
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/static/css/style.css" rel="stylesheet">
+    <link href="/static/css/simpleLayout.css" rel="stylesheet">
+    <title>ChacaoGO</title>
+  </head>
+
+  <body class="preto">
+
+    <div class="container-fluid">
+    <div class="row elefanteinvisible">
+        <div class="col-md-8">
+            <img alt="Bootstrap Image Preview" src="/static/img/logo.png" height="252px" width="408px">
+        </div>
+        <div class="col-md-4">
+            <a href="/logout">
+                <img href="/logout" alt="Bootstrap Image Preview" src="/static/img/button_logout_menu.png">
+            </a>
+        </div>
+    </div>
+
+    <div class="row elefanteinvisible">
+        <div class="col-md-4">
+            <a href="/checkprofile/?username={{user}}">
+            <img class="smallerimg" alt="Bootstrap Image Preview" src="/static/img/button_menu_profile.png">
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/myevents">
+            <img class="smallerimg" href="/myevents" alt="Bootstrap Image Preview" src="/static/img/button_menu_events.png">
+            </a>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+
+    <div class="row elefanteinvisible">
+    </div>
+
+    <div class="row elefanteinvisible">
+        <div class="col-md-4">
+            <a href="/favorites">
+            <img class="smallerimg" alt="Bootstrap Image Preview" src="/static/img/button_menu_favs.png">
+            </a>
+        </div>
+        <div class="col-md-4">
+            <a href="/report">
+            <img class="smallerimg" alt="Bootstrap Image Preview" src="/static/img/button_menu_reports.png">
+            </a>
+        </div>
+        <div class="col-md-4">
+        </div>
+    </div>
+
+    <div class="row elefanteinvisible">
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-4">
+                    <a href="/topusers">
+                    <img class="smallerimg" alt="Bootstrap Image Preview" src="/static/img/button_menu_bests.png" />
+                    </a>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    <a href="/main">
+                    <img alt="Bootstrap Image Preview" height="100" width="100" src="/static/img/backorg.png" />
+                    </a>
+                </div>
+            </div>
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/scripts.js"></script>
+  </body>
+
+</html>
