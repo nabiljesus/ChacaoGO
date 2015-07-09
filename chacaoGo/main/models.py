@@ -54,6 +54,18 @@ CATEGORIES = (
 
 CATEGORYLIST = ['SE','VI','DS','DE','CU','PR','SP','DM']
 
+def smallerDate(a,b):
+    if a.year <= b.year:
+        if a.month <= b.year:
+            if a.day <= b.year:
+                return True
+            else:
+                return False
+        else:
+            return False
+    else:
+        return False
+
 ##########
 # Modelos
 ##########
@@ -74,7 +86,7 @@ class User(models.Model):
     email    = models.EmailField(unique=True)
     password = models.CharField(max_length = 128) #Para sha
     userType = models.CharField(max_length = 9,choices=USERTYPES,default=NORMAL) 
-    added    = models.DateTimeField(auto_now_add=True)
+    added    = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.username + " " + self.fullname
@@ -132,6 +144,7 @@ class Event(models.Model):
     seen        = models.BooleanField(default = False)
 
     def getEventsByType(eventList):
+        from django.utils import timezone
         res = {}
         for cat in CATEGORYLIST:
             catEvents   = []
@@ -141,10 +154,21 @@ class Event(models.Model):
                 events = Event.objects.filter(evenType=evType)
                 if (len(events) > 0):
                     for e in events:
-                        
+                        now = timezone.now()
 
-                        if e.evenType in eventList:
-                            print("Aqui encontre algo de la lista")
+                        #Comparacion unicamente de dias
+                        rightInTime = smallerDate(e.start,now)  and \
+                                      smallerDate(now,e.end)
+
+                        if not rightInTime:
+                            print("Verga primo el ",end="")
+                            print(e.name,end="")
+                            print(" no furula porque")
+                            print(now)
+                            print(e.end)
+
+                        if (e.evenType in eventList) and rightInTime:
+                            
                             catEvents.append(
                                 { 'X'          : e.xPosition ,
                                   'Y'          : e.yPosition,

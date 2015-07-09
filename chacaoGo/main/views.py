@@ -27,6 +27,7 @@ def main(request):
     logged = 'username' in request.session
 
     listaEventos = Event.getEventsByType(['ZP','DEL','AS','AC','EM','PV','PR','AM','SA','SE','RRS','MA','ED','BA','YO','CD','CO','FE','OT','EA','JD','VPE','JE','DES','DS','SM','JV','SV','CA','AC','PC','TE'])
+    import json
     listaEventos = json.dumps(listaEventos)
 
     dictionary = {'logged':logged, 'listaEventos': str(listaEventos) }
