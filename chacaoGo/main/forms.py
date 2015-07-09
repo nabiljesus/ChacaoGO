@@ -11,8 +11,7 @@ class UserForm(forms.ModelForm):
     password = forms.CharField(max_length = 128,required=True,widget=forms.PasswordInput()) #Para sha
     password2= forms.CharField(max_length = 128,required=True,widget=forms.PasswordInput()) #Para sha
     email    = forms.EmailField(required=True) #Para sha
-    #userType = forms.CharField(max_length = 11,required=True) 
-    #added    = models.DateTimeField(auto_now_add=True)
+
 
     def isValid(self):
         #Chequeo de validez muy basico
