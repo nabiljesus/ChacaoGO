@@ -65,21 +65,18 @@
 					</h3>
 					<hr/>
 					<div class="list-group">
-						 <a href="#" class="list-group-item active">Home</a>
-						<div class="list-group-item">
-							List header
-						</div>
-						<div class="list-group-item">
-							<h4 class="list-group-item-heading">
-								List group item heading
-							</h4>
-							<p class="list-group-item-text">
-								...
-							</p>
-						</div>
-						<div class="list-group-item">
-							<span class="badge">14</span>Help
-						</div> <a class="list-group-item active"><span class="badge">14</span>Help</a>
+						{% for c in comments %}
+						<a href="#" class="list-group-item active elefanteinvisible">{{c.user.username}} ({{c.added}})</a>
+
+						<div class="list-group-item elefanteinvisible">
+							<span class="badge">14</span><p class="linesplit">
+							{{c.description}}</p>
+			
+						</div> 
+						{% endfor %}
+
+
+
 					</div>
 				</div>
 				<div class="col-md-6">
@@ -87,7 +84,12 @@
 						<div class="col-md-12">
 							 
 							<p>
-								<b> Ubicación: </b>  Calle la dolorita
+								<b> Evento VIP: </b>  
+								{% if event.vip %}
+									Si 
+								{% else %}
+									No
+								{% endif %}
 							</p> 
 
 							<hr />
@@ -104,14 +106,14 @@
 					<hr />
 					<div class="row">
 						<div class="col-md-12">
-							<b> Publicado por: </b> <a href="/user/?={{event.user.username}}"> {{ event.user.username }} </a>
+							<b> Publicado por: </b> <a href="/user/?username={{event.user.username}}"> {{ event.user.username }} </a>
 						</div>
 					</div>
 					<hr />
 
 					<div class="row">
 						<div class="col-md-12">
-							<b> Responsabilidad de: </b> <a href="/user/?=blah"> policia blah </a>
+							<b> Responsabilidad de: </b> <a href="/user/?username=blah"> policia blah </a>
 						</div>
 					</div>
 					<hr />
@@ -138,18 +140,25 @@
 					<hr />
 					<div class="row">
 						<div class="col-md-12">
-							<form role="form">
+							
+							{% if logged%}
 								<div class="form-group">
-									 
-									<textarea rows='5' cols='10' class="form-control">
-										
-									</textarea>
+								<form id="form" action="/addcomment/" method="post">
+								{% csrf_token %}
 
-									<button type="submit" class="btn btn-default">
-										Comentar
-									</button>
+								<input type="hidden" name="eventId" value="{{event.eventId}}" >
+								
+								{{form.description}}
+
+								<button type="submit" class="btn btn-default">
+									Comentar
+								</button>
+								</form>
 								</div>
-							</form>
+							{% else %}
+								<p> Necesitas estar conectado para <b>comentar</b> </p>
+							{% endif %}
+							
 						</div>
 					</div>
 					<div class="row">

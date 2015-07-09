@@ -193,10 +193,65 @@ def event(request):
 
     if eventId != -1:
         event   = Event.getEventById(eventId)
+    else:
+        event   = Event.getEventById(1)
+
+    comments = Event.getAllComments(eventId)
+    print(comments)
     
-    c = Context({'event': event,'type' : event.get_evenType_display() })         
-    t = loader.get_template('event.html')
-    return HttpResponse(t.render(c))
+    dictionary = {
+                 'event'   : event,
+                 'type'    : event.get_evenType_display(), 
+                 'form'    : CommentForm(),
+                 'logged'  : 'username' in request.session,
+                 'comments': comments
+                 }
+
+
+    return render_to_response('event.html', dictionary , context_instance=RequestContext(request))
+
+
+def addcomment(request):
+    print("TE JURO QUE PASE POR AQUI")
+    if request.method == 'GET':
+        print("Que mieeeerda paso aqui")
+    elif request.method == 'POST':
+
+        #Conversion a floats
+        eventId = int(request.POST.get('eventId',-1))
+
+        #Convertir post en mutable y elimnar variables de mas
+        copy = request.POST.copy()
+        copy.pop('eventId')
+
+        form = CommentForm(copy)
+        if form.is_valid():
+
+            newComment = Comment(
+                user        = User.getUser(request.session['username']),
+                description = form.cleaned_data['description'],
+                event       = Comment.getParentEvent(eventId)
+            )
+
+            newComment.save()
+            c = Context({'mensaje': 'Gracias por comentar!'})
+            #t = loader.get_template('/event/?id='+str(eventId)) 
+            #return render_to_response('/event/?id='+str(eventId), c , context_instance=RequestContext(request))
+            return redirect('/event/?id='+str(eventId))
+        else:
+            print("No pase la validez D:")
+            for field in form:
+                print(field)
+                print(field.errors)
+            t = loader.get_template('/event/?id='+str(eventId)) 
+            c = Context({'form': CommentForm(), 'mensaje': 'Ha ocurrido un error al momento de crear el evento :('})
+        return HttpResponse(t.render(c))
+    else:
+        dictionary = {}
+        print("wtf? what am i doing here?")
+
+    return render_to_response('addevent.html', dictionary , context_instance=RequestContext(request))
+
 
 def addevent(request):
     if not 'username' in request.session:

@@ -98,3 +98,7 @@
     left: 89%;  
 } 
 
+.linesplit{ 
+    width: 38em;
+    word-wrap: break-word; 
+}

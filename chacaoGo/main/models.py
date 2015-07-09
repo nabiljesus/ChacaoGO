@@ -147,6 +147,10 @@ class Event(models.Model):
     vip         = models.BooleanField(default = False)
     seen        = models.BooleanField(default = False)
 
+    def getAllComments(id):
+        event = Event.objects.filter(eventId=id)[0]
+        return Comment.objects.filter(event=event)
+
     def getEventById(id):
         return Event.objects.filter(eventId=id)[0]
 
@@ -200,3 +204,6 @@ class Comment(models.Model):
     event       = models.ForeignKey(Event)
     description = models.CharField(max_length = 500)
     added       = models.DateTimeField(auto_now_add=True)
+
+    def getParentEvent(id):
+        return Event.objects.filter(eventId=id)[0]
