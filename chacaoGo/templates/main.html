@@ -229,7 +229,7 @@
   
   <script type="text/javascript" src="/static/js/jquery-1.11.0.min.js"></script>
   <script type="text/javascript" src="/static/js/jquery.leanModal.min.js"></script>
-  <button id="modal_trigger" href="#modal" class="btn topright" >Conectarse o Registrarse</button>
+  <button id="modal_trigger" href="#modal" class="btn bottomright" >Conectarse o Registrarse</button>
 
   <div id="modal" class="popupContainer" style="display:none;">
 
@@ -334,14 +334,12 @@
   
   {% else %}
 
-  <div class="btn-group topright">
+  <div class="btn-group bottomright">
+    <a type="button" class="btn btn-default" href="/addevent">Crear Evento</a>
     <a type="button" class="btn btn-default" href="/redirectuser">Menú Principal</a>
     <a class="btn btn-default" href="/logout">Salir</a>
   </div>  
 
-  <div class="btn-group bottomright">
-    <a type="button" class="btn btn-default" href="/addevent">Crear Evento</a>
-</div>
 
   {% endif %}
 
