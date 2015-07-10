@@ -274,11 +274,11 @@ class Event(models.Model):
                     events = Event.objects.filter(evenType=evType)
                 if len(users) == 2:
                     #Consulta con los dos oficiales
-                    #events = Event.objects.filter(evenType=evType).
-                    pass
+                    events = (Event.objects.filter(user__userType='Moderador') | Event.objects.filter(user__userType='Alcaldía')).filter(evenType=evType)
                 if len(users) == 1:
                     #Consulta de solo ciudadano
-                    pass
+                    events = (Event.objects.filter(user__userType='Usuario')).filter(evenType=evType)
+                    
 
                 if (len(events) > 0):
                     for e in events:
