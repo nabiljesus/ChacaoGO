@@ -348,6 +348,9 @@
     <script src="/static/js/jquery.sumoselect.js"></script>
     <script type="text/javascript">
         $(document).ready(function () {
+            window.asd = $('.SlectBox').SumoSelect({ csvDispCount: 3 });
+            window.test = $('.testsel').SumoSelect({okCancelInMulti:true });
+            window.testSelAll = $('.testSelAll').SumoSelect({okCancelInMulti:true, selectAll:true });
             window.testSelAll2 = $('.testSelAll2').SumoSelect({selectAll:true });
         });
     </script>
@@ -355,14 +358,14 @@
     <input type="hidden" name="Language" value="English">
 
 
-    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_police.png" width="18px">' placeholder="Seguridad" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_police.png" width="18px">' placeholder="Seguridad" onchange="console.log($(this).children(':selected').length)" class="SlectBox">
            <option value="ZP">Zona Peligrosa</option>
            <option value="DEL">Delito</option>
            <option value="AS">Actividad Sospechosa</option>
 
 
     </select>
-    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_street.png" width="18px">' placeholder="Vialidad" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_street.png" width="18px">' placeholder="Vialidad" onchange="console.log($(this).children(':selected').length)" class="SlectBox">
            <option value="AC">Accidente</option>
            <option value="EM">Embotellamiento</option>
            <option value="PV">Peligro en la Vía</option>
@@ -370,7 +373,7 @@
 
 
     </select>
-    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_service.png" width="18px">' placeholder="Def. Servicios" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_service.png" width="18px">' placeholder="Def. Servicios" onchange="console.log($(this).children(':selected').length)" class="SlectBox">
            <option value="AM">Asistencia médica</option>
            <option value="SA">Servicio de Agua</option>
            <option value="SE">Servicio Eléctrico</option>
@@ -379,7 +382,7 @@
 
 
     </select>
-    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_sports.png" width="18px">' placeholder="Deportes" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_sports.png" width="18px">' placeholder="Deportes" onchange="console.log($(this).children(':selected').length)" class="SlectBox">
            <option value="ED">Encuentro Deportivo</option>
            <option value="BA">Bailoterapia</option>
            <option value="YO">Yoga</option>
@@ -387,7 +390,7 @@
 
 
     </select> <br>
-    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_culture.png" width="18px">' placeholder="Cultura" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_culture.png" width="18px">' placeholder="Cultura" onchange="console.log($(this).children(':selected').length)" class="SlectBox">
            <option value="CO">Concierto</option>
            <option value="FE">Feria</option>
            <option value="EA">Exposición de arte</option>
@@ -395,7 +398,7 @@
 
     </select>
     
-    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_product.png" width="18px">' placeholder="Productos" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_product.png" width="18px">' placeholder="Productos" onchange="console.log($(this).children(':selected').length)" class="SlectBox">
            <option value="JD">Jornada de Documentación</option>
            <option value="VPE">Venta de Producto Escaso</option>
            <option value="JE">Jornada Electoral</option>
@@ -403,19 +406,19 @@
 
 
     </select>    
-    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_help.png" width="18px">' placeholder="Productos" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_help.png" width="18px">' placeholder="Productos" onchange="console.log($(this).children(':selected').length)" class="SlectBox">
            <option value="DS">Donación de sangre</option>
            <option value="SM">Solicitud de Medicamento</option>
            <option value="JV">Jornada Veterinaria</option>
            <option value="SV">Solicitud de Voluntarios</option>
     </select>
-    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_broken.png" width="18px">' placeholder="Det. Municipal" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+    <select name="type[]" multiple="multiple" image='<img src="/static/img/icon_broken.png" width="18px">' placeholder="Det. Municipal" onchange="console.log($(this).children(':selected').length)" class="SlectBox">
            <option value="CA">Calles y avenidas</option>
            <option value="ACE">Aceras</option>
            <option value="PC">Patrimonio Cultural</option>
            <option value="TE">Terreno</option>
     </select>
-    <select name="fuser" multiple="multiple" image='<img src="/static/img/icon_broken.png" width="18px">' placeholder="Tipo Usuario" onchange="console.log($(this).children(':selected').length)" class="testSelAll2" >
+    <select name="fuser" multiple="multiple" image='<img src="/static/img/icon_broken.png" width="18px">' placeholder="Tipo Usuario" onchange="console.log($(this).children(':selected').length)" class="SlectBox" >
            <option value="Oficiales">EnteOficial</option>
            <option value="Usuario">Ciudadano</option>
     </select>
