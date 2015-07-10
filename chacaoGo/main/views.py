@@ -25,6 +25,7 @@ def index(request):
 def main(request):
 
     logged = 'username' in request.session
+    print("Scrum Nigga master")
 
     listaEventos = Event.getEventsByType(['ZP','DEL','AS','AC','EM','PV','PR','AM','SA','SE','RRS','MA','ED','BA','YO','CD','CO','FE','OT','EA','JD','VPE','JE','DES','DS','SM','JV','SV','CA','AC','PC','TE'])
     import json
@@ -237,9 +238,12 @@ def event(request):
 
     reports    = Report.getEventNumberReports(eventId)
     if logged:
-        mayReport  = Report.mayReport(eventId,request.session['username'])    
+        mayReport  = Report.mayReport(eventId,request.session['username'])
+        official   = User.getType(request.session['username']) == 'Alcaldía' or\
+                     User.getType(request.session['username']) == 'Moderador'
     else:
         mayReport = False
+        official  = False
     
     dictionary = {
                  'event'   : event,
@@ -253,6 +257,7 @@ def event(request):
                  'mayvoten'  : mayvoten,
                  'reports'   : reports,
                  'mayReport' : mayReport,
+                 'official'  : official,
                  }
 
 
@@ -379,14 +384,9 @@ def addvote(request):
             )
             newVote.save()
         else:
-            print("EL voto es")
-            print(vote)
+
             v = Vote.objects.filter(user=user,event=event).first()
-            print("Pasando de ")
-            print(v.isUsefull)
             v.isUsefull = vote
-            print("a")
-            print(v.isUsefull)
             v.save()
 
         return redirect('/event/?id='+str(eventId))
@@ -428,3 +428,20 @@ def mostreported(request):
     t = loader.get_template('mostreported.html')
     c = Context({'reports': reports}) 
     return HttpResponse(t.render(c))
+
+def seen(request):
+    eventId = int(request.GET.get('eventId',-1))
+
+    if eventId == -1 or not ('username' in request.session):
+        return redirect('/event/?id='+str(eventId))
+    else:
+        
+        if (User.getType(request.session['username']) != 'Alcaldía' ) and \
+           (User.getType(request.session['username']) != 'Moderador' ):
+            return redirect("/main",foo='bar')
+
+        event= Event.getEventById(eventId)
+        event.seen = True
+        event.save()
+
+        return redirect('/mostreported/')

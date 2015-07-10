@@ -46,4 +46,5 @@ urlpatterns = [
     url(r'^addcomment/', views.addcomment, name='addcomment'),
     url(r'^addvote/', views.addvote, name='addvote'),
     url(r'^addreport/', views.addreport, name='addreport'),
+    url(r'^seen/', views.seen, name='seen'),
 ]

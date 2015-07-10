@@ -355,7 +355,7 @@ class Report(models.Model):
 
     #Funcion para obtener numero de votos positivos y negativos de un evento
     def getReports():
-        return Event.objects.annotate(repCount=Count('report')).order_by('-repCount')
+        return Event.objects.filter(seen=False).annotate(repCount=Count('report')).order_by('-repCount')
 
     def getEventNumberReports(eventId):
         event=Event.objects.filter(eventId=eventId)

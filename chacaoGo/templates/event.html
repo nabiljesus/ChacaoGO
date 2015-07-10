@@ -134,28 +134,42 @@
 					<div class="row">
 						<div class="col-md-12">
 							<div class="row">
+								{% if not official%}
+									<div class="col-md-8">
+										<blockquote>
+											<p>
+												<b> Consolidar denuncia: </b>
+											</p>
+										</blockquote>
+									</div>
+									<div class="col-md-4">
+										{%if mayReport%}
+										<a href="/addreport/?eventId={{event.eventId}}" type="button" class="btn btn-default">
+											({{reports}})
+										</a>
+										{% else %}
+										  {%if not logged%}
+											<p>Conéctate para opinar</p>
+										  {%endif%}
+											<a  disabled="disabled"  type="button" class="btn btn-default">
+												({{reports}})
+											</a>
+										{% endif %}
+								{% else %}
 								<div class="col-md-8">
-									<blockquote>
-										<p>
-											<b> Consolidar denuncia: </b>
-										</p>
-									</blockquote>
+										<blockquote>
+											<p>
+												<b> Marcar como atendido: </b>
+											</p>
+										</blockquote>
 								</div>
 								<div class="col-md-4">
-									{%if mayReport%}
-									<a href="/addreport/?eventId={{event.eventId}}" type="button" class="btn btn-default">
-										({{reports}})
-									</a>
-									{% else %}
-									  {%if not logged%}
-										<p>Conéctate para opinar</p>
-									  {%endif%}
-									  
+										<a href="/seen/?eventId={{event.eventId}}" type="button" class="btn btn-default">
+											&#10004;
+										</a>
+								<div>
+								{% endif%}
 
-									<a  disabled="disabled"  type="button" class="btn btn-default">
-										({{reports}})
-									</a>
-									{% endif %}
 								</div>
 							</div>
 						</div>
