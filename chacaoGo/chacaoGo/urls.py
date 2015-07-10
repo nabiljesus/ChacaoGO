@@ -40,6 +40,7 @@ urlpatterns = [
     url(r'^purchases/', views.purchases, name='purchases'),
     url(r'^favorites/', views.favorites, name='favorites'),
     url(r'^mostreported/', views.mostreported, name='mostreported'),
+    url(r'^topusers/', views.topusers, name='topusers'),
     
     #Paginas de eventos
     url(r'^event/', views.event, name='event'),

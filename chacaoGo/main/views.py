@@ -32,7 +32,8 @@ def main(request):
     logged = 'username' in request.session
     print("Scrum Nigga master")
 
-    listaEventos = Event.getEventsByType(['ZP','DEL','AS','AC','EM','PV','PR','AM','SA','SE','RRS','MA','ED','BA','YO','CD','CO','FE','OT','EA','JD','VPE','JE','DES','DS','SM','JV','SV','CA','AC','PC','TE'])
+    users = ['Alcaldía','Usuario','Moderador']
+    listaEventos = Event.getEventsByType(EVENTLIST,users)
     import json
     listaEventos = json.dumps(listaEventos)
 
@@ -254,6 +255,20 @@ def purchases(request):
 
     t = loader.get_template('purchases.html')
     c = Context({'userEvents': userEvents})
+    return HttpResponse(t.render(c))
+
+def topusers(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
+    if (User.getType(request.session['username']) != 'Alcaldía' ) and \
+       (User.getType(request.session['username']) != 'Moderador' ):
+       return redirect("/main",foo='bar')
+
+    userEvents = User.getEvents(request.session['username'])
+
+    t = loader.get_template('topusers.html')
+    c = Context({'userEvents': userEvents}) 
     return HttpResponse(t.render(c))
 
 #######################
