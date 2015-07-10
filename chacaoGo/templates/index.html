@@ -360,7 +360,9 @@
    <!-- ================ MAP END ====================== -->
 
   <div class="overlay" >
-      <img id="animation" class="img-responsive" src="/static/img/animation.gif">
+<object data="/static/svg/ani.svg" type="image/svg+xml">
+  <img src="yourfallback.jpg" />
+</object>
       <style>
         #animation{
          position: absolute;
@@ -376,13 +378,13 @@
       window.location="main"; 
     } 
     document.write(""); 
-    setTimeout('Redirect()', 5000);   
+    setTimeout('Redirect()', 6500);   
      function Redirect() 
      {  
        window.location="main"; 
      } 
      document.write(""); 
-     setTimeout('Redirect()', 5000);   
+     setTimeout('Redirect()', 6500);   
   </script>
 
 </body>    
