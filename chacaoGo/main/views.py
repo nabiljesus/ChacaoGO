@@ -46,9 +46,28 @@ def filter(request):
     logged = 'username' in request.session
     print("Scrum Nigga master")
 
-    print(request.GET)
+    selectedEvents = EVENTLIST
 
-    listaEventos = Event.getEventsByType(['ZP','DEL','AS','AC','EM','PV','PR','AM','SA','SE','RRS','MA','ED','BA','YO','CD','CO','FE','OT','EA','JD','VPE','JE','DES','DS','SM','JV','SV','CA','AC','PC','TE'])
+    if request.method == 'POST':
+        if 'fuser' in request.POST:
+            if len(request.POST['fuser']) == 2:
+                users = ['Alcaldía','Usuario','Moderador']
+            else:
+                if request.POST['fuser'] == "Usuario":
+                    users = ["Usuario"]
+                else:
+                    users = ['Alcaldía','Moderador']
+        else:
+            users = ['Alcaldía','Usuario','Moderador']
+
+        if 'type[]' in request.POST:
+            selectedEvents = request.POST['type[]']
+        else:
+            selectedEvents = EVENTLIST
+
+    print(users)
+
+    listaEventos = Event.getEventsByType(selectedEvents)
     import json
     listaEventos = json.dumps(listaEventos)
 

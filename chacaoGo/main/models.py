@@ -65,6 +65,7 @@ CATEGORYIMAGE = {
 }
 
 CATEGORYLIST = ['SE','VI','DS','DE','CU','PR','SP','DM']
+EVENTLIST    = ['ZP','DEL','AS','AC','EM','PV','PR','AM','SA','SE','RRS','MA','ED','BA','YO','CD','CO','FE','OT','EA','JD','VPE','JE','DES','DS','SM','JV','SV','CA','AC','PC','TE']
 
 LEVELS  = [ ("Pinocho",                       0   , 'cred_pinocho.png'),
             ("Ciudadano común",               0   , 'cred_common.png'),
