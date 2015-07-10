@@ -6,13 +6,14 @@
 
 <body bgcolor="#FF9900" >
 <style type="text/css">
-  
-body {
-  background: #FF9900;
-}
+    body{font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444;font-size:13px; background: #FF9900;}
+    p,div,ul,li{padding:0px; margin:0px;}
 </style>
 
- <div class="toplef" style="z-index: 2;">
+
+
+
+<!--  <div class="toplef" style="z-index: 2;">
     <div id="list1" class="dropdown-check-list" tabindex="100" >
         <span class="anchor"><img src="/static/img/icon_police.png" width="18px"><b> Seguridad </b></span>
         <ul class="items">
@@ -217,11 +218,11 @@ body {
         </script>
       </div>
       </div>
-      <!-- si se quitan las siguientes 3 lineas, funciona el de registrar-->
+
       <div class="filt_buttom topright" style="top : 10px; left:  45%;">
          <button class="btn  btn-default" href="/register" >Filtrar</button>
       </div>
- </div>
+ </div> -->
 
 {% if not logged %}
 <div class="container">
@@ -334,15 +335,89 @@ body {
   {% else %}
 
   <div class="btn-group topright">
-    <a type="button" class="btn btn-default" href="/redirectuser">Perfil</a>
+    <a type="button" class="btn btn-default" href="/redirectuser">Menú Principal</a>
     <a class="btn btn-default" href="/logout">Salir</a>
   </div>  
 
   <div class="btn-group bottomright">
     <a type="button" class="btn btn-default" href="/addevent">Crear Evento</a>
-  </div>
+</div>
 
   {% endif %}
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <script src="/static/js/jquery.sumoselect.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            window.testSelAll2 = $('.testSelAll2').SumoSelect({selectAll:true });
+        });
+    </script>
+
+    <select multiple="multiple" image='<img src="/static/img/icon_police.png" width="18px">' placeholder="Seguridad" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+           <option value="ZP">Zona Peligrosa</option>
+           <option value="DEL">Delito</option>
+           <option value="AS">Actividad Sospechosa</option>
+
+
+    </select>
+    <select multiple="multiple" image='<img src="/static/img/icon_street.png" width="18px">' placeholder="Vialidad" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+           <option value="AC">Accidente</option>
+           <option value="EM">Embotellamiento</option>
+           <option value="PV">Peligro en la Vía</option>
+           <option value="PR">Protesta</option>
+
+
+    </select>
+    <select multiple="multiple" image='<img src="/static/img/icon_service.png" width="18px">' placeholder="Def. Servicios" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+           <option value="AM">Asistencia médica</option>
+           <option value="SA">Servicio de Agua</option>
+           <option value="SE">Servicio Eléctrico</option>
+           <option value="RRS">Recolección de Residuos Solidos</option>
+           <option value="EDU">Educación</option>
+
+
+    </select>
+    <select multiple="multiple" image='<img src="/static/img/icon_sports.png" width="18px">' placeholder="Deportes" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+           <option value="ED">Encuentro Deportivo</option>
+           <option value="BA">Bailoterapia</option>
+           <option value="YO">Yoga</option>
+           <option value="CD">Clase Deportiva</option>
+
+
+    </select> <br>
+    <select multiple="multiple" image='<img src="/static/img/icon_culture.png" width="18px">' placeholder="Cultura" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+           <option value="CO">Concierto</option>
+           <option value="FE">Feria</option>
+           <option value="EA">Exposición de arte</option>
+
+
+    </select>
+    
+    <select multiple="multiple" image='<img src="/static/img/icon_product.png" width="18px">' placeholder="Productos" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+           <option value="JD">Jornada de Documentación</option>
+           <option value="VPE">Venta de Producto Escaso</option>
+           <option value="JE">Jornada Electoral</option>
+           <option value="DES">Descuento</option>
+
+
+    </select>    
+    <select multiple="multiple" image='<img src="/static/img/icon_help.png" width="18px">' placeholder="Productos" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+           <option value="DS">Donación de sangre</option>
+           <option value="SM">Solicitud de Medicamento</option>
+           <option value="JV">Jornada Veterinaria</option>
+           <option value="SV">Solicitud de Voluntarios</option>
+    </select>
+    <select multiple="multiple" image='<img src="/static/img/icon_broken.png" width="18px">' placeholder="Det. Municipal" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
+           <option value="CA">Calles y avenidas</option>
+           <option value="ACE">Aceraso</option>
+           <option value="PC">Patrimonio Cultural</option>
+           <option value="TE">Terreno</option>
+    </select>
+    <select multiple="multiple" image='<img src="/static/img/icon_broken.png" width="18px">' placeholder="Tipo Usuario" onchange="console.log($(this).children(':selected').length)" class="testSelAll2" >
+           <option value="OFI">EnteOficial</option>
+           <option value="CIU">Ciudadano Común</option>
+    </select>
+    <button class="btn  btn-default" style="margin: 0px 10px 10px 10px;" href="/register" >Filtrar</button>
 
 
   <!-- ================ MAP START ====================== -->
@@ -720,7 +795,7 @@ body {
                       case "CA": 
                          var subcate="Calles y avenidas"; 
                          break;
-                      case "AC": 
+                      case "ACE": 
                          var subcate="Aceras"; 
                          break;
                       case "PC": 
@@ -758,7 +833,7 @@ body {
         map.options.maxZoom = 19;
         map.options.minZoom = 14;
      </script>
- </div> 
+</div>  
 
    <!-- ================ MAP END ====================== -->
 

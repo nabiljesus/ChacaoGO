@@ -8,6 +8,7 @@ from django.http      import HttpResponse
 from django.template  import Context,loader
 from main.forms       import *
 from main.models      import * 
+from django.http import HttpResponseRedirect
 
 def kickout(request):
     if not 'username' in request.session:
@@ -21,6 +22,12 @@ def index(request):
     t = loader.get_template('index.html')
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
+
+def testdrop(request):
+    t = loader.get_template('testdrop.html')
+    c = Context({'foo': 'bar'})         
+    return HttpResponse(t.render(c))
+
 
 def main(request):
 
@@ -58,6 +65,7 @@ def register(request):
             )
             newUser.save()
             c = Context({'mensaje': 'Gracias por registrarte!'})
+            return HttpResponseRedirect("/main") #Con esto lo arreglé
             
         else:
             print("No pase la validez D:")
@@ -68,7 +76,6 @@ def register(request):
     else:
         dictionary = {}
         print("wtf am i doing here?")
-
     return render_to_response('register.html', dictionary , context_instance=RequestContext(request))
 
 # ELIMINAR CREO
