@@ -210,6 +210,44 @@ class User(models.Model):
 
         return (voteSum,title)
 
+    def getUsersByPoints():
+        from django.db.models import Q
+
+        #Ciudadanos
+        usuarios = User.objects.filter(~Q(userType='Alcaldía') & 
+                                       ~Q(userType='Moderador'))
+
+        #Usuarios y sus votos positivos
+        positives = Vote.objects.filter(isUsefull=True).\
+                             values('event').\
+                                values('event__user').\
+                                    annotate(positive=Count('event'))
+
+        #Usuarios y sus votos negativos
+        negatives = Vote.objects.filter(isUsefull=False).\
+                             values('event').\
+                                values('event__user').\
+                                    annotate(negative=Count('event'))
+        res = []
+        count = 0
+        for u in usuarios:
+            res.append({ 'user': u, 'points': 0})
+            for p in positives:
+                if u.username == p['event__user']:
+                    res[count]['points'] = p['positive']
+            for p in negatives:
+                if u.username == p['event__user']:
+                    res[count]['points'] = res[count]['points'] - p['negative']
+            count += 1
+
+
+        #return sorted(res,key=lambda x: x[1]['points'],reverse=True)
+        from operator import itemgetter
+        return sorted(res, key=itemgetter('points'),reverse=True)
+
+        #from main.models import *
+        #User.getUsersByPoints()
+
     def getCommentsMade(username):
         user = User.objects.filter(username=username).first()
         return Comment.objects.filter(user=user).count()
