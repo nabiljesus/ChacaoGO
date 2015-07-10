@@ -67,7 +67,7 @@ def filter(request):
 
     print(users)
 
-    listaEventos = Event.getEventsByType(selectedEvents)
+    listaEventos = Event.getEventsByType(selectedEvents,users)
     import json
     listaEventos = json.dumps(listaEventos)
 

@@ -261,7 +261,7 @@ class Event(models.Model):
     def getEventById(id):
         return Event.objects.filter(eventId=id)[0]
 
-    def getEventsByType(eventList):
+    def getEventsByType(eventList,users):
         from django.utils import timezone
         res = {}
         for cat in CATEGORYLIST:
@@ -269,7 +269,17 @@ class Event(models.Model):
             eventsInCat = Category.getTypes(cat)
 
             for evType in eventsInCat:
-                events = Event.objects.filter(evenType=evType)
+                if len(users) == 3:
+                    #Consulta normal, agarro todos
+                    events = Event.objects.filter(evenType=evType)
+                if len(users) == 2:
+                    #Consulta con los dos oficiales
+                    #events = Event.objects.filter(evenType=evType).
+                    pass
+                if len(users) == 1:
+                    #Consulta de solo ciudadano
+                    pass
+
                 if (len(events) > 0):
                     for e in events:
                         now = timezone.now()
