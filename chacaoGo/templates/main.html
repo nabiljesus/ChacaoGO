@@ -824,7 +824,7 @@
               var tempmark = L.marker([ACT[i]["X"], ACT[i]["Y"]], {icon: iconact}).addTo(map);
               var popup = L.popup()
                .setLatLng([ACT[i]["X"], ACT[i]["Y"]])
-               .setContent("<b><h3>"+subcate+"</h3></b><hr>"+ACT[i]["descripcion"]+"<br><br><font color=\"cyan\"><div align=\"right\"><a href=\"/event/?id="+ACT[i]["id"]+"\">+ detalles</a></div></font>")
+               .setContent("<b><h3>"+subcate+":</h3></b><b>"+ACT[i]["nombre"]+"</b><hr>"+ACT[i]["descripcion"]+"<br><br><font color=\"cyan\"><div align=\"right\"><a href=\"/event/?id="+ACT[i]["id"]+"\">+ detalles</a></div></font>")
                //.openOn(map)
               tempmark.bindPopup(popup,customOptions);
            }
