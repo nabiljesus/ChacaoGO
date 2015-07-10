@@ -267,10 +267,9 @@ def topusers(request):
 
     topusers = User.getUsersByPoints()
 
-    userEvents = User.getEvents(request.session['username'])
 
     t = loader.get_template('topusers.html')
-    c = Context({'userEvents': userEvents}) 
+    c = Context({'topusers': topusers}) 
     return HttpResponse(t.render(c))
 
 #######################

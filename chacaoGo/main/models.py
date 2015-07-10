@@ -64,7 +64,8 @@ CATEGORYIMAGE = {
     'VI' : "icon_street.png"
 }
 
-CATEGORYLIST = ['SE','VI','DS','DE','CU','PR','SP','DM']
+CATEGORYLIST         = ['SE','VI','DS','DE','CU','PR','SP','DM']
+REPORTABLECATEGORIES = ['SE','VI','DS','SP','DM']
 EVENTLIST    = ['ZP','DEL','AS','AC','EM','PV','PR','AM','SA','SE','RRS','MA','ED','BA','YO','CD','CO','FE','OT','EA','JD','VPE','JE','DES','DS','SM','JV','SV','CA','AC','PC','TE']
 
 LEVELS  = [ ("Pinocho",                       0   , 'cred_pinocho.png'),
@@ -354,6 +355,9 @@ class Event(models.Model):
 
     def getCat(etype):
         return Category.objects.filter(eventType=etype)[0].categoryName
+
+    def mayReport(eventId):
+        return Category.objects.filter(eventType=eventType).first().categoryName in REPORTABLECATEGORIES
 
 
 
