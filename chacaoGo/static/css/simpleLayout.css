@@ -179,3 +179,25 @@
 }
 /* end filtro */
 
+/* events */
+
+.input-color {
+    position: relative;
+}
+.input-color input {
+    padding-left: 20px;
+}
+.input-color .color-box {
+
+    width: 1100px;
+    height: 800px;
+    background-color: #ccc;
+  top:0;
+  left:0;
+  margin-top:8vh;
+  margin-left:3vh;
+
+ position:absolute;
+    z-index: 0;
+}
+

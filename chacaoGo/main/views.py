@@ -298,6 +298,51 @@ def event(request):
     else:
         mayReport = False
         official  = False
+    cred = User.getUserVotes(event.user.username)
+    image=""
+    if event.user.userType == 'Moderador' or event.user.userType == 'Alcaldía':
+        ucolor = "#FFCC00"
+        image='/static/img/chacao1.jpg'
+    elif cred[0] < 0:
+        ucolor="#CC0000"
+    elif cred[0] < 10:
+        ucolor=""
+    elif cred[0] < 30:
+        ucolor="#E0FFE0"
+    else: 
+        ucolor="#00FF00"
+    categ=Event.getCat(event.evenType)
+    print(categ)
+    bcolor="#fff";
+    timage=""
+    if categ=='SE':
+        bcolor="#007fff"
+        timage="police"
+    elif categ=='VI':
+        bcolor="#b5b5b5"
+        timage="street"
+    elif categ=='DS':
+        bcolor="#f2cb14"
+        timage="servce"
+    elif categ=='DE':
+        bcolor="#74b54d"
+        timage="sports"
+    elif categ=='CU':
+        bcolor="#7956c0"
+        timage="culture"
+    elif categ=='PR':
+        bcolor="#c06756"
+        timage="product"
+    elif categ=='SP':
+        bcolor="#53d5d3"
+        timage="help"
+    elif categ=='DM':
+        bcolor="#d76adb"
+        timage="broken"
+
+
+    #profile = request.GET.get('username',-1)
+    #User.getUserVotes(profile)
     
     dictionary = {
                  'event'   : event,
@@ -312,6 +357,10 @@ def event(request):
                  'reports'   : reports,
                  'mayReport' : mayReport,
                  'official'  : official,
+                 'ucolor'    : ucolor,
+                 'bcolor'    : bcolor,
+                 'image'     : image,
+                 'timage'    : timage
                  }
 
 

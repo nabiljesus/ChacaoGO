@@ -16,21 +16,29 @@
 
   </head>
   <body>
-
-    <div class="container-fluid">
-	<div class="row">
+	<style type="text/css">
+	    body{font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;color:#444;font-size:13px; background: {{bcolor}};}
+	    p,div,ul,li{padding:0px; margin:0px;}
+	</style>
+	<div class="input-color">
+    	<div class="color-box" width="90vh" height="90vh" style="background-color: #fff;"></div>
+    <!-- Replace "#FF850A" to change the color -->
+	</div>
+	<div class="topright">
+		<img  src="/static/img/logos.png" height="126px" width="204x">
+	</div>
+    <div class="container-fluid" style="">
+	<div class="row" style="z-index: 99; margin-left:3vh;">
 		<div class="col-md-12">
 			<div class="row">
 				<div class="col-md-4">
-					<h3>
-						{{ type }}
-					</h3>
+					<h1  style="color: #fff">
+						<img src="/static/img/icon_{{timage}}.png" width="30px" height="30px">{{ type }}
+					</h1> 
 				</div>
 				<div class="col-md-4">
 				</div>
-				<div class="col-md-4 preto">
-					<img alt="Bootstrap Image Preview" src="/static/img/logo.png" height="126px" height="204x">
-				</div>
+
 			</div>
 			<div class="row">
 				<div class="col-md-6">
@@ -79,7 +87,7 @@
 					<hr/>
 					<div class="list-group">
 						{% for c in comments %}
-						<a href="#" class="list-group-item active elefanteinvisible">{{c.user.username}} ({{c.added}})</a>
+						<a href="#" class="list-group-item active elefanteinvisible" style="background: {{bcolor}}">{{c.user.username}} ({{c.added}})</a>
 
 						<div class="list-group-item elefanteinvisible">
 							<span class="badge">14</span><p class="linesplit">
@@ -119,7 +127,7 @@
 					<hr />
 					<div class="row">
 						<div class="col-md-12">
-							<b> Publicado por: </b> <a href="/checkprofile/?username={{event.user.username}}"> {{ event.user.username }} </a>
+							<b> Publicado por: </b> <a style="color: {{ucolor}}" href="/checkprofile/?username={{event.user.username}}"> <img src={{image}} width="20px" height="20px">{{ event.user.username }} </a>
 						</div>
 					</div>
 					<hr />

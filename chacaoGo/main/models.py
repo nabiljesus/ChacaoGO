@@ -314,6 +314,10 @@ class Event(models.Model):
         return res
 
 
+    def getCat(etype):
+        return Category.objects.filter(eventType=etype)[0].categoryName
+
+
 
 class Comment(models.Model):
     """Clase para comentarios asociados a un evento"""
@@ -358,6 +362,7 @@ class Vote(models.Model):
                 return (False,True)
             else:
                 return (True,False)
+
 
 class Report(models.Model):
     """Clase para votos de utilidad en un evento"""
