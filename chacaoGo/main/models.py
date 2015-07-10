@@ -89,6 +89,11 @@ def smallerDate(a,b):
     else:
         return False
 
+def deletRepeated(seq):
+    seen = set()
+    seen_add = seen.add
+    return [ x for x in seq if not (x in seen or seen_add(x))]
+
 ##########
 # Modelos
 ##########
@@ -137,8 +142,40 @@ class User(models.Model):
             return None
 
     def getEvents(username):
-        user = User.objects.filter(username=username)
-        return Event.objects.filter(user=user[0]).order_by('-added')
+        user = User.objects.filter(username=username).first()
+        return Event.objects.filter(user=user).order_by('-added')
+
+    def getPurchases(username):
+        user = User.objects.filter(username=username).first()
+        return Event.objects.filter(user=user,vip=True).order_by('-added')
+
+
+    def getCommentedEvents(username):
+        user     = User.objects.filter(username=username)
+        
+        eventsCommented = Comment.objects.filter(user=user)\
+                            .order_by('-added')
+
+        #Asegurando la unicidad
+        a = set()
+        for comment in eventsCommented:
+            event = comment.event
+            a.add( (event.name,event.description,event.eventId))
+
+        return a
+
+    def getFavoriteEvents(username):
+        user     = User.objects.filter(username=username)
+        
+        eventsLiked = Vote.objects.filter(user=user,isUsefull=True)
+
+        #Asegurando la unicidad
+        a = set()
+        for vote in eventsLiked:
+            event = vote.event
+            a.add( (event.name,event.description,event.eventId))
+
+        return a
 
     def getCreatedEvents(username):
         user = User.objects.filter(username=username).first()

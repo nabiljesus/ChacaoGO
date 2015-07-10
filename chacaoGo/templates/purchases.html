@@ -18,45 +18,48 @@
   <body>
 
     <div class="container-fluid">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="row">
-				<div class="col-md-2">
-					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
-				</div>
-				<div class="col-md-6">
-					<h3>
-						Mis Compras
-					</h3>
-				</div>
-				<div class="col-md-2">
-				</div>
-				<div class="col-md-2">
-					<img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
-				</div>
-			</div>
-			<div class="col-md-12 elefanteinvisible"></div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-2">
+                    <img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
+                </div>
+                <div class="col-md-6">
+                    <h3>
+                        Mis Compras
+                    </h3>
+                </div>
+                <div class="col-md-2">
+                </div>
+                <div class="col-md-2">
+                    <img alt="Bootstrap Image Preview" src="http://lorempixel.com/140/140/">
+                </div>
+            </div>
+            <div class="col-md-12 elefanteinvisible"></div>
 
-			<div class="list-group">
-				<!-- Elemento a repetir	 -->
-				<p href="#" class="list-group-item active">Toque 100% Rock</p>
-				<div class="list-group-item">
-					<h4 class="list-group-item-heading">
-						Puro rots
-					</h4>
-					<a href="/event/?id=1" class="list-group-item-text">
-						+Detalles
-					</a>
-				</div>
-			</div>
+            <div class="list-group">
 
-		</div>
-		<div class="col-md-12 elefanteinvisible">
-			<a href="/redirectuser" type="button" class="btn btn-default">
-				Regresar
-			</a>
-		</div>
-	</div>
+                {% for event in userEvents %}
+                    <p href="#" class="list-group-item active">{{event.name}}</p>
+                        <div class="list-group-item">
+                    <h4 class="list-group-item-heading">
+                        {{event.description}}
+                    </h4>
+                    <a href="/event/?id={{event.eventId}}" class="list-group-item-text">
+                        +Detalles
+                    </a>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+        <div class="col-md-12 elefanteinvisible">
+            <a href="/redirectuser" type="button" class="btn btn-default">
+                Regresar
+            </a>
+        </div>
+    </div>
 </div>
 
     <script src="/static/js/jquery.min.js"></script>

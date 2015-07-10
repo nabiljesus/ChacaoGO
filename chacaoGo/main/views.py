@@ -190,22 +190,31 @@ def mycomments(request):
     if not 'username' in request.session:
         return redirect("/main",foo='bar')
 
+    userEvents = User.getCommentedEvents(request.session['username'])
+
     t = loader.get_template('mycomments.html')
-    return HttpResponse(t.render({}))
+    c = Context({'userEvents': userEvents})
+    return HttpResponse(t.render(c))
 
 def favorites(request):
     if not 'username' in request.session:
         return redirect("/main",foo='bar')
 
+    userEvents = User.getFavoriteEvents(request.session['username'])
+
     t = loader.get_template('favorites.html')
-    return HttpResponse(t.render({}))
+    c = Context({'userEvents': userEvents})
+    return HttpResponse(t.render(c))
 
 def purchases(request):
     if not 'username' in request.session:
         return redirect("/main",foo='bar')
 
+    userEvents = User.getPurchases(request.session['username'])
+
     t = loader.get_template('purchases.html')
-    return HttpResponse(t.render({}))
+    c = Context({'userEvents': userEvents})
+    return HttpResponse(t.render(c))
 
 #######################
 #  Vistas para eventos
