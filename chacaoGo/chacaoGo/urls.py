@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^admin/', include(admin.site.urls)),
     url(r'^$', views.index, name='index'),
     url(r'^main/', views.main, name='main'),
+    url(r'^filter/', views.filter, name='filter'),
     
     #Paginas de sesion
     url(r'^register/', views.register, name='register'),

@@ -10,9 +10,6 @@ from main.forms       import *
 from main.models      import * 
 from django.http import HttpResponseRedirect
 
-def kickout(request):
-    if not 'username' in request.session:
-        return redirect("/main",foo='bar')
 
 #######################
 #  Vistas principales
@@ -27,6 +24,7 @@ def testdrop(request):
     t = loader.get_template('testdrop.html')
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
+
 
 
 def main(request):
@@ -44,6 +42,21 @@ def main(request):
                               context_instance=RequestContext(request)
                               )
 
+def filter(request):
+    logged = 'username' in request.session
+    print("Scrum Nigga master")
+
+    print(request.GET)
+
+    listaEventos = Event.getEventsByType(['ZP','DEL','AS','AC','EM','PV','PR','AM','SA','SE','RRS','MA','ED','BA','YO','CD','CO','FE','OT','EA','JD','VPE','JE','DES','DS','SM','JV','SV','CA','AC','PC','TE'])
+    import json
+    listaEventos = json.dumps(listaEventos)
+
+    dictionary = {'logged':logged, 'listaEventos': str(listaEventos) }
+    return render_to_response('main.html', 
+                              dictionary , 
+                              context_instance=RequestContext(request)
+                              )
 ################################
 #  Vistas de manejo de usuarios
 ################################

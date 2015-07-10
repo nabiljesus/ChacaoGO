@@ -345,6 +345,9 @@
 
   {% endif %}
 
+    <form id="form" action="/filter/" method="get">
+    {% csrf_token %}
+    
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
     <script src="/static/js/jquery.sumoselect.js"></script>
     <script type="text/javascript">
@@ -352,6 +355,9 @@
             window.testSelAll2 = $('.testSelAll2').SumoSelect({selectAll:true });
         });
     </script>
+
+    <input type="hidden" name="Language" value="English">
+
 
     <select multiple="multiple" image='<img src="/static/img/icon_police.png" width="18px">' placeholder="Seguridad" onchange="console.log($(this).children(':selected').length)" class="testSelAll2">
            <option value="ZP">Zona Peligrosa</option>
@@ -417,7 +423,10 @@
            <option value="OFI">EnteOficial</option>
            <option value="CIU">Ciudadano Común</option>
     </select>
-    <button class="btn  btn-default" style="margin: 0px 10px 10px 10px;" href="/register" >Filtrar</button>
+    <button type="submit" value="Submit" class="btn  btn-default" style="margin: 0px 10px 10px 10px;">Filtrar</button>
+
+
+    </form >
 
 
   <!-- ================ MAP START ====================== -->
