@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Count
 
 
 #######################
@@ -328,8 +329,6 @@ class Vote(models.Model):
 
         return (positive,negative)
 
-    
-
     #Funcion que indica por que puede votar un usuario en un evento
     def mayVote(username,eventId):
         user    = User.objects.filter(username=username).first()
@@ -345,5 +344,25 @@ class Vote(models.Model):
             else:
                 return (True,False)
 
-        
+class Report(models.Model):
+    """Clase para votos de utilidad en un evento"""
+    user        = models.ForeignKey(User)
+    event       = models.ForeignKey(Event)
 
+
+    class Meta:
+        unique_together = ('user','event')
+
+    #Funcion para obtener numero de votos positivos y negativos de un evento
+    def getReports():
+        return Event.objects.annotate(repCount=Count('report')).order_by('-repCount')
+
+    def getEventNumberReports(eventId):
+        event=Event.objects.filter(eventId=eventId)
+        return Report.objects.filter(event=event).count()
+
+    def mayReport(eventId,username):
+        event = Event.objects.filter(eventId=eventId)
+        user  = User.objects.filter(username=username)
+
+        return Report.objects.filter(user=user,event=event).count() == 0

@@ -222,6 +222,7 @@ def purchases(request):
 
 def event(request):
     eventId = int(request.GET.get('id',-1))
+    logged  = 'username' in request.session
 
     if eventId != -1:
         event   = Event.getEventById(eventId)
@@ -232,20 +233,26 @@ def event(request):
     (positiveVotes,negativeVotes) = Vote.getEventVotes(eventId)
     
     (mayvotep,mayvoten) = Vote.mayVote(request.session['username'],eventId) if \
-                         ('username' in request.session) \
-                         else (False,False) 
+                         logged else (False,False) 
 
+    reports    = Report.getEventNumberReports(eventId)
+    if logged:
+        mayReport  = Report.mayReport(eventId,request.session['username'])    
+    else:
+        mayReport = False
     
     dictionary = {
                  'event'   : event,
                  'type'    : event.get_evenType_display(), 
                  'form'    : CommentForm(),
-                 'logged'  : 'username' in request.session,
+                 'logged'  : logged,
                  'comments': comments,
                  'positives' : positiveVotes,
                  'negatives' : negativeVotes,
                  'mayvotep'  : mayvotep,
                  'mayvoten'  : mayvoten,
+                 'reports'   : reports,
+                 'mayReport' : mayReport,
                  }
 
 
@@ -384,3 +391,40 @@ def addvote(request):
 
         return redirect('/event/?id='+str(eventId))
 
+def addreport(request):
+    print(request.GET)
+    eventId = int(request.GET.get('eventId',-1))
+
+    if eventId == -1 or not ('username' in request.session):
+        return redirect('/event/?id='+str(eventId))
+    else:
+        user = User.getUser(request.session['username'])
+        event= Event.getEventById(eventId)
+        
+
+        if Report.mayReport(eventId,request.session['username']):
+            newReport = Report(
+                user  = user,
+                event = event
+            )
+            newReport.save()
+        else:
+            pass
+
+        return redirect('/event/?id='+str(eventId))
+
+def mostreported(request):
+    if not 'username' in request.session:
+        return redirect("/main",foo='bar')
+
+    print(User.getType(request.session['username']))
+    
+    if (User.getType(request.session['username']) != 'Alcaldía' ) and \
+       (User.getType(request.session['username']) != 'Moderador' ):
+       return redirect("/main",foo='bar')
+
+    reports = Report.getReports()
+
+    t = loader.get_template('mostreported.html')
+    c = Context({'reports': reports}) 
+    return HttpResponse(t.render(c))

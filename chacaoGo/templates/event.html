@@ -142,10 +142,20 @@
 									</blockquote>
 								</div>
 								<div class="col-md-4">
-									 
-									<button type="button" class="btn btn-default">
-										+1
-									</button>
+									{%if mayReport%}
+									<a href="/addreport/?eventId={{event.eventId}}" type="button" class="btn btn-default">
+										({{reports}})
+									</a>
+									{% else %}
+									  {%if not logged%}
+										<p>Conéctate para opinar</p>
+									  {%endif%}
+									  
+
+									<a  disabled="disabled"  type="button" class="btn btn-default">
+										({{reports}})
+									</a>
+									{% endif %}
 								</div>
 							</div>
 						</div>

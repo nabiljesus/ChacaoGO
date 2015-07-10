@@ -38,10 +38,12 @@ urlpatterns = [
     url(r'^mycomments/', views.mycomments, name='mycomments'),
     url(r'^purchases/', views.purchases, name='purchases'),
     url(r'^favorites/', views.favorites, name='favorites'),
+    url(r'^mostreported/', views.mostreported, name='mostreported'),
     
     #Paginas de eventos
     url(r'^event/', views.event, name='event'),
     url(r'^addevent/', views.addevent, name='addevent'),
     url(r'^addcomment/', views.addcomment, name='addcomment'),
     url(r'^addvote/', views.addvote, name='addvote'),
+    url(r'^addreport/', views.addreport, name='addreport'),
 ]
