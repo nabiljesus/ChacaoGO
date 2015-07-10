@@ -190,16 +190,17 @@ def checkprofile(request):
         posts    = User.getCreatedEvents(profile)
         comments = User.getCommentsMade(profile)
         showable = request.session['username'] == profile
-        (points,title)   = User.getUserVotes(profile)
+        (points,title,image)   = User.getUserVotes(profile)
 
         dictionary = {
-            'posts'   : posts   ,
+            'posts'   : posts,
             'comments': comments,
             'points'  : points,
             'showable': showable, #Podria permitirse que las autoridades tambien vean este correo
             'email'   : User.getEmail(profile),
             'name'    : User.getName(profile),
             'title'   : title,
+            'image'   : image,
         }
 
         t = loader.get_template('checkprofile.html')

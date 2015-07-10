@@ -201,15 +201,17 @@ class User(models.Model):
         for l in LEVELS:
             if voteSum < 0:
                 title = LEVELS[0][0]
+                image = LEVELS[0][2]
                 pass
             elif voteSum >= l[1]:
                 title = l[0]
+                image = l[2]
                 pass
             else:
                 break
             
 
-        return (voteSum,title)
+        return (voteSum,title,image)
 
     def getUsersByPoints():
         from django.db.models import Q
