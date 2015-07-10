@@ -42,6 +42,6 @@ urlpatterns = [
     #Paginas de eventos
     url(r'^event/', views.event, name='event'),
     url(r'^addevent/', views.addevent, name='addevent'),
-    url(r'^testdrop/', views.testdrop),
     url(r'^addcomment/', views.addcomment, name='addcomment'),
     url(r'^addvote/', views.addvote, name='addvote'),
+]

@@ -17,6 +17,7 @@ TYPECHOICES = (
         ('SA','Servicio de Agua'),
         ('SE','Servicio Eléctrico'),
         ('RRS','Recolección de Residuos Solidos'),
+        ('EDU','Educación'),
         ('MA','Maratón'),
         ('ED','Encuentro Deportivo'),
         ('BA','Bailoterapia'),
@@ -64,16 +65,16 @@ CATEGORYIMAGE = {
 
 CATEGORYLIST = ['SE','VI','DS','DE','CU','PR','SP','DM']
 
-LEVELS  = [ ("Villano",                       0   ),
-            ("Ciudadano común",               10  ),
-            ("Buen samaritano",               20  ),
-            ("Viejita de la comunidad",       30  ),
-            ("Ciudadano Ejemplar",            40  ),
-            ("Periodista aficionado",         60  ),
-            ("Ciberperiodista",               70  ),
-            ("Colaborador conocido ChacaoGO", 100 ),
-            ("Colaborador Destacado Chacao",  150 ),
-            ("Mano dereha de Ramón Muchacho", 300 )
+LEVELS  = [ ("Pinocho",                       0   , 'cred_pinocho.png'),
+            ("Ciudadano común",               0   , 'cred_common.png'),
+            ("Buen samaritano",               10  , 'cred_good.png'),
+            ("Viejita de la comunidad",       30  , 'cred_granny.png'),
+            ("Ciudadano Ejemplar",            40  , 'cred_exemplar.png'),
+            ("Periodista aficionado",         60  , 'cred_journalistwannabe.png'),
+            ("Ciberperiodista",               70  , 'cred_ciberjournalist.png'),
+            ("Colaborador conocido ChacaoGO", 100 , 'cred_chacaoGO1.png'),
+            ("Colaborador Destacado Chacao",  150 , 'cred_chacaoGO2.png'),
+            ("Mano dereha de Ramón Muchacho", 300 , 'cred_chacaoGO3.png')
            ]
 
 
@@ -195,10 +196,13 @@ class User(models.Model):
             voteSum  = voteSum + positive - negative
 
         for l in LEVELS:
-            if voteSum > l[1]:
+            if voteSum < 0:
+                title = LEVELS[0][0]
+                pass
+            elif voteSum >= l[1]:
+                title = l[0]
                 pass
             else:
-                title = l[0]
                 break
             
 

@@ -55,7 +55,7 @@
                     var O = this;
                     O.E.wrap('<div class="SumoSelect" tabindex="0">');
                     O.select = O.E.parent();
-                    O.caption = $('<span></span>');
+                    O.caption = $(''+O.E.attr('image')+'<b></b>');
                     O.CaptionCont = $('<p class="CaptionCont"><label><i></i></label></p>').addClass('SlectBox').attr('style', O.E.attr('style')).prepend(O.caption);
                     O.select.append(O.CaptionCont);
 
