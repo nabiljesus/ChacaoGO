@@ -265,6 +265,8 @@ def topusers(request):
        (User.getType(request.session['username']) != 'Moderador' ):
        return redirect("/main",foo='bar')
 
+    topusers = User.getUsersByPoints()
+
     userEvents = User.getEvents(request.session['username'])
 
     t = loader.get_template('topusers.html')
