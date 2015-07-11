@@ -122,8 +122,35 @@
   
   {% else %}
 
+  <script type="text/javascript">
+     function getLocation() {
+            navigator.geolocation.getCurrentPosition(foundLocation, noLocation);
+            function foundLocation(position) {
+
+
+   var lat = position.coords.latitude;
+        var long = position.coords.longitude;
+        // alert("LAT : "+lat +", LONG : "+long);
+        //bad bad
+        window.location.replace("/addevent/?x="+lat+"&y="+long);
+        //puntos del rectangulo
+        //  1    2
+        //  3    4
+           // 1 = 10.539458389418337&y=-426.86957359313965
+           // 2 =  10.536083064772939&y=-426.83807373046875
+           // 3 = x=10.488149468956726&y=-426.86811447143555
+           // 4 = 10.484267197377525&y=-426.84425354003906                  
+         }
+    }
+
+    function noLocation() {
+        alert('Could not find location');
+    }
+
+  </script>
+
   <div class="btn-group bottomright">
-    <a type="button" class="btn btn-default" href="/addevent">Crear Evento</a>
+    <button type="button" class="btn btn-default" onclick="getLocation()" >Crear Evento</button>
     <a type="button" class="btn btn-default" href="/redirectuser">Menú Principal</a>
     <a class="btn btn-default" href="/logout">Salir</a>
   </div>  
@@ -635,22 +662,6 @@
 </div>  
 
    <!-- ================ MAP END ====================== -->
-
-<!--   <div class="row btn-group">
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_police.png" width="18px"> Seguridad </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_street.png" width="18px"> Vialidad </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_service.png" width="18px"> Det. Servicios </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_sports.png" width="18px"> Deportes </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_culture.png" width="18px"> Cultura </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_product.png" width="18px"> Productos </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_help.png" width="18px"> Solicitudes </div>
-    <div class="col-sm-3"> <input type="checkbox" value=""><img src="/static/img/icon_broken.png" width="18px"> Det. Municipal </div>
-    <div class="filt_buttom">
-       <a class="btn btn-default" href="/register">Filtrar</a>
-    </div>
-  </div>
- -->
-
 
   
 
