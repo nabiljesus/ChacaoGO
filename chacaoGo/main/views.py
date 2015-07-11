@@ -189,7 +189,10 @@ def checkprofile(request):
 
         posts    = User.getCreatedEvents(profile)
         comments = User.getCommentsMade(profile)
-        showable = request.session['username'] == profile
+        if logged:
+            showable = request.session['username'] == profile
+        else:
+            showable = False
         (points,title,image)   = User.getUserVotes(profile)
 
         dictionary = {
