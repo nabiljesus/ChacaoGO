@@ -62,11 +62,11 @@ def filter(request):
             users = ['Alcaldía','Usuario','Moderador']
 
         if 'type[]' in request.POST:
-            selectedEvents = request.POST['type[]']
+            selectedEvents = request.POST.getlist('type[]')
         else:
             selectedEvents = EVENTLIST
 
-    print(users)
+    
 
     listaEventos = Event.getEventsByType(selectedEvents,users)
     import json
