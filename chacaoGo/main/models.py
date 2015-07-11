@@ -358,7 +358,7 @@ class Event(models.Model):
     def getCat(etype):
         return Category.objects.filter(eventType=etype)[0].categoryName
 
-    def mayReport(eventId):
+    def reportable(eventType):
         return Category.objects.filter(eventType=eventType).first().categoryName in REPORTABLECATEGORIES
 
 

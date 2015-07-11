@@ -286,6 +286,7 @@ def event(request):
     else:
         event   = Event.getEventById(1)
 
+
     comments                      = Event.getAllComments(eventId)
     (positiveVotes,negativeVotes) = Vote.getEventVotes(eventId)
     
@@ -300,7 +301,13 @@ def event(request):
     else:
         mayReport = False
         official  = False
+
+
+    reportable = Event.reportable(event.evenType)
+    print(reportable)
+
     cred = User.getUserVotes(event.user.username)
+    
     image=""
     if event.user.userType == 'Moderador' or event.user.userType == 'Alcaldía':
         ucolor = "#FFCC00"
@@ -358,6 +365,7 @@ def event(request):
                  'mayvoten'  : mayvoten,
                  'reports'   : reports,
                  'mayReport' : mayReport,
+                 'reportable': reportable,
                  'official'  : official,
                  'ucolor'    : ucolor,
                  'bcolor'    : bcolor,
@@ -452,8 +460,8 @@ def addevent(request):
             newEvent.save()
             c = Context({'mensaje': 'Gracias por agregar eso que agregaste jeje!'})
             t = loader.get_template('main.html') # A donde deberia mandar?
-            return render_to_response('main.html', {} , context_instance=RequestContext(request))
             return redirect("/main")
+            return render_to_response('main.html', {} , context_instance=RequestContext(request))
         else:
             print("No pase la validez D:")
             for field in form:
@@ -466,7 +474,7 @@ def addevent(request):
     else:
         dictionary = {}
         print("wtf? what am i doing here?")
-    return redirect("/main")
+
     return render_to_response('addevent.html', dictionary , context_instance=RequestContext(request))
 
 def addvote(request):
