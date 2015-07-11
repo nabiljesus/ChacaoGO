@@ -459,13 +459,14 @@ def addevent(request):
             for field in form:
                 print(field)
                 print(field.errors)
+            return redirect("/main")
             t = loader.get_template('main.html')
             c = Context({'form': EventForm(), 'mensaje': 'Ha ocurrido un error al momento de crear el evento :('})
         return HttpResponse(t.render(c))
     else:
         dictionary = {}
         print("wtf? what am i doing here?")
-
+    return redirect("/main")
     return render_to_response('addevent.html', dictionary , context_instance=RequestContext(request))
 
 def addvote(request):
