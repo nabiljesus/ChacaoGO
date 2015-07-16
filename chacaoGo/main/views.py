@@ -311,7 +311,7 @@ def event(request):
 
     cred = User.getUserVotes(event.user.username)
     
-    image=""
+    image="/static/img/white.png"
     if event.user.userType == 'Moderador' or event.user.userType == 'Alcaldía':
         ucolor = "#FFCC00"
         image='/static/img/chacao1.jpg'

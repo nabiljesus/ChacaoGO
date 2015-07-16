@@ -49,7 +49,7 @@
           <br />
 
           <div class="action_btns">
-            <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Voler</a></div>
+            <div class="one_half"><a href="#" class="btn back_btn"><i class="fa fa-angle-double-left"></i> Volver</a></div>
             <div class="one_half last"><button id="connect" type="submit" class="btn btn_red">Iniciar Sesion</button></div>
           </div>
         </form>
@@ -144,13 +144,13 @@
     }
 
     function noLocation() {
-        alert('Could not find location');
+        alert('No se pudo encontrar su localizacion o usted no se encuentra en Chacao');
     }
 
   </script>
 
   <div class="btn-group bottomright">
-    <button type="button" class="btn btn-default" onclick="getLocation()" >Crear Evento</button>
+    <button type="button" class="btn btn-default" onclick="getLocation()" >Agregar Evento/Suceso</button>
     <a type="button" class="btn btn-default" href="/redirectuser">Menú Principal</a>
     <a class="btn btn-default" href="/logout">Salir</a>
   </div>  
@@ -465,7 +465,7 @@
         function onMapClick(e) {
            popup
               .setLatLng(e.latlng)
-              .setContent("<div align=\"right\"><a href=\"/addevent/?x="+e.latlng.lat.toString()+"&y="+e.latlng.lng.toString()+"\">Agregar Evento</a></div></font>")
+              .setContent("<div align=\"right\"><a href=\"/addevent/?x="+e.latlng.lat.toString()+"&y="+e.latlng.lng.toString()+"\">Agregar Evento/Suceso</a></div></font>")
               //.setContent("No toy en Chacao :(")
               .openOn(map);
         }
