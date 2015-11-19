@@ -470,187 +470,184 @@
               .openOn(map);
         }
 
-        //polip.addTo(map).bindPopup("Estoy en chacao :D en: " );
+        var myInput = null;
 
-
-        //Markers
-        // L.marker([10.49802, -426.85181], {icon: mark_police}).addTo(map);
-        // L.marker([10.49794, -426.85756], {icon: mark_street}).addTo(map);
-        // L.marker([10.49769, -426.86502], {icon: mark_service}).addTo(map);
-        // L.marker([10.49304, -426.86013], {icon: mark_sports}).addTo(map);
-        // L.marker([10.53144, -426.84709], {icon: mark_culture}).addTo(map);
-        // L.marker([10.51541, -426.8397], {icon: mark_product}).addTo(map);
-        // L.marker([10.51853, -426.86245], {icon: mark_help}).addTo(map);
-        // L.marker([10.48393, -426.84571], {icon: mark_broken}).addTo(map);
-
-        var customOptions =
-            {
-            'maxWidth': '150',
-            'className' : 'custom'
-            }
-
-        var myInput = JSON.parse('{{ listaEventos | safe }}')
-
-        for (var key in myInput) {
+        $.ajax({
+          url: '/all.json',
+          type: 'get', 
+          success: function(data) {
+              myInput = data;
+              console.log(data);
+              for (var key in myInput) {
           //alert(key)
-          if (myInput.hasOwnProperty(key)) {
+              if (myInput.hasOwnProperty(key)) {
 
-           var ACT = myInput[key];
-           var auxl =  ACT.length;
-           //var iconact = mark_product
+               var ACT = myInput[key];
+               var auxl =  ACT.length;
+               //var iconact = mark_product
 
-           switch(key) {
-                  case "SE":
-                      var iconact = mark_police;
-                      break;
-                  case "VI":
-                      var iconact = mark_street;
-                      break;
-                  case "DS":
-                      var iconact = mark_service;
-                      break;
-                  case "DE":
-                      var iconact = mark_sports;
-                      break;
-                  case "CU":
-                      var iconact = mark_culture;
-                      break;
-                  case "PR":
-                      var iconact = mark_product;
-                      break;
-                  case "SP":
-                      var iconact = mark_help;
-                      break;
-                  case "DM":
-                      var iconact = mark_broken;
-                      break;
-                  default:
-                      var iconact = mark_police;
-                      break;
-           }
-
-
-           for (var i = 0; i<auxl; i++){
-               var typei = ACT[i]["tipo"]
-               //alert(typei)
-               switch(typei){
-                      case "ZP": 
-                         var subcate="Zona Peligrosa"; 
-                         break;
-                      case "DEL": 
-                         var subcate="Delito"; 
-                         break;
-                      case "AS": 
-                         var subcate="Actividad Sospechosa"; 
-                         break;
-                      case "AC": 
-                         var subcate="Accidente"; 
-                         break;
-                      case "EM": 
-                         var subcate="Embotellamiento"; 
-                         break;
-                      case "PV": 
-                         var subcate="Peligro en la Vía"; 
-                         break;
-                      case "PR": 
-                         var subcate="Protesta"; 
-                         break;
-                      case "AM": 
-                         var subcate="Asistencia médica"; 
-                         break;
-                      case "SA": 
-                         var subcate="Servicio de Agua"; 
-                         break;
-                      case "SE": 
-                         var subcate="Servicio Eléctrico"; 
-                         break;
-                      case "RRS": 
-                         var subcate="Recolección de Residuos Solidos"; 
-                         break;
-                      case "MA": 
-                         var subcate="Maratón"; 
-                         break;
-                      case "ED": 
-                         var subcate="Encuentro Deportivo"; 
-                         break;
-                      case "BA": 
-                         var subcate="Bailoterapia"; 
-                         break;
-                      case "YO": 
-                         var subcate="Yoga"; 
-                         break;
-                      case "CD": 
-                         var subcate="Clase Deportiva"; 
-                         break;
-                      case "CO": 
-                         var subcate="Concierto"; 
-                         break;
-                      case "FE": 
-                         var subcate="Feria"; 
-                         break;
-                      case "OT": 
-                         var subcate="Obra de Teatro"; 
-                         break;
-                      case "EA": 
-                         var subcate="Exposición de arte"; 
-                         break;
-                      case "JD": 
-                         var subcate="Jornada de Documentación"; 
-                         break;
-                      case "VPE": 
-                         var subcate="Venta de Producto Escaso"; 
-                         break;
-                      case "JE": 
-                         var subcate="Jornada Electoral"; 
-                         break;
-                      case "DES": 
-                         var subcate="Descuento"; 
-                         break;
-                      case "DS": 
-                         var subcate="Donación de sangre"; 
-                         break;
-                      case "SM": 
-                         var subcate="Solicitud de Medicamento"; 
-                         break;
-                      case "JV": 
-                         var subcate="Jornada Veterinaria"; 
-                         break;
-                      case "SV": 
-                         var subcate="Solicitud de Voluntarios"; 
-                         break;
-                      case "CA": 
-                         var subcate="Calles y avenidas"; 
-                         break;
-                      case "ACE": 
-                         var subcate="Aceras"; 
-                         break;
-                      case "PC": 
-                         var subcate="Patrimonio Cultural"; 
-                         break;
-                      case "TE": 
-                         var subcate="Terreno";
-                         break;
-                      default :
-                         var subcate="Zona Peligrosa"; 
-                         break;
+               switch(key) {
+                      case "SE":
+                          var iconact = mark_police;
+                          break;
+                      case "VI":
+                          var iconact = mark_street;
+                          break;
+                      case "DS":
+                          var iconact = mark_service;
+                          break;
+                      case "DE":
+                          var iconact = mark_sports;
+                          break;
+                      case "CU":
+                          var iconact = mark_culture;
+                          break;
+                      case "PR":
+                          var iconact = mark_product;
+                          break;
+                      case "SP":
+                          var iconact = mark_help;
+                          break;
+                      case "DM":
+                          var iconact = mark_broken;
+                          break;
+                      default:
+                          var iconact = mark_police;
+                          break;
                }
-              //alert('webo')
-              //alert(ACT[i].X);
-              //alert('webo')
-              if (ACT[i]["VIP"]){
-                  var tempmark = L.circleMarker([ACT[i]["X"], ACT[i]["Y"]], {color: '#FF0033'}).addTo(map);
-              }
-              var tempmark = L.marker([ACT[i]["X"], ACT[i]["Y"]], {icon: iconact}).addTo(map);
-              var popup = L.popup()
-               .setLatLng([ACT[i]["X"], ACT[i]["Y"]])
-               .setContent("<b><h3>"+subcate+":</h3></b><b>"+ACT[i]["nombre"]+"</b><hr>"+ACT[i]["descripcion"]+"<br><br><font color=\"cyan\"><div align=\"right\"><a href=\"/event/?id="+ACT[i]["id"]+"\">+ detalles</a></div></font>")
-               //.openOn(map)
-              tempmark.bindPopup(popup,customOptions);
-           }
-              //
-          }
-        }
 
+
+               for (var i = 0; i<auxl; i++){
+                   var typei = ACT[i]["tipo"]
+                   //alert(typei)
+                   switch(typei){
+                          case "ZP": 
+                             var subcate="Zona Peligrosa"; 
+                             break;
+                          case "DEL": 
+                             var subcate="Delito"; 
+                             break;
+                          case "AS": 
+                             var subcate="Actividad Sospechosa"; 
+                             break;
+                          case "AC": 
+                             var subcate="Accidente"; 
+                             break;
+                          case "EM": 
+                             var subcate="Embotellamiento"; 
+                             break;
+                          case "PV": 
+                             var subcate="Peligro en la Vía"; 
+                             break;
+                          case "PR": 
+                             var subcate="Protesta"; 
+                             break;
+                          case "AM": 
+                             var subcate="Asistencia médica"; 
+                             break;
+                          case "SA": 
+                             var subcate="Servicio de Agua"; 
+                             break;
+                          case "SE": 
+                             var subcate="Servicio Eléctrico"; 
+                             break;
+                          case "RRS": 
+                             var subcate="Recolección de Residuos Solidos"; 
+                             break;
+                          case "MA": 
+                             var subcate="Maratón"; 
+                             break;
+                          case "ED": 
+                             var subcate="Encuentro Deportivo"; 
+                             break;
+                          case "BA": 
+                             var subcate="Bailoterapia"; 
+                             break;
+                          case "YO": 
+                             var subcate="Yoga"; 
+                             break;
+                          case "CD": 
+                             var subcate="Clase Deportiva"; 
+                             break;
+                          case "CO": 
+                             var subcate="Concierto"; 
+                             break;
+                          case "FE": 
+                             var subcate="Feria"; 
+                             break;
+                          case "OT": 
+                             var subcate="Obra de Teatro"; 
+                             break;
+                          case "EA": 
+                             var subcate="Exposición de arte"; 
+                             break;
+                          case "JD": 
+                             var subcate="Jornada de Documentación"; 
+                             break;
+                          case "VPE": 
+                             var subcate="Venta de Producto Escaso"; 
+                             break;
+                          case "JE": 
+                             var subcate="Jornada Electoral"; 
+                             break;
+                          case "DES": 
+                             var subcate="Descuento"; 
+                             break;
+                          case "DS": 
+                             var subcate="Donación de sangre"; 
+                             break;
+                          case "SM": 
+                             var subcate="Solicitud de Medicamento"; 
+                             break;
+                          case "JV": 
+                             var subcate="Jornada Veterinaria"; 
+                             break;
+                          case "SV": 
+                             var subcate="Solicitud de Voluntarios"; 
+                             break;
+                          case "CA": 
+                             var subcate="Calles y avenidas"; 
+                             break;
+                          case "ACE": 
+                             var subcate="Aceras"; 
+                             break;
+                          case "PC": 
+                             var subcate="Patrimonio Cultural"; 
+                             break;
+                          case "TE": 
+                             var subcate="Terreno";
+                             break;
+                          default :
+                             var subcate="Zona Peligrosa"; 
+                             break;
+                   }
+                  //alert('webo')
+                  //alert(ACT[i].X);
+                  //alert('webo')
+                  if (ACT[i]["VIP"]){
+                      var tempmark = L.circleMarker([ACT[i]["X"], ACT[i]["Y"]], {color: '#FF0033'}).addTo(map);
+                  }
+                  var tempmark = L.marker([ACT[i]["X"], ACT[i]["Y"]], {icon: iconact}).addTo(map);
+                  var popup = L.popup()
+                   .setLatLng([ACT[i]["X"], ACT[i]["Y"]])
+                   .setContent("<b><h3>"+subcate+":</h3></b><b>"+ACT[i]["nombre"]+"</b><hr>"+ACT[i]["descripcion"]+"<br><br><font color=\"cyan\"><div align=\"right\"><a href=\"/event/?id="+ACT[i]["id"]+"\">+ detalles</a></div></font>")
+                   //.openOn(map)
+                  tempmark.bindPopup(popup,customOptions);
+               }
+                  //
+              }
+            }
+          },
+          failure: function(data) { 
+              alert('Something went wrong');
+              myInput = null;
+          }
+        }); 
+
+        // var myInput = JSON.parse('{{ listaEventos | safe }}')
+
+
+        
         map.on('click', onMapClick);
         map.fitBounds(polip.getBounds()); // max zoom to see whole polygon
         map.setMaxBounds(polip.getBounds()); // restrict map view to polygon bounds

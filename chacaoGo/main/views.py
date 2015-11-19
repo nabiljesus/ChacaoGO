@@ -6,10 +6,10 @@ from django.contrib.sessions.backends.db import SessionStore
 from django.shortcuts import render, render_to_response, RequestContext, redirect
 from django.http      import HttpResponse
 from django.template  import Context,loader
+from django.core      import serializers
 from main.forms       import *
 from main.models      import * 
-from django.http import HttpResponseRedirect
-
+from django.http      import HttpResponseRedirect,JsonResponse
 
 #######################
 #  Vistas principales
@@ -24,6 +24,12 @@ def testdrop(request):
     t = loader.get_template('testdrop.html')
     c = Context({'foo': 'bar'})         
     return HttpResponse(t.render(c))
+
+def alljson(request):
+    users = ['Alcaldía','Usuario','Moderador']
+    listaEventos = Event.getEventsByType(EVENTLIST,users)
+    import json
+    return HttpResponse(json.dumps(listaEventos))
 
 
 

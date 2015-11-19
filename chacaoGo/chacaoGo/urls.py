@@ -20,9 +20,10 @@ from main import views
 urlpatterns = [
     # Paginas principales
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.index, name='index'),
-    url(r'^main/', views.main, name='main'),
-    url(r'^filter/', views.filter, name='filter'),
+    url(r'^$',        views.index,  name='index'),
+    url(r'^main/',    views.main,   name='main'),
+    url(r'^filter/',  views.filter, name='filter'),
+    url(r'^all\.json/', views.alljson, name='alljson'),
     
     #Paginas de sesion
     url(r'^register/', views.register, name='register'),
