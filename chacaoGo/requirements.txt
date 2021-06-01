@@ -45,5 +45,5 @@ requests==2.4.3
 requests-oauthlib==0.4.2
 selenium==2.46.0
 ssh-import-id==4.1
-urllib3==1.9.1
+urllib3==1.26.5
 virtualenv==1.11.6
